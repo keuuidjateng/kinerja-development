@@ -313,102 +313,6 @@
             backdrop-filter: blur(5px);
         }
 
-        /* Styling Pop Up Pemberitahuan (Mengunci Area Luar) */
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.35);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            backdrop-filter: blur(4px);
-            padding: 1rem;
-        }
-
-        .popup-card {
-            background-image: url('Opening Page.png');
-            background-size: cover;
-            background-position: center;
-            width: 100%;
-            max-width: 680px;
-            min-height: 380px;
-            border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            display: flex;
-            flex-direction: column;
-            /* Diubah menjadi center agar content box berada di tengah-tengah secara vertikal & horizontal */
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            position: relative;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .popup-content-box {
-            background: rgba(0, 55, 85, 0.85);
-            backdrop-filter: blur(6px);
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            color: #ffffff;
-            width: 100%;
-            max-width: 580px;
-	    opacity: 0.90
-        }
-
-        .popup-content-box h3 {
-            font-size: 1.1rem;
-            color: #FFC107;
-            margin-bottom: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .popup-content-box p {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 1.2rem;
-            color: #f1f1f1;
-            text-align: center;
-        }
-
-        .popup-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1.2rem;
-            flex-wrap: wrap;
-        }
-
-        /* Tombol Pop Up dengan Efek Hover Berganti Warna */
-        .popup-btn {
-            background-color: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            padding: 0.5rem 1.2rem;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .popup-btn.btn-accept:hover {
-            background-color: #00A65A;
-            border-color: #00A65A;
-            color: #ffffff;
-        }
-
-        .popup-btn.btn-exit:hover {
-            background-color: #d9534f;
-            border-color: #d9534f;
-            color: #ffffff;
-        }
-
         /* Kelas untuk menyembunyikan elemen */
         .hidden {
             display: none !important;
@@ -434,31 +338,10 @@
             .period-filter-container {
                 flex-wrap: wrap;
             }
-            .popup-card {
-                padding: 1rem;
-                min-height: 320px;
-            }
-            .popup-content-box {
-                padding: 1rem;
-            }
         }
     </style>
 </head>
 <body>
-
-    <!-- Pop Up Pemberitahuan Rahasia (Mengunci Area Luar) -->
-    <div id="popupOverlay" class="popup-overlay">
-        <div class="popup-card">
-            <div class="popup-content-box">
-                <h3><i class="fa-solid fa-triangle-exclamation"></i> PEMBERITAHUAN PENTING</h3>
-                <p>Halaman ini berisi informasi yang <b>sangat rahasia (<i>strictly confidential</i>)</b> dan hanya untuk konsumsi internal PLN. Akses hanya diperuntukkan bagi pegawai PLN yang berkepentingan. Dengan melanjutkan, Anda setuju untuk menjaga kerahasiaan informasi di dalamnya dan bertanggung jawab penuh untuk tidak menyebarkannya kepada pihak ketiga tanpa izin.</p>
-                <div class="popup-buttons">
-                    <button id="btnAccept" class="popup-btn btn-accept">Saya Setuju & Lanjutkan</button>
-                    <button id="btnExit" class="popup-btn btn-exit">Keluar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Header dengan Logo -->
     <header class="navbar">
@@ -474,7 +357,7 @@
             <h2>ANALISIS DAN EVALUASI KINERJA KEUANGAN</h2>
             <p>PT PLN (PERSERO) UNIT INDUK DISTRIBUSI JAWA TENGAH</p>
             <div>
-                <span class="badge-periode">Periode Agustus 2026</span>
+                <span class="badge-periode">Periode September 2026</span>
             </div>
         </div>
 
@@ -486,7 +369,8 @@
             <div class="dropdown">
                 <button class="period-btn">2026</button>
                 <div class="dropdown-content">
-                    <a href="agustus-2026/index.html">Agustus</a>
+                    <a href="september-2026/index.html">September</a>
+					<a href="agustus-2026/index.html">Agustus</a>
                     <a href="juli-2026/index.html">Juli</a>
                     <a href="juni-2026/index.html">Juni</a>
                     <a href="maret-2026/index.html">Maret</a>
@@ -504,42 +388,42 @@
 
         <!-- Daftar Kartu Tautan (Susunan 3 Kolom) -->
         <div class="card-grid">
-            <a href="agustus-2026/anev-kinerja.pdf" class="card">
+            <a href="september-2026/anev-kinerja.pdf" class="card">
                 <h3><span class="card-icon"><i class="fa-solid fa-chart-line"></i></span> Evaluasi Kinerja Bulanan</h3>
                 <p>Analisis dan Evaluasi Kinerja Bulanan Keuangan</p>
             </a>
 
-            <a href="agustus-2026/km-keu.html" class="card">
+            <a href="september-2026/km-keu.html" class="card">
                 <h3><span class="card-icon"><i class="fa-solid fa-handshake"></i></span> Kontrak Manajemen</h3>
                 <p>Laporan Pencapaian Kinerja Berdasarkan Kontrak Manajemen</p>
             </a>
 
-            <a href="agustus-2026/anggaran-investasi.html" class="card">
+            <a href="september-2026/anggaran-investasi.html" class="card">
                 <h3><span class="card-icon"><svg viewBox="0 0 24 24"><mask id="mSack"><rect width="24" height="24" fill="black"/><path d="M8.6 4h6.8l-1.6 3.3c2.9 1 5 3.8 5 7 0 4.1-3.4 7.4-7.6 7.4s-7.6-3.3-7.6-7.4c0-3.2 2.1-6 5-7L8.6 4Z" fill="white"/><rect x="8.3" y="4" width="7.4" height="1.6" rx="0.8" fill="white"/><text x="12" y="16.6" font-size="7.4" font-weight="800" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" fill="black">Rp</text></mask><rect width="24" height="24" fill="currentColor" mask="url(#mSack)"/></svg></span> Anggaran Investasi</h3>
                 <p>Monitoring Realisasi Penyerapan Anggaran Investasi</p>
             </a>
 
-            <a href="agustus-2026/anggaran-operasi.html" class="card">
+            <a href="september-2026/anggaran-operasi.html" class="card">
                 <h3><span class="card-icon"><i class="fa-solid fa-coins"></i></span> Anggaran Operasi</h3>
                 <p>Monitoring Realisasi Penyerapan Anggaran Operasi</p>
             </a>
 
-            <a href="agustus-2026/attb-pdp-ito.html" class="card">
+            <a href="september-2026/attb-pdp-ito.html" class="card">
                 <h3><span class="card-icon"><svg viewBox="0 0 24 24"><mask id="mTrafo"><rect width="24" height="24" fill="black"/><rect x="3.4" y="9.6" width="17.2" height="10" rx="2.2" fill="white"/><rect x="6.9" y="4.6" width="2.2" height="5.4" rx="1.1" fill="white"/><circle cx="8" cy="4.4" r="1.5" fill="white"/><rect x="14.9" y="4.6" width="2.2" height="5.4" rx="1.1" fill="white"/><circle cx="16" cy="4.4" r="1.5" fill="white"/><rect x="2" y="19.6" width="20" height="1.8" rx="0.9" fill="white"/><path d="M13 11.6 10.6 15.4h2.5l-2 3.2 4.9-5.2h-2.7l1.7-1.8Z" fill="black"/></mask><rect width="24" height="24" fill="currentColor" mask="url(#mTrafo)"/></svg></span> ATTB, PDP, dan Persediaan</h3>
                 <p>Monitoring ATTB, PDP, dan Persediaan Material</p>
             </a>
 
-            <a href="agustus-2026/nac.html" class="card">
+            <a href="september-2026/nac.html" class="card">
                 <h3><span class="card-icon"><svg viewBox="0 0 24 24"><mask id="mNote"><rect width="24" height="24" fill="black"/><path d="M5 3h9.2l4.3 4.3V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" fill="white"/><path d="M14.2 3v3.6a0.7 0.7 0 0 0 .7.7h3.6" fill="none" stroke="black" stroke-width="1.4"/><text x="10.3" y="16.6" font-size="6.6" font-weight="800" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" fill="black">Rp</text><line x1="4.5" y1="20.5" x2="18.8" y2="5.5" stroke="black" stroke-width="2.6" stroke-linecap="round"/></mask><rect width="24" height="24" fill="currentColor" mask="url(#mNote)"/></svg></span> Non Allowable Cost</h3>
                 <p>Monitoring Realisasi Non Allowable Cost (NAC)</p>
             </a>
 
-            <a href="agustus-2026/bpp.html" class="card">
+            <a href="september-2026/bpp.html" class="card">
                 <h3><span class="card-icon"><i class="fa-solid fa-industry"></i></span> Biaya Pokok Penyediaan</h3>
                 <p>Monitoring Realisasi Biaya Pokok Penyediaan</p>
             </a>
 
-            <a href="agustus-2026/piutang-prr.html" class="card">
+            <a href="september-2026/piutang-prr.html" class="card">
                 <h3><span class="card-icon"><svg viewBox="0 0 28 28" aria-label="Buku catatan bergaris dengan pena dan logo rupiah">
 <g fill="currentColor">
   <rect x="3" y="2.5" width="17" height="23" rx="2" fill="currentColor"/>
@@ -561,17 +445,17 @@
                 <p>Monitoring Piutang dan Piutang Ragu-Ragu Berdasarkan SAP-FM dan AP2T</p>
             </a>
 
-            <a href="agustus-2026/lr-neraca-gab.html" class="card">
+            <a href="september-2026/lr-neraca-gab.html" class="card">
                 <h3><span class="card-icon"><i class="fa-solid fa-chart-pie"></i></span> Laba Rugi dan Neraca Gabungan</h3>
                 <p>Laporan Laba Rugi dan Neraca Keuangan Gabungan Keseluruhan UID Jateng</p>
             </a>
 
-            <a href="agustus-2026/lr-unit.html" class="card">
+            <a href="september-2026/lr-unit.html" class="card">
                 <h3><span class="card-icon"><i class="fa-solid fa-square-poll-vertical"></i></span> Laba Rugi Per Unit</h3>
                 <p>Laporan Laba Rugi per Masing-Masing Unit</p>
             </a>
 			
-            <a href="agustus-2026/neraca-unit.html" class="card">
+            <a href="september-2026/neraca-unit.html" class="card">
                 <h3><span class="card-icon"><i class="fa-solid fa-scale-balanced"></i></span> Neraca Per Unit</h3>
                 <p>Neraca Keuangan per Masing-Masing Unit</p>
             </a>
@@ -583,7 +467,7 @@
         &copy; 2026. Bidang Keuangan PLN UID Jawa Tengah.
     </footer>
 
-    <!-- Script Interaksi Pop Up -->
+	<!-- Script Interaksi Pop Up -->
     <script>
         const popupOverlay = document.getElementById('popupOverlay');
         const btnAccept = document.getElementById('btnAccept');
@@ -610,6 +494,6 @@
             `;
         });
     </script>
-
+	
 </body>
 </html>
