@@ -467,5 +467,33 @@
         &copy; 2026. Bidang Keuangan PLN UID Jawa Tengah.
     </footer>
 
+	<!-- Script Interaksi Pop Up -->
+    <script>
+        const popupOverlay = document.getElementById('popupOverlay');
+        const btnAccept = document.getElementById('btnAccept');
+        const btnExit = document.getElementById('btnExit');
+
+        // Jika tombol "Saya Setuju & Lanjutkan" diklik
+        btnAccept.addEventListener('click', function() {
+            popupOverlay.classList.add('hidden');
+        });
+
+        // Jika tombol "Keluar" diklik
+        btnExit.addEventListener('click', function() {
+            // Menutup jendela atau tab browser (berfungsi jika dibuka melalui script/window baru)
+            window.close();
+            
+            // Fallback jika window.close() diblokir oleh browser modern
+            document.body.innerHTML = `
+                <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#1a1a1a; color:#ffffff; text-align:center; font-family:sans-serif;">
+                    <div>
+                        <h2>Akses Ditolak / Keluar</h2>
+                        <p style="margin-top:10px; color:#aaa;">Anda telah keluar dari portal atau halaman ini telah ditutup. Silakan tutup tab browser Anda.</p>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+	
 </body>
 </html>
