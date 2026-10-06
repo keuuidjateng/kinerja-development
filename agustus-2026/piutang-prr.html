@@ -1,0 +1,2436 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard Piutang & Piutang Ragu-Ragu — UID Jawa Tengah</title>
+    <!-- Kode Favicon -->
+    <link rel="icon" type="image/png" href="Logo PLN Favicon.png">
+<style>
+:root{
+  --navy-950:#0B1B33;
+  --navy-900:#0F2547;
+  --navy-800:#16335F;
+  --navy-700:#1E4275;
+  --blue-600:#2F6FB0;
+  --blue-400:#6FA3D8;
+  --blue-100:#E7EFF7;
+  --gold-600:#B8872F;
+  --gold-500:#C99A3F;
+  --gold-100:#F7EFDC;
+  --red-600:#A93B41;
+  --red-100:#F6E5E4;
+  --green-700:#286651;
+  --green-100:#E3F0EA;
+  --purple:#7462A8;
+  --purple-light:#EAE5F4;
+  --gray-900:#171A21;
+  --gray-700:#454B57;
+  --gray-500:#6E7686;
+  --gray-300:#C9CED8;
+  --gray-150:#E7EAF0;
+  --gray-100:#F2F3F6;
+  --paper:#F7F7F5;
+  --white:#FFFFFF;
+  --serif:Georgia,'Times New Roman',serif;
+  --sans:Arial,Helvetica,'Segoe UI',sans-serif;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  background:var(--paper);
+  color:var(--gray-900);
+  font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+body{
+  padding-bottom:50px;
+}
+
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 40px;
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar{
+  background:var(--navy-950);
+  color:var(--gray-300);
+  font-size:11.5px;
+  letter-spacing:.06em;
+}
+
+.topbar .wrap{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-top:11px;
+  padding-bottom:11px;
+}
+
+.topbar .org{
+  color:var(--white);
+  font-weight:700;
+  text-transform:uppercase;
+}
+
+.topbar .period{
+  color:var(--gold-500);
+  font-weight:700;
+  text-transform:uppercase;
+  border:1px solid rgba(201,154,63,.55);
+  border-radius:3px;
+  padding:3px 10px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  background:linear-gradient(
+    180deg,
+    var(--navy-900) 0%,
+    var(--navy-800) 100%
+  );
+  color:var(--white);
+  padding:36px 0 0;
+}
+
+.hero .eyebrow{
+  font-size:12.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--blue-400);
+  font-weight:700;
+  margin-bottom:14px;
+}
+
+.hero h1{
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:36px;
+  line-height:1.18;
+  max-width:850px;
+  color:var(--white);
+}
+
+.hero .sub{
+  margin-top:14px;
+  font-size:15px;
+  line-height:1.65;
+  color:#C7D3E3;
+  max-width:800px;
+}
+
+/* =========================
+   TABS
+========================= */
+
+.tabs{
+  margin-top:28px;
+  display:flex;
+  gap:0;
+  border-bottom:1px solid rgba(255,255,255,.18);
+}
+
+.tab-btn{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:#A9B8CE;
+  padding:14px 22px;
+  font-family:var(--sans);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  cursor:pointer;
+  border-bottom:3px solid transparent;
+  transition:.2s ease;
+}
+
+.tab-btn:hover{
+  color:#fff;
+}
+
+.tab-btn.active{
+  color:#fff;
+  border-bottom-color:var(--gold-500);
+}
+
+/* =========================
+   KPI BAND
+========================= */
+
+.kpi-band{
+  margin-top:0;
+  display:grid;
+  grid-template-columns:1.2fr 1fr 1fr 1fr;
+  border-top:1px solid rgba(255,255,255,.14);
+}
+
+.kpi{
+  padding:26px 26px 30px 0;
+  border-right:1px solid rgba(255,255,255,.14);
+}
+
+.kpi:first-child{
+  padding-left:0;
+}
+
+.kpi:last-child{
+  border-right:none;
+}
+
+.kpi-label{
+  font-size:11.5px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:#9FB2CC;
+  font-weight:700;
+  margin-top:22px;
+}
+
+.kpi-value{
+  font-family:var(--serif);
+  font-size:33px;
+  font-weight:700;
+  color:var(--white);
+  margin-top:8px;
+  line-height:1.05;
+}
+
+.kpi-value small{
+  font-size:15px;
+  font-weight:400;
+  color:#B9C6DA;
+  margin-left:3px;
+}
+
+.kpi-sub{
+  font-size:12px;
+  color:#A9B8CE;
+  margin-top:9px;
+  line-height:1.5;
+}
+
+.badge{
+  display:inline-block;
+  font-size:10.5px;
+  font-weight:700;
+  padding:3px 8px;
+  border-radius:11px;
+  margin-top:9px;
+}
+
+.badge.red{
+  background:rgba(169,59,65,.22);
+  color:#F0AFA9;
+}
+
+.badge.green{
+  background:rgba(40,102,81,.28);
+  color:#8FE0BE;
+}
+
+.badge.gold{
+  background:rgba(201,154,63,.22);
+  color:#F0D191;
+}
+
+/* =========================
+   TAB CONTENT
+========================= */
+
+.tab-content{
+  display:none;
+}
+
+.tab-content.active{
+  display:block;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+section{
+  padding:52px 0;
+}
+
+section.tinted{
+  background:var(--gray-100);
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  border-bottom:2px solid var(--navy-900);
+  padding-bottom:14px;
+  margin-bottom:30px;
+}
+
+.section-tag{
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--gold-600);
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.section-head h2{
+  font-family:var(--serif);
+  font-size:25px;
+  color:var(--navy-950);
+  font-weight:700;
+}
+
+.section-note{
+  font-size:12.5px;
+  color:var(--gray-500);
+  max-width:360px;
+  text-align:right;
+  line-height:1.5;
+}
+
+/* =========================
+   EXECUTIVE CARDS
+========================= */
+
+.exec-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px 28px;
+}
+
+.exec-card{
+  background:var(--white);
+  border:1px solid var(--gray-150);
+  border-left:4px solid var(--navy-800);
+  padding:22px 24px;
+}
+
+.exec-card.flag-up{
+  border-left-color:var(--red-600);
+}
+
+.exec-card.flag-down{
+  border-left-color:var(--green-700);
+}
+
+.exec-card.flag-note{
+  border-left-color:var(--gold-600);
+}
+
+.exec-card.flag-purple{
+  border-left-color:var(--purple);
+}
+
+.exec-num{
+  font-family:var(--serif);
+  font-size:12px;
+  font-weight:700;
+  color:var(--gray-500);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.exec-title{
+  font-size:16px;
+  font-weight:700;
+  color:var(--gray-900);
+  margin-top:8px;
+  line-height:1.4;
+}
+
+.exec-body{
+  font-size:13.5px;
+  color:var(--gray-700);
+  line-height:1.65;
+  margin-top:8px;
+}
+
+.exec-body b{
+  color:var(--navy-900);
+}
+
+/* =========================
+   KPI SUMMARY CARDS
+========================= */
+
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.summary-card{
+  background:var(--navy-950);
+  color:#fff;
+  padding:23px 24px;
+  min-height:150px;
+}
+
+.summary-card.gold{
+  background:var(--gold-600);
+}
+
+.summary-card.blue{
+  background:var(--navy-800);
+}
+
+.summary-card.purple{
+  background:var(--purple);
+}
+
+.summary-label{
+  font-size:10.5px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  font-weight:700;
+  color:#D8E1ED;
+}
+
+.summary-value{
+  font-family:var(--serif);
+  font-size:30px;
+  font-weight:700;
+  margin-top:12px;
+}
+
+.summary-value small{
+  font-size:14px;
+  font-family:var(--sans);
+  font-weight:400;
+  color:#C7D3E3;
+}
+
+.summary-desc{
+  font-size:12px;
+  color:#C7D3E3;
+  line-height:1.6;
+  margin-top:9px;
+}
+
+/* =========================
+   CHART / BAR AREA
+========================= */
+
+.chart-layout{
+  display:grid;
+  grid-template-columns:1.45fr .75fr;
+  gap:30px;
+  align-items:start;
+}
+
+.chart-card{
+  background:var(--white);
+  border:1px solid var(--gray-150);
+  padding:24px;
+}
+
+.chart-card h3{
+  font-family:var(--serif);
+  font-size:17px;
+  color:var(--navy-950);
+}
+
+.chart-caption{
+  color:var(--gray-500);
+  font-size:12px;
+  margin-top:5px;
+  margin-bottom:22px;
+}
+
+.bar-list{
+  display:flex;
+  flex-direction:column;
+  gap:11px;
+}
+
+.bar-row{
+  display:grid;
+  grid-template-columns:105px 1fr 105px;
+  align-items:center;
+  gap:12px;
+}
+
+.bar-label{
+  font-size:12px;
+  font-weight:700;
+  color:var(--navy-950);
+}
+
+.bar-track{
+  height:25px;
+  background:var(--gray-150);
+  border-radius:2px;
+  overflow:hidden;
+}
+
+.bar-fill{
+  height:100%;
+  border-radius:2px;
+  background:var(--navy-800);
+  transition:width .6s ease;
+}
+
+.bar-row:nth-child(-n+5) .bar-fill{
+  background:var(--blue-600);
+}
+
+.bar-value{
+  text-align:right;
+  font-size:12px;
+  font-weight:700;
+  color:var(--gray-700);
+  font-variant-numeric:tabular-nums;
+}
+
+/* =========================
+   DONUT
+========================= */
+
+.donut-layout{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:230px;
+}
+
+.donut{
+  width:190px;
+  height:190px;
+  border-radius:50%;
+  position:relative;
+  background:
+    conic-gradient(
+      var(--blue-600) 0deg 180deg,
+      var(--purple) 180deg 360deg
+    );
+}
+
+.donut::after{
+  content:"";
+  position:absolute;
+  width:112px;
+  height:112px;
+  border-radius:50%;
+  background:var(--white);
+  left:39px;
+  top:39px;
+}
+
+.donut-center{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.donut-center strong{
+  font-family:var(--serif);
+  font-size:23px;
+  color:var(--navy-950);
+}
+
+.donut-center span{
+  font-size:10px;
+  color:var(--gray-500);
+  margin-top:3px;
+}
+
+.legend{
+  margin-top:20px;
+}
+
+.legend-row{
+  display:grid;
+  grid-template-columns:13px 1fr auto;
+  gap:9px;
+  align-items:center;
+  padding:8px 0;
+  border-bottom:1px solid var(--gray-150);
+  font-size:12px;
+}
+
+.legend-row:last-child{
+  border-bottom:0;
+}
+
+.legend-dot{
+  width:11px;
+  height:11px;
+  border-radius:2px;
+}
+
+.legend-name{
+  font-weight:600;
+}
+
+.legend-value{
+  font-weight:700;
+  color:var(--navy-900);
+}
+
+/* =========================
+   DISCREPANCY CALLOUT
+========================= */
+
+.callout{
+  background:var(--navy-950);
+  color:#fff;
+  padding:28px;
+}
+
+.callout.gold{
+  border-left:5px solid var(--gold-500);
+}
+
+.callout.red{
+  border-left:5px solid var(--red-600);
+}
+
+.callout .tag{
+  font-size:10.5px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--gold-500);
+  font-weight:700;
+  margin-bottom:12px;
+}
+
+.callout .big{
+  font-family:var(--serif);
+  font-size:38px;
+  font-weight:700;
+  line-height:1;
+}
+
+.callout .big small{
+  font-size:17px;
+  color:#B9C6DA;
+}
+
+.callout p{
+  font-size:13px;
+  color:#C7D3E3;
+  line-height:1.7;
+  margin-top:13px;
+}
+
+.callout p b{
+  color:#fff;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table.data-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12.5px;
+  background:var(--white);
+}
+
+table.data-table th{
+  background:var(--navy-950);
+  color:var(--white);
+  text-align:right;
+  font-weight:700;
+  font-size:10.5px;
+  letter-spacing:.03em;
+  text-transform:uppercase;
+  padding:11px 12px;
+  white-space:nowrap;
+}
+
+table.data-table th:first-child{
+  text-align:left;
+}
+
+table.data-table td{
+  padding:9px 12px;
+  text-align:right;
+  border-bottom:1px solid var(--gray-150);
+  font-variant-numeric:tabular-nums;
+  color:var(--gray-900);
+  white-space:nowrap;
+}
+
+table.data-table td:first-child{
+  text-align:left;
+  font-weight:700;
+  color:var(--navy-950);
+}
+
+table.data-table tr:nth-child(even) td{
+  background:var(--gray-100);
+}
+
+table.data-table tr.highlight td{
+  background:var(--gold-100);
+}
+
+table.data-table tr.alert td{
+  background:var(--red-100);
+}
+
+table.data-table tr.total-row td{
+  background:var(--navy-900);
+  color:var(--white);
+  font-weight:700;
+  border-bottom:none;
+}
+
+table.data-table tr.total-row td:first-child{
+  color:#fff;
+}
+
+/* =========================
+   RANKING
+========================= */
+
+.rank-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+
+.rank-card{
+  background:var(--white);
+  border:1px solid var(--gray-150);
+  padding:22px 24px;
+}
+
+.rank-title{
+  font-family:var(--serif);
+  font-size:17px;
+  color:var(--navy-950);
+  margin-bottom:16px;
+}
+
+.rank-item{
+  display:grid;
+  grid-template-columns:30px 1fr auto;
+  align-items:center;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid var(--gray-150);
+}
+
+.rank-item:last-child{
+  border-bottom:0;
+}
+
+.rank-number{
+  font-family:var(--serif);
+  font-size:20px;
+  color:var(--blue-400);
+  font-weight:700;
+}
+
+.rank-name{
+  font-size:12.5px;
+  font-weight:700;
+}
+
+.rank-val{
+  font-size:12px;
+  color:var(--gray-500);
+  font-weight:700;
+}
+
+/* =========================
+   INSIGHT
+========================= */
+
+.insight-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.insight-card{
+  background:#fff;
+  border:1px solid var(--gray-150);
+  padding:23px;
+}
+
+.insight-no{
+  font-family:var(--serif);
+  font-size:28px;
+  color:var(--blue-400);
+  font-weight:700;
+}
+
+.insight-title{
+  font-size:15px;
+  font-weight:700;
+  margin-top:10px;
+  color:var(--navy-950);
+}
+
+.insight-body{
+  font-size:13px;
+  line-height:1.65;
+  color:var(--gray-700);
+  margin-top:8px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+  border-top:1px solid var(--gray-300);
+  padding:26px 0;
+  font-size:11px;
+  color:var(--gray-500);
+  line-height:1.6;
+}
+
+.footer-flex{
+  display:flex;
+  justify-content:space-between;
+  gap:30px;
+}
+
+.footer-col{
+  max-width:520px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:860px){
+
+  .wrap{
+    padding:0 20px;
+  }
+
+  .topbar .wrap{
+    gap:10px;
+  }
+
+  .topbar .period{
+    font-size:9px;
+  }
+
+  .hero h1{
+    font-size:27px;
+  }
+
+  .kpi-band{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .kpi{
+    border-right:none;
+    border-bottom:1px solid rgba(255,255,255,.14);
+    padding:20px 0;
+  }
+
+  .exec-grid,
+  .chart-layout,
+  .rank-grid,
+  .insight-grid,
+  .summary-grid{
+    grid-template-columns:1fr;
+  }
+
+  .section-head{
+    display:block;
+  }
+
+  .section-note{
+    text-align:left;
+    max-width:none;
+    margin-top:10px;
+  }
+
+  .bar-row{
+    grid-template-columns:78px 1fr 85px;
+  }
+
+  .tabs{
+    overflow-x:auto;
+  }
+
+  .tab-btn{
+    white-space:nowrap;
+    padding-left:14px;
+    padding-right:14px;
+  }
+
+  .footer-flex{
+    display:block;
+  }
+
+  .footer-col{
+    margin-bottom:12px;
+  }
+}
+
+@media(max-width:520px){
+
+  .kpi-band{
+    grid-template-columns:1fr;
+  }
+
+  .kpi-value{
+    font-size:29px;
+  }
+
+  .hero{
+    padding-top:28px;
+  }
+
+  section{
+    padding:38px 0;
+  }
+
+  .section-head h2{
+    font-size:22px;
+  }
+
+  .bar-row{
+    grid-template-columns:72px 1fr;
+  }
+
+  .bar-value{
+    grid-column:2;
+    text-align:left;
+    margin-top:-7px;
+  }
+
+  .chart-card{
+    padding:18px;
+  }
+
+  .callout{
+    padding:22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="org">
+      UID Jawa Tengah — Analisis Piutang
+    </span>
+
+    <span class="period">
+      Data Piutang &amp; Piutang Ragu-Ragu
+    </span>
+  </div>
+</div>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<div class="hero">
+
+  <div class="wrap">
+
+    <div class="eyebrow">
+      Dashboard Analisis Piutang — UID Jawa Tengah
+    </div>
+
+    <h1>
+      Piutang Tercatat Rp 2.546,96 Miliar — Konsentrasi Terbesar Berada pada 5 UP3
+    </h1>
+
+    <p class="sub">
+      Dashboard interaktif untuk melihat sebaran <b>Piutang</b>,
+      <b>Piutang Ragu-Ragu</b>, konsentrasi per UP3, serta perbedaan
+      pencatatan SAP dan AP2T.
+    </p>
+
+
+    <!-- TABS -->
+
+    <div class="tabs">
+
+      <button
+        class="tab-btn active"
+        onclick="switchTab('piutang',this)"
+      >
+        Piutang
+      </button>
+
+      <button
+        class="tab-btn"
+        onclick="switchTab('ragu',this)"
+      >
+        Piutang Ragu-Ragu
+      </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         KPI PIUTANG
+    ====================================================== -->
+
+    <div
+      id="heroPiutang"
+      class="kpi-band"
+    >
+
+      <div class="kpi">
+
+        <div class="kpi-label">
+          Total Piutang SAP
+        </div>
+
+        <div class="kpi-value">
+          Rp 2.546,96
+          <small>Miliar</small>
+        </div>
+
+        <div class="kpi-sub">
+          Total saldo piutang seluruh 12 UP3.
+        </div>
+
+      </div>
+
+
+      <div class="kpi">
+
+        <div class="kpi-label">
+          Total Piutang AP2T
+        </div>
+
+        <div class="kpi-value">
+          Rp 2.546,96
+          <small>Miliar</small>
+        </div>
+
+        <div class="kpi-sub">
+          Nilai identik dengan total pencatatan SAP.
+        </div>
+
+      </div>
+
+
+      <div class="kpi">
+
+        <div class="kpi-label">
+          Konsentrasi Top 5
+        </div>
+
+        <div class="kpi-value">
+          60,11
+          <small>%</small>
+        </div>
+
+        <span class="badge gold">
+          Rp 1.531,06 M
+        </span>
+
+      </div>
+
+
+      <div class="kpi">
+
+        <div class="kpi-label">
+          UP3 Tertinggi
+        </div>
+
+        <div class="kpi-value">
+          Semarang
+        </div>
+
+        <div class="kpi-sub">
+          Rp 514,97 M atau 20,22% dari total.
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         KPI PIUTANG RAGU-RAGU
+    ====================================================== -->
+
+    <div
+      id="heroRagu"
+      class="kpi-band"
+      style="display:none;"
+    >
+
+      <div class="kpi">
+
+        <div class="kpi-label">
+          PRR SAP
+        </div>
+
+        <div class="kpi-value">
+          Rp 22,43
+          <small>Miliar</small>
+        </div>
+
+        <div class="kpi-sub">
+          Total Piutang Ragu-Ragu berdasarkan SAP.
+        </div>
+
+      </div>
+
+
+      <div class="kpi">
+
+        <div class="kpi-label">
+          PRR AP2T
+        </div>
+
+        <div class="kpi-value">
+          Rp 20,13
+          <small>Miliar</small>
+        </div>
+
+        <div class="kpi-sub">
+          Total Piutang Ragu-Ragu berdasarkan AP2T.
+        </div>
+
+      </div>
+
+
+      <div class="kpi">
+
+        <div class="kpi-label">
+          Selisih SAP – AP2T
+        </div>
+
+        <div class="kpi-value">
+          Rp 2,30
+          <small>Miliar</small>
+        </div>
+
+        <span class="badge gold">
+          Selisih 10,27% dari SAP
+        </span>
+
+      </div>
+
+
+      <div class="kpi">
+
+        <div class="kpi-label">
+          Sumber Selisih
+        </div>
+
+        <div class="kpi-value">
+          Tegal
+        </div>
+
+        <div class="kpi-sub">
+          Selisih Rp 2,30 M antara SAP dan AP2T.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     TAB PIUTANG
+========================================================= -->
+
+<div
+  id="piutang"
+  class="tab-content active"
+>
+
+  <!-- EXECUTIVE SUMMARY -->
+
+  <section>
+
+    <div class="wrap">
+
+      <div class="section-head">
+
+        <div>
+
+          <div class="section-tag">
+            Ringkasan Eksekutif
+          </div>
+
+          <h2>
+            Empat Temuan Utama Piutang
+          </h2>
+
+        </div>
+
+        <div class="section-note">
+          Analisis berdasarkan total piutang SAP/AP2T
+          dari 12 UP3.
+        </div>
+
+      </div>
+
+
+      <div class="exec-grid">
+
+        <div class="exec-card flag-note">
+
+          <div class="exec-num">
+            Temuan 01 — Total Piutang
+          </div>
+
+          <div class="exec-title">
+            Total piutang tercatat sebesar Rp 2.546,96 Miliar
+          </div>
+
+          <div class="exec-body">
+            Total nilai piutang pada <b>SAP</b> dan
+            <b>AP2T</b> sama, yaitu
+            <b>Rp 2.546,96 Miliar</b>.
+            Hal ini menunjukkan kesesuaian total nilai
+            antara kedua sumber pencatatan pada data yang diberikan.
+          </div>
+
+        </div>
+
+
+        <div class="exec-card flag-up">
+
+          <div class="exec-num">
+            Temuan 02 — Konsentrasi
+          </div>
+
+          <div class="exec-title">
+            Lima UP3 menyumbang 60,11% dari total piutang
+          </div>
+
+          <div class="exec-body">
+            Lima UP3 terbesar — <b>Semarang, Kudus,
+            Surakarta, Tegal, dan Pekalongan</b> —
+            memiliki akumulasi piutang sekitar
+            <b>Rp 1.531,06 Miliar</b>.
+            Konsentrasi ini menjadi area utama untuk monitoring
+            saldo piutang.
+          </div>
+
+        </div>
+
+
+        <div class="exec-card flag-purple">
+
+          <div class="exec-num">
+            Temuan 03 — UP3 Terbesar
+          </div>
+
+          <div class="exec-title">
+            Semarang memiliki saldo piutang terbesar
+          </div>
+
+          <div class="exec-body">
+            Piutang UP3 Semarang sebesar
+            <b>Rp 514,97 Miliar</b>, setara sekitar
+            <b>20,22%</b> dari total piutang 12 UP3.
+            Nilainya lebih besar dibanding UP3 dengan saldo
+            terbesar kedua, yaitu Kudus.
+          </div>
+
+        </div>
+
+
+        <div class="exec-card flag-note">
+
+          <div class="exec-num">
+            Temuan 04 — Sebaran
+          </div>
+
+          <div class="exec-title">
+            Piutang tersebar di seluruh 12 UP3
+          </div>
+
+          <div class="exec-body">
+            Tidak terdapat satu UP3 yang menyumbang mayoritas
+            absolut atas keseluruhan saldo. Setelah lima UP3
+            terbesar, tujuh UP3 lainnya masih menyumbang sekitar
+            <b>39,89%</b> dari total piutang.
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- TOP 5 + SUMMARY -->
+
+  <section class="tinted">
+
+    <div class="wrap">
+
+      <div class="section-head">
+
+        <div>
+
+          <div class="section-tag">
+            Konsentrasi Piutang
+          </div>
+
+          <h2>
+            Distribusi Piutang per UP3
+          </h2>
+
+        </div>
+
+        <div class="section-note">
+          Diurutkan dari nominal piutang terbesar
+          ke terkecil.
+        </div>
+
+      </div>
+
+
+      <div class="chart-layout">
+
+        <!-- BAR CHART -->
+
+        <div class="chart-card">
+
+          <h3>
+            Sebaran Piutang — 12 UP3
+          </h3>
+
+          <div class="chart-caption">
+            Nilai dalam Miliar Rupiah.
+          </div>
+
+          <div
+            class="bar-list"
+            id="piutangBarChart"
+          ></div>
+
+        </div>
+
+
+        <!-- TOP 5 CALLOUT -->
+
+        <div>
+
+          <div class="callout gold">
+
+            <div class="tag">
+              Konsentrasi Top 5
+            </div>
+
+            <div class="big">
+              60,11
+              <small>%</small>
+            </div>
+
+            <p>
+              Lima UP3 terbesar memiliki total piutang
+              sebesar <b>Rp 1.531,06 Miliar</b> dari total
+              Rp 2.546,96 Miliar.
+            </p>
+
+          </div>
+
+
+          <div
+            class="summary-grid"
+            style="margin-top:20px;grid-template-columns:1fr;"
+          >
+
+            <div class="summary-card blue">
+
+              <div class="summary-label">
+                Top 1 — Semarang
+              </div>
+
+              <div class="summary-value">
+                Rp 514,97
+                <small>M</small>
+              </div>
+
+              <div class="summary-desc">
+                20,22% dari total piutang.
+              </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+              <div class="summary-label">
+                Top 2 — Kudus
+              </div>
+
+              <div class="summary-value">
+                Rp 320,16
+                <small>M</small>
+              </div>
+
+              <div class="summary-desc">
+                12,57% dari total piutang.
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- TABLE -->
+
+  <section>
+
+    <div class="wrap">
+
+      <div class="section-head">
+
+        <div>
+
+          <div class="section-tag">
+            Detail Data
+          </div>
+
+          <h2>
+            Rincian Piutang per UP3
+          </h2>
+
+        </div>
+
+        <div class="section-note">
+          SAP dan AP2T memiliki total pencatatan yang sama.
+        </div>
+
+      </div>
+
+
+      <div class="table-wrap">
+
+        <table class="data-table">
+
+          <thead>
+
+            <tr>
+              <th>Rank</th>
+              <th>UP3</th>
+              <th>SAP</th>
+              <th>AP2T</th>
+              <th>Kontribusi</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="piutangTable"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- INSIGHT -->
+
+  <section class="tinted">
+
+    <div class="wrap">
+
+      <div class="section-head">
+
+        <div>
+
+          <div class="section-tag">
+            Insight Manajemen
+          </div>
+
+          <h2>
+            Fokus Monitoring Piutang
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div class="insight-grid">
+
+        <div class="insight-card">
+
+          <div class="insight-no">
+            01
+          </div>
+
+          <div class="insight-title">
+            Prioritaskan monitoring Top 5
+          </div>
+
+          <div class="insight-body">
+            Karena 60,11% saldo piutang terkonsentrasi
+            pada lima UP3, monitoring aging, status penagihan,
+            dan komitmen pembayaran dapat difokuskan terlebih
+            dahulu pada kelompok tersebut.
+          </div>
+
+        </div>
+
+
+        <div class="insight-card">
+
+          <div class="insight-no">
+            02
+          </div>
+
+          <div class="insight-title">
+            Perhatikan saldo Semarang
+          </div>
+
+          <div class="insight-body">
+            Semarang memiliki saldo terbesar sebesar
+            Rp 514,97 Miliar. Perubahan kecil pada saldo
+            UP3 ini dapat memberikan dampak yang relatif
+            besar terhadap total piutang.
+          </div>
+
+        </div>
+
+
+        <div class="insight-card">
+
+          <div class="insight-no">
+            03
+          </div>
+
+          <div class="insight-title">
+            Pantau kelompok di luar Top 5
+          </div>
+
+          <div class="insight-body">
+            Tujuh UP3 lainnya tetap menyumbang 39,89%
+            dari total saldo. Monitoring tidak hanya perlu
+            berfokus pada Top 5 agar akumulasi saldo pada
+            kelompok lainnya tetap terkendali.
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<!-- =========================================================
+     TAB PIUTANG RAGU-RAGU
+========================================================= -->
+
+<div
+  id="ragu"
+  class="tab-content"
+>
+
+
+  <!-- EXECUTIVE SUMMARY -->
+
+  <section>
+
+    <div class="wrap">
+
+      <div class="section-head">
+
+        <div>
+
+          <div class="section-tag">
+            Ringkasan Eksekutif
+          </div>
+
+          <h2>
+            Empat Temuan Piutang Ragu-Ragu
+          </h2>
+
+        </div>
+
+        <div class="section-note">
+          Membandingkan pencatatan SAP, AP2T,
+          dan selisih pada masing-masing UP3.
+        </div>
+
+      </div>
+
+
+      <div class="exec-grid">
+
+        <div class="exec-card flag-note">
+
+          <div class="exec-num">
+            Temuan 01 — Total PRR
+          </div>
+
+          <div class="exec-title">
+            PRR SAP sebesar Rp 22,43 Miliar
+          </div>
+
+          <div class="exec-body">
+            Berdasarkan data input, total Piutang Ragu-Ragu
+            pada SAP mencapai <b>Rp 22,43 Miliar</b>,
+            sedangkan AP2T mencatat <b>Rp 20,13 Miliar</b>.
+          </div>
+
+        </div>
+
+
+        <div class="exec-card flag-up">
+
+          <div class="exec-num">
+            Temuan 02 — Selisih
+          </div>
+
+          <div class="exec-title">
+            Terdapat selisih pencatatan Rp 2,30 Miliar
+          </div>
+
+          <div class="exec-body">
+            Selisih antara SAP dan AP2T sebesar
+            <b>Rp 2,297 Miliar</b>. Seluruh selisih dalam
+            dataset berasal dari <b>UP3 Tegal</b>, karena terdapat pencatatan Nota Texmaco sebesar 2,30 M di AP2T.
+          </div>
+
+        </div>
+
+
+        <div class="exec-card flag-purple">
+
+          <div class="exec-num">
+            Temuan 03 — Konsentrasi
+          </div>
+
+          <div class="exec-title">
+            Semarang memiliki PRR SAP terbesar
+          </div>
+
+          <div class="exec-body">
+            Nilai PRR SAP Semarang mencapai
+            <b>Rp 6,30 Miliar</b>, diikuti Tegal sebesar
+            Rp 3,50 Miliar dan Kudus sebesar Rp 3,47 Miliar.
+          </div>
+
+        </div>
+
+
+        <div class="exec-card flag-note">
+
+          <div class="exec-num">
+            Temuan 04 — Keselarasan
+          </div>
+
+          <div class="exec-title">
+            11 UP3 tidak menunjukkan selisih SAP–AP2T
+          </div>
+
+          <div class="exec-body">
+            Berdasarkan data yang diberikan, seluruh UP3
+            kecuali Tegal memiliki nilai SAP dan AP2T yang
+            sama. Ini membuat selisih total terutama terkonsentrasi
+            pada satu unit.
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- BAR + CALLOUT -->
+  <section class="tinted">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Konsentrasi Piutang Ragu-Ragu</div>
+          <h2>Distribusi PRR per UP3</h2>
+        </div>
+        <div class="section-note">
+          Diurutkan dari nilai PRR SAP terbesar ke terkecil. Selisih SAP–AP2T Rp 2,30 Miliar seluruhnya berasal dari Tegal.
+        </div>
+      </div>
+      <div class="chart-layout">
+        <div class="chart-card">
+          <h3>Sebaran PRR SAP — 12 UP3</h3>
+          <div class="chart-caption">Nilai dalam Miliar Rupiah.</div>
+          <div class="bar-list" id="prrBarChart"></div>
+        </div>
+        <div>
+          <div class="callout gold">
+            <div class="tag">Konsentrasi Top 5</div>
+            <div class="big">80,35 <small>%</small></div>
+            <p>
+              Lima UP3 terbesar memiliki PRR SAP sebesar
+              <b>Rp 18,02 Miliar</b> dari total Rp 22,43 Miliar.
+            </p>
+          </div>
+          <div class="summary-grid" style="margin-top:20px;grid-template-columns:1fr;">
+            <div class="summary-card blue">
+              <div class="summary-label">Top 1 — Semarang</div>
+              <div class="summary-value">Rp 6,30 <small>M</small></div>
+              <div class="summary-desc">28,10% dari total PRR SAP.</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-label">Top 2 — Tegal</div>
+              <div class="summary-value">Rp 3,50 <small>M</small></div>
+              <div class="summary-desc">15,62% dari total PRR SAP.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- TABLE PRR -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Detail Data</div>
+          <h2>Rincian Piutang Ragu-Ragu per UP3</h2>
+        </div>
+        <div class="section-note">Nilai dalam Miliar Rupiah. Baris merah menunjukkan selisih SAP–AP2T.</div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Rank</th><th>UP3</th><th>SAP</th><th>AP2T</th><th>Selisih</th><th>Kontribusi</th></tr>
+          </thead>
+          <tbody id="prrTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <!-- PRR INSIGHT -->
+
+  <section class="tinted">
+
+    <div class="wrap">
+
+      <div class="section-head">
+
+        <div>
+
+          <div class="section-tag">
+            Insight Manajemen
+          </div>
+
+          <h2>
+            Fokus Rekonsiliasi Piutang Ragu-Ragu
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div class="insight-grid">
+
+        <div class="insight-card">
+
+          <div class="insight-no">
+            01
+          </div>
+
+          <div class="insight-title">
+            Tindak lanjuti selisih UP3 Tegal
+          </div>
+
+          <div class="insight-body">
+            Selisih Rp 2,297 Miliar antara SAP dan AP2T
+            seluruhnya berasal dari Tegal. Rekonsiliasi
+            detail transaksi menjadi titik penting untuk
+            memastikan konsistensi kedua sumber data.
+          </div>
+
+        </div>
+
+
+        <div class="insight-card">
+
+          <div class="insight-no">
+            02
+          </div>
+
+          <div class="insight-title">
+            Monitor tiga UP3 dengan PRR terbesar
+          </div>
+
+          <div class="insight-body">
+            Semarang, Tegal, dan Kudus memiliki nilai
+            PRR SAP terbesar. Ketiganya secara kumulatif
+            menyumbang sekitar Rp 13,27 Miliar.
+          </div>
+
+        </div>
+
+
+        <div class="insight-card">
+
+          <div class="insight-no">
+            03
+          </div>
+
+          <div class="insight-title">
+            Pertahankan konsistensi 11 UP3 lainnya
+          </div>
+
+          <div class="insight-body">
+            Sebelas UP3 menunjukkan nilai SAP dan AP2T
+            yang sama pada dataset. Konsistensi tersebut
+            perlu dipertahankan melalui rekonsiliasi berkala.
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+  <div class="wrap">
+
+    <div class="footer-flex">
+
+      <div class="footer-col">
+
+        <b>Sumber data:</b>
+        Data Piutang dan Piutang Ragu-Ragu yang diberikan
+        pada input dashboard.
+
+        <br>
+
+        Dashboard ini merupakan alat analisis internal dan
+        tidak menggantikan laporan keuangan resmi/audited.
+
+      </div>
+
+
+      <div
+        class="footer-col"
+        style="text-align:right;"
+      >
+
+        UID Jawa Tengah
+
+        <br>
+
+        Seluruh angka disajikan dalam Rupiah/Miliar
+        sesuai label masing-masing.
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   DATA
+========================================================= */
+
+const PIUTANG = [
+
+  {
+    up3:"SEMARANG",
+    sap:514966777210,
+    ap2t:514966777210
+  },
+
+  {
+    up3:"KUDUS",
+    sap:320164724229,
+    ap2t:320164724229
+  },
+
+  {
+    up3:"SURAKARTA",
+    sap:303086135283,
+    ap2t:303086135283
+  },
+
+  {
+    up3:"TEGAL",
+    sap:217137624309,
+    ap2t:217137624309
+  },
+
+  {
+    up3:"PEKALONGAN",
+    sap:175702010542,
+    ap2t:175702010542
+  },
+
+  {
+    up3:"GROBOGAN",
+    sap:165919686227,
+    ap2t:165919686227
+  },
+
+  {
+    up3:"KLATEN",
+    sap:161175582803,
+    ap2t:161175582803
+  },
+
+  {
+    up3:"SUKOHARJO",
+    sap:155787203683,
+    ap2t:155787203683
+  },
+
+  {
+    up3:"CILACAP",
+    sap:147685839005,
+    ap2t:147685839005
+  },
+
+  {
+    up3:"PURWOKERTO",
+    sap:144093531548,
+    ap2t:144093531548
+  },
+
+  {
+    up3:"SALATIGA",
+    sap:127295870988,
+    ap2t:127295870988
+  },
+
+  {
+    up3:"MAGELANG",
+    sap:113943901467,
+    ap2t:113943901467
+  }
+
+];
+
+
+const PRR = [
+
+  {
+    up3:"SEMARANG",
+    sap:6303245871,
+    ap2t:6303245871
+  },
+
+  {
+    up3:"TEGAL",
+    sap:3503703721,
+    ap2t:1206373831
+  },
+
+  {
+    up3:"KUDUS",
+    sap:3465993376,
+    ap2t:3465993376
+  },
+
+  {
+    up3:"PEKALONGAN",
+    sap:2790960215,
+    ap2t:2790960215
+  },
+
+  {
+    up3:"SURAKARTA",
+    sap:1958402873,
+    ap2t:1958402873
+  },
+
+  {
+    up3:"SALATIGA",
+    sap:1134694742,
+    ap2t:1134694742
+  },
+
+  {
+    up3:"GROBOGAN",
+    sap:851678249,
+    ap2t:851678249
+  },
+
+  {
+    up3:"SUKOHARJO",
+    sap:601589648,
+    ap2t:601589648
+  },
+
+  {
+    up3:"MAGELANG",
+    sap:555512451,
+    ap2t:555512451
+  },
+
+  {
+    up3:"PURWOKERTO",
+    sap:505720822,
+    ap2t:505720822
+  },
+
+  {
+    up3:"CILACAP",
+    sap:440308317,
+    ap2t:440308317
+  },
+
+  {
+    up3:"KLATEN",
+    sap:317249080,
+    ap2t:317249080
+  }
+
+];
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function fmtID(n,dec=0){
+
+  return Number(n).toLocaleString(
+    "id-ID",
+    {
+      minimumFractionDigits:dec,
+      maximumFractionDigits:dec
+    }
+  );
+
+}
+
+
+function toMiliar(n){
+
+  return n / 1000000000;
+
+}
+
+
+function fmtMiliar(n,dec=2){
+
+  return fmtID(toMiliar(n),dec);
+
+}
+
+
+function pct(value,total){
+
+  return value / total * 100;
+
+}
+
+
+/* =========================================================
+   TAB SWITCHING
+========================================================= */
+
+function switchTab(tab,button){
+
+  document
+    .querySelectorAll(".tab-content")
+    .forEach(el=>{
+      el.classList.remove("active");
+    });
+
+  document
+    .querySelectorAll(".tab-btn")
+    .forEach(el=>{
+      el.classList.remove("active");
+    });
+
+  document
+    .getElementById(tab)
+    .classList.add("active");
+
+  button.classList.add("active");
+
+
+  if(tab === "piutang"){
+
+    document.getElementById("heroPiutang").style.display =
+      "grid";
+
+    document.getElementById("heroRagu").style.display =
+      "none";
+
+  }else{
+
+    document.getElementById("heroPiutang").style.display =
+      "none";
+
+    document.getElementById("heroRagu").style.display =
+      "grid";
+
+  }
+
+}
+
+
+/* =========================================================
+   PIUTANG BAR CHART
+========================================================= */
+
+(function(){
+
+  const container =
+    document.getElementById("piutangBarChart");
+
+  const total =
+    PIUTANG.reduce(
+      (sum,item)=>sum + item.sap,
+      0
+    );
+
+  const max =
+    Math.max(...PIUTANG.map(x=>x.sap));
+
+
+  PIUTANG.forEach((item,index)=>{
+
+    const row =
+      document.createElement("div");
+
+    row.className = "bar-row";
+
+    const width =
+      item.sap / max * 100;
+
+    const contribution =
+      pct(item.sap,total);
+
+    row.innerHTML = `
+
+      <div class="bar-label">
+        ${item.up3}
+      </div>
+
+      <div class="bar-track">
+        <div
+          class="bar-fill"
+          style="width:${width}%"
+        ></div>
+      </div>
+
+      <div class="bar-value">
+        Rp ${fmtMiliar(item.sap)} M
+      </div>
+
+    `;
+
+    container.appendChild(row);
+
+  });
+
+})();
+
+
+/* =========================================================
+   PIUTANG TABLE
+========================================================= */
+
+(function(){
+
+  const tbody =
+    document.getElementById("piutangTable");
+
+  const total =
+    PIUTANG.reduce(
+      (sum,item)=>sum + item.sap,
+      0
+    );
+
+
+  PIUTANG.forEach((item,index)=>{
+
+    const tr =
+      document.createElement("tr");
+
+    if(index < 5){
+
+      tr.className = "highlight";
+
+    }
+
+
+    const contribution =
+      pct(item.sap,total);
+
+
+    tr.innerHTML = `
+
+      <td>${index+1}</td>
+
+      <td>
+        ${item.up3}
+      </td>
+
+      <td>
+        Rp ${fmtMiliar(item.sap)} M
+      </td>
+
+      <td>
+        Rp ${fmtMiliar(item.ap2t)} M
+      </td>
+
+      <td>
+        ${fmtID(contribution,2)}%
+      </td>
+
+    `;
+
+    tbody.appendChild(tr);
+
+  });
+
+
+  const totalRow =
+    document.createElement("tr");
+
+  totalRow.className =
+    "total-row";
+
+  totalRow.innerHTML = `
+
+    <td>—</td>
+
+    <td>TOTAL</td>
+
+    <td>
+      Rp ${fmtMiliar(total)} M
+    </td>
+
+    <td>
+      Rp ${fmtMiliar(total)} M
+    </td>
+
+    <td>
+      100,00%
+    </td>
+
+  `;
+
+  tbody.appendChild(totalRow);
+
+})();
+
+
+/* =========================================================
+   PRR BAR CHART
+========================================================= */
+(function(){
+  const container=document.getElementById("prrBarChart");
+  const sorted=[...PRR].sort((a,b)=>b.sap-a.sap);
+  const max=Math.max(...sorted.map(x=>x.sap));
+  sorted.forEach(item=>{
+    const row=document.createElement("div");
+    row.className="bar-row";
+    row.innerHTML=`
+      <div class="bar-label">${item.up3}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${item.sap/max*100}%"></div></div>
+      <div class="bar-value">Rp ${fmtMiliar(item.sap)} M</div>`;
+    container.appendChild(row);
+  });
+})();
+/* =========================================================
+   PRR TABLE
+========================================================= */
+
+(function(){
+
+  const tbody =
+    document.getElementById("prrTable");
+
+  const sorted =
+    [...PRR].sort(
+      (a,b)=>b.sap-a.sap
+    );
+
+  const totalSAP =
+    PRR.reduce(
+      (sum,item)=>sum + item.sap,
+      0
+    );
+
+  const totalAP2T =
+    PRR.reduce(
+      (sum,item)=>sum + item.ap2t,
+      0
+    );
+
+
+  sorted.forEach((item,index)=>{
+
+    const tr =
+      document.createElement("tr");
+
+
+    const selisih =
+      item.sap - item.ap2t;
+
+
+    if(selisih !== 0){
+
+      tr.className = "alert";
+
+    }else if(index < 5){
+
+      tr.className = "highlight";
+
+    }
+
+
+
+
+    tr.innerHTML = `
+
+      <td>${index+1}</td>
+
+      <td>
+        ${item.up3}
+      </td>
+
+      <td>
+        Rp ${fmtMiliar(item.sap)} M
+      </td>
+
+      <td>
+        Rp ${fmtMiliar(item.ap2t)} M
+      </td>
+
+      <td style="
+        color:${selisih === 0
+          ? 'var(--green-700)'
+          : 'var(--red-600)'};
+        font-weight:700;
+      ">
+        ${selisih === 0
+          ? '—'
+          : 'Rp ' + fmtMiliar(selisih) + ' M'}
+      </td>
+
+      <td>
+        ${status}
+      </td>
+
+    `;
+
+    tbody.appendChild(tr);
+
+  });
+
+
+  const totalRow =
+    document.createElement("tr");
+
+  totalRow.className =
+    "total-row";
+
+  const totalSelisih =
+    totalSAP-totalAP2T;
+
+
+  totalRow.innerHTML = `
+
+    <td>—</td>
+
+    <td>TOTAL</td>
+
+    <td>
+      Rp ${fmtMiliar(totalSAP)} M
+    </td>
+
+    <td>
+      Rp ${fmtMiliar(totalAP2T)} M
+    </td>
+
+    <td>
+      Rp ${fmtMiliar(totalSelisih)} M
+    </td>
+
+    <td>
+      — 
+    </td>
+
+  `;
+
+  tbody.appendChild(totalRow);
+
+})();
+
+</script>
+
+</body>
+</html>
