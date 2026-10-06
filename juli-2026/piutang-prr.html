@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Analisis Piutang</title>
+    <!-- Kode Favicon -->
+    <link rel="icon" type="image/png" href="Logo PLN Favicon.png">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js DataLabels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+    
+    <style>
+        /* Custom styling untuk scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .hover-scale:hover { transform: scale(1.01); }
+    </style>
+</head>
+<body class="bg-[#fdf8f0] text-slate-800 font-sans antialiased pb-12">
+
+    <!-- Container Utama -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        
+        <!-- Header & Tabs (Background Krem Tua, Teks Krem Muda) -->
+        <header class="mb-8 bg-[#a9927d] p-6 rounded-xl shadow-sm">
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-[#fcf4ec] mb-1">Dashboard Rekonsiliasi Piutang</h1>
+                    <p class="text-[#fcf4ec] opacity-90">Monitoring Saldo Piutang & Piutang Ragu-Ragu (SAP vs AP2T)</p>
+                </div>
+                
+                <!-- Navigasi 2 Tab -->
+                <div class="mt-4 md:mt-0 bg-[#907b68] p-1.5 rounded-lg flex space-x-1">
+                    <button id="btn-tab-piutang" onclick="switchTab('piutang')" 
+                            class="px-5 py-2 text-sm font-bold rounded-md transition-all shadow bg-[#fdf8f0] text-[#a9927d]">
+                        Piutang
+                    </button>
+                    <button id="btn-tab-ragu" onclick="switchTab('ragu')" 
+                            class="px-5 py-2 text-sm font-medium rounded-md transition-all text-[#fcf4ec] hover:bg-[#826e5d]">
+                        Piutang Ragu-Ragu
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- KPI Scorecards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            
+            <!-- Kartu SAP -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border-y border-r border-slate-100 border-l-[6px] border-l-slate-800 hover-scale hover:bg-[#fdf4e8] transition-all duration-300">
+                <p class="text-sm font-medium text-slate-500 mb-1">Total Piutang (SAP)</p>
+                <h3 class="text-3xl font-bold text-slate-800" id="kpiSap">Rp 0</h3>
+            </div>
+            
+            <!-- Kartu AP2T -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border-y border-r border-slate-100 border-l-[6px] border-l-blue-600 hover-scale hover:bg-[#fdf4e8] transition-all duration-300">
+                <p class="text-sm font-medium text-slate-500 mb-1">Total Piutang (AP2T)</p>
+                <h3 class="text-3xl font-bold text-blue-600" id="kpiAp2t">Rp 0</h3>
+            </div>
+            
+            <!-- Kartu Selisih -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border-y border-r border-slate-100 border-l-[6px] border-l-rose-500 hover-scale hover:bg-[#fdf4e8] transition-all duration-300 relative overflow-hidden">
+                <p class="text-sm font-medium text-slate-500 mb-1">Total Selisih (SAP - AP2T)</p>
+                <h3 class="text-3xl font-bold text-rose-500" id="kpiSelisih">Rp 0</h3>
+                <div id="alertSelisih" class="absolute top-0 right-0 w-2 h-full bg-rose-500 hidden"></div>
+            </div>
+
+        </div>
+
+        <!-- Section Analisis & Insights -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 mb-8 hover-scale">
+            <div class="flex items-center mb-4 border-b border-slate-100 pb-3">
+                <svg class="h-6 w-6 text-amber-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                <h3 class="text-lg font-bold text-slate-800">Executive Summary & Key Insights</h3>
+            </div>
+            <ul id="analysisList" class="space-y-4 text-sm text-slate-700">
+                <!-- Konten dirender dinamis via JS -->
+            </ul>
+        </div>
+
+        <!-- Visualizations / Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Bar Chart -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 lg:col-span-2 hover-scale">
+                <h3 class="text-lg font-bold text-slate-800 mb-4">Perbandingan Nilai SAP & AP2T per Unit (%)</h3>
+                <div class="relative h-72">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Doughnut Chart -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover-scale">
+                <h3 class="text-lg font-bold text-slate-800 mb-4">Komposisi 5 Unit Terbesar (%)</h3>
+                <div class="relative h-72 flex justify-center">
+                    <canvas id="doughnutChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
+                <h3 class="text-lg font-bold text-slate-800">Tabel Rincian Rekonsiliasi</h3>
+                <span class="text-xs font-medium bg-slate-200 text-slate-600 px-2 py-1 rounded">Diurutkan (SAP Tertinggi)</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-white text-slate-500 border-b border-slate-100">
+                        <tr>
+                            <th class="px-6 py-4 font-semibold uppercase tracking-wider">Unit</th>
+                            <th class="px-6 py-4 font-semibold uppercase tracking-wider text-right">Nilai SAP (Rp)</th>
+                            <th class="px-6 py-4 font-semibold uppercase tracking-wider text-right">Nilai AP2T (Rp)</th>
+                            <th class="px-6 py-4 font-semibold uppercase tracking-wider text-right">Selisih (Rp)</th>
+                            <th class="px-6 py-4 font-semibold uppercase tracking-wider text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-50">
+                        <!-- Rows dirender via JS -->
+                    </tbody>
+                    <tfoot class="bg-slate-50 font-bold text-slate-800 border-t-2 border-slate-200" id="tableFoot">
+                        <!-- Footer dirender via JS -->
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Registrasi plugin datalabels secara global
+        Chart.register(ChartDataLabels);
+
+        // --- 1. DATASET SETUP ---
+        const rawData = {
+            piutang: [
+                { unit: 'SEMARANG', sap: 512162077146, ap2t: 512162077146, selisih: 0 },
+                { unit: 'KUDUS', sap: 325238506354, ap2t: 325238506354, selisih: 0 },
+                { unit: 'SURAKARTA', sap: 310374158618, ap2t: 310374158618, selisih: 0 },
+                { unit: 'TEGAL', sap: 217721523319, ap2t: 217721523319, selisih: 0 },
+                { unit: 'PEKALONGAN', sap: 179469203767, ap2t: 179469203767, selisih: 0 },
+                { unit: 'DEMAK', sap: 166920081376, ap2t: 166920081376, selisih: 0 },
+                { unit: 'KLATEN', sap: 163009937836, ap2t: 163009937836, selisih: 0 },
+                { unit: 'SUKOHARJO', sap: 158953124832, ap2t: 158953124832, selisih: 0 },
+                { unit: 'CILACAP', sap: 145724913675, ap2t: 145724913675, selisih: 0 },
+                { unit: 'PURWOKERTO', sap: 139338977752, ap2t: 139338977752, selisih: 0 },
+                { unit: 'SALATIGA', sap: 128083129629, ap2t: 128083129629, selisih: 0 },
+                { unit: 'MAGELANG', sap: 112017445406, ap2t: 112017445406, selisih: 0 },
+                { unit: 'YOGYAKARTA', sap: 0, ap2t: 0, selisih: 0 }
+            ],
+            ragu: [
+                { unit: 'SEMARANG', sap: 6299191873, ap2t: 6299191873, selisih: 0 },
+                { unit: 'TEGAL', sap: 3486265665, ap2t: 1188935775, selisih: 2297329890 },
+                { unit: 'KUDUS', sap: 3454444934, ap2t: 3454444934, selisih: 0 },
+                { unit: 'PEKALONGAN', sap: 2787025485, ap2t: 2787025485, selisih: 0 },
+                { unit: 'SURAKARTA', sap: 1968934729, ap2t: 1968934729, selisih: 0 },
+                { unit: 'SALATIGA', sap: 1134524846, ap2t: 1134524846, selisih: 0 },
+                { unit: 'DEMAK', sap: 850731143, ap2t: 850731143, selisih: 0 },
+                { unit: 'SUKOHARJO', sap: 605211989, ap2t: 605211989, selisih: 0 },
+                { unit: 'MAGELANG', sap: 554839699, ap2t: 554839699, selisih: 0 },
+                { unit: 'PURWOKERTO', sap: 504728634, ap2t: 504728634, selisih: 0 },
+                { unit: 'CILACAP', sap: 440308317, ap2t: 440308317, selisih: 0 },
+                { unit: 'KLATEN', sap: 310699216, ap2t: 310699216, selisih: 0 },
+                { unit: 'YOGYAKARTA', sap: 0, ap2t: 0, selisih: 0 }
+            ]
+        };
+
+        // --- 2. FORMATTER & UTILS ---
+        const formatRupiah = (number) => {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(number);
+        };
+        
+        const formatShort = (number) => {
+            if (number >= 1e12) return (number / 1e12).toFixed(2) + ' T';
+            if (number >= 1e9) return (number / 1e9).toFixed(2) + ' M';
+            if (number >= 1e6) return (number / 1e6).toFixed(2) + ' Jt';
+            return number;
+        };
+
+        // --- 3. CHART INSTANCES ---
+        let barChart, doughnutChart;
+        Chart.defaults.font.family = "'Inter', 'Segoe UI', sans-serif";
+        Chart.defaults.color = '#64748b';
+
+        // --- 4. TAB NAVIGATION LOGIC ---
+        function switchTab(tabId) {
+            const btnPiutang = document.getElementById('btn-tab-piutang');
+            const btnRagu = document.getElementById('btn-tab-ragu');
+            
+            // Style Classes
+            const activeStyle = "px-5 py-2 text-sm font-bold rounded-md transition-all shadow bg-[#fdf8f0] text-[#a9927d]";
+            const inactiveStyle = "px-5 py-2 text-sm font-medium rounded-md transition-all text-[#fcf4ec] hover:bg-[#826e5d]";
+
+            if (tabId === 'piutang') {
+                btnPiutang.className = activeStyle;
+                btnRagu.className = inactiveStyle;
+            } else {
+                btnPiutang.className = inactiveStyle;
+                btnRagu.className = activeStyle;
+            }
+
+            // Render Dashboard Data berdasarkan tab
+            renderDashboard(tabId);
+        }
+
+        // --- 5. RENDER FUNCTION ---
+        function renderDashboard(category) {
+            let data = [...rawData[category]].sort((a, b) => b.sap - a.sap);
+            
+            // Kalkulasi Total
+            let totalSap = data.reduce((sum, item) => sum + item.sap, 0);
+            let totalAp2t = data.reduce((sum, item) => sum + item.ap2t, 0);
+            let totalSelisih = data.reduce((sum, item) => sum + item.selisih, 0);
+
+            // Update Alert UI
+            const alertSelisih = document.getElementById('alertSelisih');
+            if (category === 'piutang') {
+                alertSelisih.classList.add('hidden');
+            } else {
+                alertSelisih.classList.remove('hidden');
+            }
+
+            // Update Analisis & Insight Dinamis
+            const analysisList = document.getElementById('analysisList');
+            if (category === 'piutang') {
+                analysisList.innerHTML = `
+                    <li class="flex items-start">
+                        <span class="text-emerald-500 mr-3 text-lg">✔️</span> 
+                        <p><b>Tingkat Akurasi 100%:</b> Seluruh pencatatan data dari 12 unit aktif telah terekonsiliasi secara sempurna antara sistem SAP dan AP2T, menghasilkan selisih akhir Rp 0.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-blue-500 mr-3 text-lg">📊</span> 
+                        <p><b>Konsentrasi Piutang Dominan:</b> Unit <b>Semarang</b> menjadi pusat piutang terbesar dengan nilai Rp 512,16 Miliar (menyumbang ±20% dari total pencatatan). Diikuti oleh Kudus dan Surakarta yang juga melampaui angka Rp 300 Miliar.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-amber-500 mr-3 text-lg">💡</span> 
+                        <p><b>Rekomendasi Tindakan:</b> Mengingat akumulasi dari 3 unit teratas melampaui Rp 1,1 Triliun, prioritas pengawasan performa penagihan dapat difokuskan pada area tersebut. Sementara itu, wilayah Yogyakarta tercatat stabil tanpa ada tumpukan saldo (Rp 0).</p>
+                    </li>
+                `;
+            } else {
+                analysisList.innerHTML = `
+                    <li class="flex items-start">
+                        <span class="text-rose-500 mr-3 text-lg">⚠️</span> 
+                        <p><b>Unbalance / Anomali Ditemukan:</b> Terdapat selisih sebesar <b>Rp 2,30 Miliar</b> yang terisolasi secara spesifik pada pencatatan unit <b>TEGAL</b> (SAP: Rp 3,48 Miliar vs AP2T: Rp 1,18 Miliar).</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-red-600 mr-3 text-lg">📌</span> 
+                        <p><b>Key Issues:</b> Terdapat selisih Total PRR antara SAP-FM dan AP2T, karena terdapat pencatatan <b>Nota Texmaco Tegal sebesar 2,30 M di AP2T</b>.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-blue-500 mr-3 text-lg">📊</span> 
+                        <p><b>Profil Piutang:</b> Keseluruhan Piutang Ragu-Ragu tercatat sebesar Rp 22,39 Miliar di SAP. Semarang tetap memegang proporsi nilai tertinggi (28.1%), namun berstatus sinkron (Match) dengan AP2T.</p>
+                    </li>
+                `;
+            }
+
+            // Update KPIs
+            document.getElementById('kpiSap').innerText = formatRupiah(totalSap);
+            document.getElementById('kpiAp2t').innerText = formatRupiah(totalAp2t);
+            document.getElementById('kpiSelisih').innerText = formatRupiah(totalSelisih);
+
+            // Ekstrak Array untuk Chart
+            const labels = data.map(d => d.unit);
+            const sapData = data.map(d => d.sap);
+            const ap2tData = data.map(d => d.ap2t);
+
+            // Data Doughnut (Top 5 + Lainnya)
+            const top5Sap = sapData.slice(0, 5);
+            const othersSap = sapData.slice(5).reduce((a,b)=>a+b, 0);
+            const doughnutLabels = labels.slice(0, 5).concat(['LAINNYA']);
+            const doughnutData = [...top5Sap, othersSap];
+
+            // --- UPDATE BAR CHART ---
+            if (barChart) barChart.destroy();
+            const ctxBar = document.getElementById('barChart').getContext('2d');
+            barChart = new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'SAP',
+                            data: sapData,
+                            backgroundColor: '#3b82f6',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'AP2T',
+                            data: ap2tData,
+                            backgroundColor: '#93c5fd',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: { top: 50 } 
+                    },
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: { 
+                        tooltip: { 
+                            callbacks: { label: (ctx) => `${ctx.dataset.label}: ${formatRupiah(ctx.raw)}` } 
+                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            offset: 4,
+                            rotation: -90,
+                            color: function(ctx) {
+                                return ctx.dataset.backgroundColor;
+                            },
+                            font: { size: 11, weight: 'bold' },
+                            formatter: (value, ctx) => {
+                                if (value === 0) return '';
+                                let sum = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                let percentage = (value * 100 / sum).toFixed(1) + "%";
+                                return percentage;
+                            }
+                        }
+                    },
+                    scales: { 
+                        y: { ticks: { callback: (val) => formatShort(val) } } 
+                    }
+                }
+            });
+
+            // --- UPDATE DOUGHNUT CHART ---
+            if (doughnutChart) doughnutChart.destroy();
+            const ctxDoughnut = document.getElementById('doughnutChart').getContext('2d');
+            doughnutChart = new Chart(ctxDoughnut, {
+                type: 'doughnut',
+                data: {
+                    labels: doughnutLabels,
+                    datasets: [{
+                        data: doughnutData,
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#cbd5e1'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { position: 'right' },
+                        tooltip: { 
+                            callbacks: { label: (ctx) => `${ctx.label}: ${formatShort(ctx.raw)}` } 
+                        },
+                        datalabels: {
+                            color: '#ffffff',
+                            font: { size: 11, weight: 'bold' },
+                            formatter: (value, ctx) => {
+                                let sum = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                let percentage = (value * 100 / sum).toFixed(1) + "%";
+                                return (value * 100 / sum) > 3 ? percentage : '';
+                            }
+                        }
+                    }
+                }
+            });
+
+            // --- UPDATE TABLE ---
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-amber-50 transition-colors duration-200';
+                
+                const statusBadge = item.selisih === 0 
+                    ? `<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs font-bold">MATCH</span>` 
+                    : `<span class="bg-rose-100 text-rose-700 px-2 py-1 rounded text-xs font-bold animate-pulse">UNMATCH</span>`;
+
+                tr.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-slate-700 font-medium">${item.unit}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right font-medium text-slate-800">${formatRupiah(item.sap)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-slate-600">${formatRupiah(item.ap2t)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right font-bold ${item.selisih > 0 ? 'text-rose-600' : 'text-slate-400'}">${item.selisih > 0 ? formatRupiah(item.selisih) : '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center">${statusBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Update Table Footer
+            const tfoot = document.getElementById('tableFoot');
+            tfoot.innerHTML = `
+                <tr>
+                    <td class="px-6 py-4 uppercase">Total Keseluruhan</td>
+                    <td class="px-6 py-4 text-right">${formatRupiah(totalSap)}</td>
+                    <td class="px-6 py-4 text-right">${formatRupiah(totalAp2t)}</td>
+                    <td class="px-6 py-4 text-right ${totalSelisih > 0 ? 'text-rose-600' : ''}">${totalSelisih > 0 ? formatRupiah(totalSelisih) : '-'}</td>
+                    <td class="px-6 py-4 text-center">-</td>
+                </tr>
+            `;
+        }
+
+        // --- 6. INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Render awal secara default ke tab 'piutang'
+            switchTab('piutang');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Analisis Kinerja Keuangan UID Jateng — 31 Juli 2026</title>
+    <!-- Kode Favicon -->
+    <link rel="icon" type="image/png" href="Logo PLN Favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{--navy:#0B2E4F;--navy-d:#081E36;--navy-soft:#12406B;--gold:#C9A227;--teal:#0E7C7B;--grey:#6B7280;--lgrey:#E7E9EC;--bg:#FBFBFA;--card:#FFF;--red:#B23A2E;--green:#1E7A4C;--line:#D7DBE1}
+*{box-sizing:border-box}html,body{margin:0;padding:0}body{font-family:Arial,Helvetica,sans-serif;color:#20304A;background:var(--bg);line-height:1.55;font-size:14px}
+.wrap{max-width:1180px;margin:auto;padding:0 28px 70px}.hero{background:linear-gradient(135deg,var(--navy-d),var(--navy) 60%,var(--navy-soft));color:#fff;padding:52px 0 38px}.hero-inner{max-width:1180px;margin:auto;padding:0 28px}.eyebrow{text-transform:uppercase;letter-spacing:3px;font-size:11px;color:var(--gold);font-weight:700;margin-bottom:15px}.hero h1{font-family:Georgia,serif;font-size:36px;margin:0 0 12px;line-height:1.2}.sub{font-size:15px;color:#CBD6E4;max-width:850px;margin:0 0 24px}.metabar{display:flex;gap:30px;flex-wrap:wrap;border-top:1px solid #ffffff2e;padding-top:16px}.metabar div{font-size:11.5px;color:#B9C6D6}.metabar strong{display:block;color:#fff;font-size:13px;margin-top:2px}
+.tabs{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 8px #0000000b}.tabbar{max-width:1180px;margin:auto;padding:0 28px;display:flex;gap:3px}.tab{border:0;background:transparent;padding:15px 18px;font-weight:700;color:#607086;cursor:pointer;border-bottom:3px solid transparent}.tab.active{color:var(--navy-d);border-bottom-color:var(--gold)}.panel{display:none}.panel.active{display:block}
+.section{padding:38px 0 5px}.section-title{font-family:Georgia,serif;font-size:23px;color:var(--navy-d);margin:0 0 5px;display:flex;align-items:baseline;gap:11px}.num{color:var(--gold);font-size:14px}.rule{height:3px;width:55px;background:var(--gold);margin:12px 0 22px}.intro{color:#41526B;margin-bottom:20px;max-width:980px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}.card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--navy);border-radius:4px;padding:17px}.label{text-transform:uppercase;letter-spacing:.8px;font-size:10.5px;color:var(--grey);font-weight:700}.value{font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--navy-d);margin:7px 0}.delta{font-size:12px;font-weight:700}.pos{color:var(--green)}.neg{color:var(--red)}.small{font-size:11px;color:var(--grey)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.box{background:#fff;border:1px solid var(--line);border-radius:4px;padding:17px;margin:16px 0}.box h3{margin:0 0 12px;font-family:Georgia,serif;color:var(--navy-d);font-size:17px}.chart{height:320px}.callout{padding:15px 18px;background:#F4F0DF;border-left:4px solid var(--gold);border-radius:2px;margin:18px 0;color:#4A3E14}.callout.blue{background:#EAF1F8;border-left-color:var(--navy);color:#1E3350}.callout.red{background:#FBEEEC;border-left-color:var(--red);color:#5C2119}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0}th{background:var(--navy-d);color:#fff;text-align:right;padding:9px}th:first-child,td:first-child{text-align:left}td{padding:8px 9px;border-bottom:1px solid var(--lgrey);text-align:right}tbody tr:nth-child(even){background:#F6F8FA}tr.total td{font-weight:700;background:#EEF2F6;border-top:1.5px solid var(--navy)}
+.insights{list-style:none;padding:0;margin:12px 0}.insights li{display:flex;gap:13px;padding:13px 0;border-bottom:1px solid var(--lgrey)}.insight-num{font-family:Georgia,serif;font-weight:700;font-size:19px;color:var(--gold);min-width:28px}.insight-body b{color:var(--navy-d)}
+.reco{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}.reco-card{background:var(--navy-d);color:#fff;border-radius:4px;padding:18px}.reco-card .k{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);font-weight:700}.reco-card p{font-size:12.5px;color:#DCE4EE;margin:8px 0 0}
+.footer{background:var(--navy-d);color:#B9C6D6;padding:25px 0;font-size:11px}.footer .wrap{padding-bottom:0;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media(max-width:850px){.cards{grid-template-columns:repeat(2,1fr)}.grid,.reco{grid-template-columns:1fr}.hero h1{font-size:28px}.tabbar{overflow-x:auto}.tab{white-space:nowrap}.chart{height:280px}}
+@media(max-width:520px){.wrap,.hero-inner,.tabbar{padding-left:15px;padding-right:15px}.cards{grid-template-columns:1fr}.hero{padding-top:38px}.metabar{gap:16px}.section{padding-top:28px}}
+@media print{.tabs{display:none}.panel{display:block!important}.hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="hero-inner">
+<div class="eyebrow">Analisis Kinerja Keuangan · Strictly Private &amp; Confidential</div>
+<h1>Laporan Keuangan UID Jateng<br>Per 31 Juli 2026</h1>
+<p class="sub">Dashboard Laporan Laba Rugi dan Laporan Posisi Keuangan, dengan perbandingan YoY terhadap periode s.d. 31 Juli 2025. Satuan utama Rp Juta.</p>
+<div class="metabar"><div>Periode Analisis<strong>s.d. 31 Juli 2026</strong></div><div>Pembanding<strong>s.d. 31 Juli 2025</strong></div><div>Satuan<strong>Rp Juta</strong></div><div>Basis<strong>Realisasi kumulatif s.d. Juli</strong></div></div>
+</div></header>
+<nav class="tabs"><div class="tabbar">
+<button class="tab active" data-tab="lr">Laporan Keuangan UID Jateng</button>
+<button class="tab" data-tab="neraca">Neraca UID Jateng</button>
+<button class="tab" data-tab="analisis">Analisis &amp; Insight</button>
+</div></nav>
+<main class="wrap">
+<section id="lr" class="panel active">
+<div class="section"><h2 class="section-title"><span class="num">01</span> Ringkasan Laba Rugi</h2><div class="rule"></div>
+<div class="intro">Sampai dengan 31 Juli 2026, Pendapatan Usaha mencapai <b>Rp37.405.392 juta</b>, naik <b>14,42%</b> YoY. Beban Usaha naik lebih rendah, <b>4,19%</b>, sehingga Laba Usaha mencapai Rp3.808.765 juta dan Laba Bersih Rp3.187.699 juta.</div>
+<div class="cards">
+<div class="card"><div class="label">Pendapatan Usaha</div><div class="value">Rp 37.405.392 Jt</div><div class="delta pos">▲ 14,42% YoY</div><div class="small">2025: Rp32.692.136 Jt</div></div>
+<div class="card"><div class="label">Beban Usaha</div><div class="value">Rp 33.596.627 Jt</div><div class="delta pos">▲ 4,19% YoY</div><div class="small">2025: Rp32.246.940 Jt</div></div>
+<div class="card"><div class="label">Laba Usaha</div><div class="value">Rp 3.808.765 Jt</div><div class="delta pos">▲ Rp3.363.569 Jt</div><div class="small">YoY: +755,53%</div></div>
+<div class="card"><div class="label">Laba Bersih</div><div class="value">Rp 3.187.699 Jt</div><div class="delta pos">▲ Rp2.045.739 Jt</div><div class="small">YoY: +179,14%</div></div>
+</div></div>
+<div class="grid">
+<div class="box"><h3>Pendapatan Usaha — Komposisi</h3><div class="chart"><canvas id="revChart"></canvas></div></div>
+<div class="box"><h3>Beban Usaha — Komposisi Utama</h3><div class="chart"><canvas id="expChart"></canvas></div></div>
+</div>
+<div class="box"><h3>Perbandingan YoY — Pos Utama</h3><table><thead><tr><th>Uraian</th><th>31-Jul-26</th><th>31-Jul-25</th><th>Deviasi Juta Rp</th><th>YoY</th></tr></thead><tbody>
+<tr><td>PENDAPATAN USAHA</td><td>37.405.392</td><td>32.692.136</td><td>4.713.255</td><td class="pos">14,42%</td></tr>
+<tr><td>Penjualan Tenaga Listrik</td><td>21.527.756</td><td>20.270.581</td><td>1.257.175</td><td class="pos">6,20%</td></tr>
+<tr><td>Subsidi Listrik Pemerintah</td><td>8.611.551</td><td>6.998.526</td><td>1.613.026</td><td class="pos">23,05%</td></tr>
+<tr><td>Pendapatan Kompensasi</td><td>7.092.527</td><td>5.272.909</td><td>1.819.617</td><td class="pos">34,51%</td></tr>
+<tr><td>BEBAN USAHA</td><td>33.596.627</td><td>32.246.940</td><td>1.349.686</td><td class="pos">4,19%</td></tr>
+<tr><td>Pembelian Tenaga Listrik</td><td>31.596.978</td><td>30.349.632</td><td>1.247.347</td><td class="pos">4,11%</td></tr>
+<tr class="total"><td>LABA (RUGI) USAHA</td><td>3.808.765</td><td>445.196</td><td>3.363.569</td><td>755,53%</td></tr>
+<tr class="total"><td>LABA (RUGI) BERSIH</td><td>3.187.699</td><td>1.141.960</td><td>2.045.739</td><td>179,14%</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="neraca" class="panel">
+<div class="section"><h2 class="section-title"><span class="num">02</span> Neraca UID Jateng</h2><div class="rule"></div>
+<div class="intro">Posisi keuangan per 31 Juli 2026 menunjukkan Total Aset Rp28.413.889 juta, turun 10,16% dibanding 31 Juli 2025. Penurunan terutama berasal dari Aset Tidak Lancar, sementara Piutang Usaha Neto mencapai Rp2.527.055 juta.</div>
+<div class="cards">
+<div class="card"><div class="label">Total Aset</div><div class="value">Rp 28.413.889 Jt</div><div class="delta neg">▼ 10,16% YoY</div><div class="small">2025: Rp31.628.898 Jt</div></div>
+<div class="card"><div class="label">Aset Tidak Lancar</div><div class="value">Rp 25.717.071 Jt</div><div class="delta neg">▼ 10,58% YoY</div></div>
+<div class="card"><div class="label">Aset Lancar</div><div class="value">Rp 2.696.819 Jt</div><div class="delta neg">▼ 5,97% YoY</div></div>
+<div class="card"><div class="label">Ekuitas</div><div class="value">Rp 3.187.699 Jt</div><div class="delta pos">▲ 179,14% YoY</div></div>
+</div>
+<div class="grid"><div class="box"><h3>Struktur Aset</h3><div class="chart"><canvas id="assetChart"></canvas></div></div><div class="box"><h3>Struktur Ekuitas &amp; Liabilitas</h3><div class="chart"><canvas id="liabChart"></canvas></div></div></div>
+<div class="box"><h3>Posisi Keuangan — Ringkasan YoY</h3><table><thead><tr><th>Uraian</th><th>31-Jul-26</th><th>31-Jul-25</th><th>Deviasi Juta Rp</th><th>YoY</th></tr></thead><tbody>
+<tr><td>ASET TIDAK LANCAR</td><td>25.717.071</td><td>28.760.830</td><td>(3.043.759)</td><td class="neg">(10,58%)</td></tr>
+<tr><td>Aset Tetap Neto</td><td>24.902.350</td><td>27.920.791</td><td>(3.018.441)</td><td class="neg">(10,81%)</td></tr>
+<tr><td>Pekerjaan Dalam Pelaksanaan</td><td>669.864</td><td>657.790</td><td>12.073</td><td class="pos">1,84%</td></tr>
+<tr><td>ASET LANCAR</td><td>2.696.819</td><td>2.868.068</td><td>(171.250)</td><td class="neg">(5,97%)</td></tr>
+<tr><td>Piutang Usaha Neto</td><td>2.527.055</td><td>2.619.261</td><td>(92.207)</td><td class="neg">(3,52%)</td></tr>
+<tr><td>Persediaan Neto</td><td>158.856</td><td>239.282</td><td>(80.426)</td><td class="neg">(33,61%)</td></tr>
+<tr class="total"><td>TOTAL ASET</td><td>28.413.889</td><td>31.628.898</td><td>(3.215.009)</td><td>(10,16%)</td></tr>
+<tr><td>EKUITAS</td><td>3.187.699</td><td>1.141.960</td><td>2.045.739</td><td class="pos">179,14%</td></tr>
+<tr><td>AKUN ANTAR SATUAN ADMINISTRASI</td><td>17.273.397</td><td>22.845.187</td><td>(5.571.790)</td><td class="neg">(24,39%)</td></tr>
+<tr><td>LIABILITAS JANGKA PANJANG</td><td>4.495.831</td><td>4.163.080</td><td>332.751</td><td class="pos">7,99%</td></tr>
+<tr><td>LIABILITAS JANGKA PENDEK</td><td>3.456.963</td><td>3.478.671</td><td>(21.708)</td><td class="neg">(1,00%)</td></tr>
+<tr class="total"><td>TOTAL EKUITAS DAN LIABILITAS</td><td>28.413.890</td><td>31.628.898</td><td>(3.215.009)</td><td>(10,16%)</td></tr>
+</tbody></table><div class="small">Catatan: angka mengikuti data sumber yang diberikan; Total Ekuitas dan Liabilitas tercatat Rp28.413.890 juta pada tabel sumber, berbeda Rp1 juta dari Total Aset.</div></div>
+</div>
+</section>
+
+<section id="analisis" class="panel">
+<div class="section"><h2 class="section-title"><span class="num">03</span> Analisis &amp; Insight Manajemen</h2><div class="rule"></div>
+<div class="callout"><b>Pertumbuhan pendapatan lebih cepat daripada beban.</b> Pendapatan Usaha tumbuh 14,42% YoY, sedangkan Beban Usaha hanya 4,19%. Selisih laju pertumbuhan tersebut menjadi faktor utama kenaikan Laba Usaha dari Rp445.196 juta menjadi Rp3.808.765 juta.</div>
+<ul class="insights">
+<li><div class="insight-num">01</div><div class="insight-body"><b>Motor pertumbuhan pendapatan berasal dari kompensasi dan subsidi.</b> Pendapatan Kompensasi naik 34,51% dan Subsidi Listrik Pemerintah naik 23,05%, lebih tinggi daripada Penjualan Tenaga Listrik yang tumbuh 6,20%.</div></li>
+<li><div class="insight-num">02</div><div class="insight-body"><b>Pembelian Tenaga Listrik tetap menjadi komponen biaya dominan.</b> Nilainya Rp31.596.978 juta atau sekitar 94,05% dari Beban Usaha, sehingga perubahan harga/struktur pasokan sangat sensitif terhadap laba.</div></li>
+<li><div class="insight-num">03</div><div class="insight-body"><b>Perbaikan profitabilitas.</b> Laba Usaha naik Rp3.363.569 juta (+755,53%) dan Laba Bersih naik Rp2.045.739 juta (+179,14%) dibanding periode yang sama 2025.</div></li>
+<li><div class="insight-num">04</div><div class="insight-body"><b>Beban selisih kurs menjadi perhatian.</b> Beban Selisih Kurs tercatat Rp253.295 juta sampai Juli 2026, dibanding Rp3.042 juta pada periode pembanding, atau deviasi Rp250.252 juta.</div></li>
+<li><div class="insight-num">05</div><div class="insight-body"><b>Struktur aset mengalami kontraksi.</b> Total Aset turun 10,16% YoY. Aset Tetap Neto turun 10,81%, sedangkan Persediaan Neto turun 33,61%; Piutang Usaha Neto turun lebih moderat 3,52%.</div></li>
+<li><div class="insight-num">06</div><div class="insight-body"><b>Ekuitas meningkat signifikan sejalan dengan laba.</b> Ekuitas naik dari Rp1.141.960 juta menjadi Rp3.187.699 juta, sementara Akun Antar Satuan Administrasi turun 24,39%.</div></li>
+</ul>
+<div class="reco">
+<div class="reco-card"><div class="k">Fokus 01 · Pendapatan</div><p>Pisahkan monitoring core sales dari subsidi dan kompensasi agar kualitas pertumbuhan pendapatan dapat dinilai secara lebih tepat.</p></div>
+<div class="reco-card"><div class="k">Fokus 02 · Biaya</div><p>Lakukan pengawasan intensif terhadap biaya Pembelian Tenaga Listrik dan faktor pembentuknya karena porsinya mendominasi Beban Usaha.</p></div>
+<div class="reco-card"><div class="k">Fokus 03 · Risiko</div><p>Review eksposur valuta asing dan dampaknya terhadap laba, mengingat kenaikan Beban Selisih Kurs yang sangat tajam secara YoY.</p></div>
+</div>
+<div class="box"><h3>Pos Lain-lain — Perbandingan</h3><table><thead><tr><th>Uraian</th><th>31-Jul-26</th><th>31-Jul-25</th><th>Deviasi Juta Rp</th><th>YoY</th></tr></thead><tbody>
+<tr><td>PENDAPATAN (BEBAN) LAINLAIN</td><td>(621.066)</td><td>696.764</td><td>(1.317.830)</td><td>(189,14%)</td></tr>
+<tr><td>Beban Pinjaman</td><td>(267.613)</td><td>(173.049)</td><td>(94.564)</td><td>54,65%</td></tr>
+<tr><td>Beban Keuangan AHG</td><td>(2.750)</td><td>(1.099)</td><td>(1.651)</td><td>150,16%</td></tr>
+<tr><td>Beban Selisih Kurs</td><td>(253.295)</td><td>(3.042)</td><td>(250.252)</td><td>8.225,38%</td></tr>
+<tr><td>Lain-lain Bersih</td><td>(97.409)</td><td>873.955</td><td>(971.364)</td><td>(111,15%)</td></tr>
+<tr class="total"><td>LABA SEBELUM PPh BADAN</td><td>3.187.699</td><td>1.141.960</td><td>2.045.739</td><td>179,14%</td></tr>
+</tbody></table></div>
+</div>
+</section>
+</main>
+<footer class="footer"><div class="wrap"><div>Sumber: data LK Per 31 Juli 2026 yang diberikan pengguna · UID Jateng</div><div>Rp Juta · Strictly Private &amp; Confidential</div></div></footer>
+<script>
+const base={responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}}}};
+
+// Palet warna yang disesuaikan dengan tema CSS
+const chartColors = ['#0B2E4F', '#C9A227', '#0E7C7B', '#B23A2E', '#6B7280'];
+
+function doughnut(id,labels,data){
+  new Chart(document.getElementById(id),{
+    type:'doughnut',
+    data:{
+      labels,
+      datasets:[{
+        data,
+        backgroundColor: chartColors, // Menambahkan warna pada grafik
+        borderWidth:2,
+        borderColor:'#fff'
+      }]
+    },
+    options:{...base,cutout:'58%'}
+  })
+}
+
+doughnut('revChart',['Penjualan Tenaga Listrik','Subsidi Pemerintah','Pendapatan Kompensasi','Penyambungan','Lain-lain'],[21527756,8611551,7092527,163306,10252]);
+doughnut('expChart',['Pembelian Tenaga Listrik','Pemeliharaan','Kepegawaian','Penyusutan','Administrasi & lainnya'],[31596978,503240,511153,715234,2700022]);
+doughnut('assetChart',['Aset Tetap Neto','Pekerjaan Dalam Pelaksanaan','Aset Lancar','Aset Tidak Lancar Lainnya'],[24902350,669864,2696819,456]);
+doughnut('liabChart',['Ekuitas','Antar Satuan Administrasi','Liabilitas Jangka Panjang','Liabilitas Jangka Pendek'],[3187699,17273397,4495831,3456963]);
+
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  document.getElementById(b.dataset.tab).classList.add('active');
+}));
+</script>

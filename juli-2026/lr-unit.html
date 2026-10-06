@@ -1,0 +1,3223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Laporan Laba Rugi Per Unit UID Jawa Tengah — 31 Juli 2026</title>
+    <!-- Kode Favicon -->
+    <link rel="icon" type="image/png" href="Logo PLN Favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root{
+  --navy:#0B2E4F;
+  --navy-d:#081E36;
+  --navy-soft:#12406B;
+  --gold:#C9A227;
+  --teal:#0E7C7B;
+  --teal2:#159A98;
+  --grey:#6B7280;
+  --lgrey:#E7E9EC;
+  --bg:#FBFBFA;
+  --card:#FFF;
+  --red:#B23A2E;
+  --green:#1E7A4C;
+  --line:#D7DBE1;
+  --blue:#2877A8;
+  --purple:#7656A6;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:#20304A;
+  background:var(--bg);
+  line-height:1.5;
+  font-size:14px;
+}
+
+button,
+select,
+input{
+  font-family:inherit;
+}
+
+.wrap{
+  max-width:1380px;
+  margin:auto;
+  padding:0 28px 70px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.hero{
+  background:
+    radial-gradient(circle at 80% 20%,rgba(21,154,152,.18),transparent 32%),
+    linear-gradient(135deg,var(--navy-d),var(--navy) 60%,var(--navy-soft));
+  color:#fff;
+  padding:40px 0 34px;
+}
+
+.hero-inner{
+  max-width:1380px;
+  margin:auto;
+  padding:0 28px;
+}
+
+.eyebrow{
+  text-transform:uppercase;
+  letter-spacing:3px;
+  font-size:11px;
+  color:var(--gold);
+  font-weight:700;
+  margin-bottom:13px;
+}
+
+.hero h1{
+  font-family:Georgia,serif;
+  font-size:36px;
+  margin:0 0 10px;
+  line-height:1.2;
+}
+
+.sub{
+  font-size:14px;
+  color:#CBD6E4;
+  max-width:1000px;
+  margin:0 0 20px;
+}
+
+.metabar{
+  display:flex;
+  gap:30px;
+  flex-wrap:wrap;
+  border-top:1px solid #ffffff2e;
+  padding-top:14px;
+}
+
+.metabar div{
+  font-size:11.5px;
+  color:#B9C6D6;
+}
+
+.metabar strong{
+  display:block;
+  color:#fff;
+  font-size:13px;
+  margin-top:2px;
+}
+
+/* =========================
+   TABS
+========================= */
+
+.tabs{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:#fff;
+  border-bottom:1px solid var(--line);
+  box-shadow:0 2px 8px #0000000b;
+}
+
+.tabbar{
+  max-width:1380px;
+  margin:auto;
+  padding:0 28px;
+  display:flex;
+  gap:3px;
+  overflow-x:auto;
+}
+
+.tab{
+  border:0;
+  background:transparent;
+  padding:15px 18px;
+  font-weight:700;
+  color:#607086;
+  cursor:pointer;
+  border-bottom:3px solid transparent;
+  white-space:nowrap;
+}
+
+.tab:hover{
+  color:var(--navy-d);
+  background:#F8FAFC;
+}
+
+.tab.active{
+  color:var(--navy-d);
+  border-bottom-color:var(--gold);
+}
+
+/* =========================
+   PANELS
+========================= */
+
+.panel{
+  display:none;
+}
+
+.panel.active{
+  display:block;
+}
+
+.section{
+  padding:34px 0 5px;
+}
+
+.section-title{
+  font-family:Georgia,serif;
+  font-size:23px;
+  color:var(--navy-d);
+  margin:0 0 5px;
+  display:flex;
+  align-items:baseline;
+  gap:11px;
+}
+
+.num{
+  color:var(--gold);
+  font-size:14px;
+}
+
+.rule{
+  height:3px;
+  width:55px;
+  background:var(--gold);
+  margin:12px 0 20px;
+}
+
+.intro{
+  color:#41526B;
+  margin-bottom:20px;
+  max-width:1100px;
+}
+
+/* =========================
+   KPI
+========================= */
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin:20px 0;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-top:3px solid var(--navy);
+  border-radius:4px;
+  padding:16px;
+  min-height:132px;
+  box-shadow:0 1px 4px rgba(11,46,79,.03);
+}
+
+.card.teal{
+  border-top-color:var(--teal);
+}
+
+.card.gold{
+  border-top-color:var(--gold);
+}
+
+.card.green{
+  border-top-color:var(--green);
+}
+
+.label{
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  font-size:10.5px;
+  color:var(--grey);
+  font-weight:700;
+}
+
+.value{
+  font-family:Georgia,serif;
+  font-size:22px;
+  font-weight:700;
+  color:var(--navy-d);
+  margin:7px 0;
+}
+
+.delta{
+  font-size:12px;
+  font-weight:700;
+}
+
+.pos{
+  color:var(--green);
+}
+
+.neg{
+  color:var(--red);
+}
+
+.neutral{
+  color:var(--grey);
+}
+
+.small{
+  font-size:11px;
+  color:var(--grey);
+}
+
+/* =========================
+   FILTER
+========================= */
+
+.filter-box{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:16px;
+  margin:18px 0;
+}
+
+.filter-grid{
+  display:grid;
+  grid-template-columns:1.2fr 1fr 1fr auto;
+  gap:12px;
+  align-items:end;
+}
+
+.field label{
+  display:block;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.7px;
+  color:var(--grey);
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+select,
+input[type="search"]{
+  width:100%;
+  border:1px solid #CCD3DB;
+  background:#fff;
+  border-radius:4px;
+  padding:10px 11px;
+  color:var(--navy-d);
+  outline:none;
+}
+
+select:focus,
+input[type="search"]:focus{
+  border-color:var(--teal);
+  box-shadow:0 0 0 2px rgba(14,124,123,.10);
+}
+
+.btn{
+  border:0;
+  background:var(--navy-d);
+  color:#fff;
+  padding:10px 16px;
+  border-radius:4px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.btn:hover{
+  background:var(--teal);
+}
+
+/* =========================
+   GRID / BOX
+========================= */
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.grid-wide{
+  display:grid;
+  grid-template-columns:1.35fr .65fr;
+  gap:16px;
+}
+
+.box{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:17px;
+  margin:16px 0;
+  box-shadow:0 1px 4px rgba(11,46,79,.025);
+}
+
+.box h3{
+  margin:0 0 12px;
+  font-family:Georgia,serif;
+  color:var(--navy-d);
+  font-size:17px;
+}
+
+.chart{
+  height:360px;
+  position:relative;
+}
+
+.chart.small-chart{
+  height:320px;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrap{
+  overflow-x:auto;
+  border:1px solid var(--line);
+  border-radius:4px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+  margin:0;
+  min-width:920px;
+}
+
+th{
+  background:var(--navy-d);
+  color:#fff;
+  text-align:right;
+  padding:10px;
+  white-space:nowrap;
+  cursor:pointer;
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+
+th:first-child,
+td:first-child{
+  text-align:left;
+}
+
+th:hover{
+  background:var(--navy-soft);
+}
+
+td{
+  padding:8px 9px;
+  border-bottom:1px solid var(--lgrey);
+  text-align:right;
+  white-space:nowrap;
+}
+
+tbody tr:nth-child(even){
+  background:#F6F8FA;
+}
+
+tbody tr:hover{
+  background:#EEF6F6;
+}
+
+tr.total td{
+  font-weight:700;
+  background:#EEF2F6;
+  border-top:1.5px solid var(--navy);
+}
+
+.unit-name{
+  font-weight:700;
+  color:var(--navy-d);
+}
+
+/* =========================
+   RANKING
+========================= */
+
+.rank-list{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+
+.rank-row{
+  display:grid;
+  grid-template-columns:32px 1fr 145px;
+  align-items:center;
+  gap:9px;
+}
+
+.rank-no{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:var(--navy-d);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:11px;
+}
+
+.rank-info{
+  min-width:0;
+}
+
+.rank-label{
+  font-size:12px;
+  font-weight:700;
+  color:var(--navy-d);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.bar-bg{
+  height:8px;
+  background:#E8EDF1;
+  border-radius:10px;
+  overflow:hidden;
+  margin-top:5px;
+}
+
+.bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--navy),var(--teal));
+  border-radius:10px;
+}
+
+.rank-value{
+  text-align:right;
+  font-size:11.5px;
+  font-weight:700;
+  color:var(--navy-d);
+}
+
+/* =========================
+   INSIGHTS
+========================= */
+
+.callout{
+  padding:15px 18px;
+  background:#F4F0DF;
+  border-left:4px solid var(--gold);
+  border-radius:2px;
+  margin:18px 0;
+  color:#4A3E14;
+}
+
+.callout.blue{
+  background:#EAF1F8;
+  border-left-color:var(--navy);
+  color:#1E3350;
+}
+
+.callout.teal{
+  background:#E8F5F4;
+  border-left-color:var(--teal);
+  color:#164B4A;
+}
+
+.callout.red{
+  background:#FBEEEC;
+  border-left-color:var(--red);
+  color:#5C2119;
+}
+
+.insights{
+  list-style:none;
+  padding:0;
+  margin:12px 0;
+}
+
+.insights li{
+  display:flex;
+  gap:13px;
+  padding:13px 0;
+  border-bottom:1px solid var(--lgrey);
+}
+
+.insight-num{
+  font-family:Georgia,serif;
+  font-weight:700;
+  font-size:19px;
+  color:var(--gold);
+  min-width:28px;
+}
+
+.insight-body b{
+  color:var(--navy-d);
+}
+
+.reco{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin:18px 0;
+}
+
+.reco-card{
+  background:var(--navy-d);
+  color:#fff;
+  border-radius:4px;
+  padding:18px;
+}
+
+.reco-card .k{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--gold);
+  font-weight:700;
+}
+
+.reco-card p{
+  font-size:12.5px;
+  color:#DCE4EE;
+  margin:8px 0 0;
+}
+
+/* =========================
+   BADGES
+========================= */
+
+.badge{
+  display:inline-block;
+  padding:3px 7px;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:700;
+}
+
+.badge.pos{
+  background:#E8F4ED;
+}
+
+.badge.neg{
+  background:#FBECEA;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+  background:var(--navy-d);
+  color:#B9C6D6;
+  padding:25px 0;
+  font-size:11px;
+}
+
+.footer .wrap{
+  padding-bottom:0;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1050px){
+  .cards{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .filter-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .grid-wide{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:850px){
+  .grid,
+  .reco{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:28px;
+  }
+
+  .chart{
+    height:300px;
+  }
+
+  .rank-row{
+    grid-template-columns:30px 1fr 120px;
+  }
+}
+
+@media(max-width:600px){
+  .wrap,
+  .hero-inner,
+  .tabbar{
+    padding-left:15px;
+    padding-right:15px;
+  }
+
+  .cards{
+    grid-template-columns:1fr;
+  }
+
+  .filter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero{
+    padding-top:32px;
+  }
+
+  .hero h1{
+    font-size:25px;
+  }
+
+  .section{
+    padding-top:26px;
+  }
+
+  .rank-row{
+    grid-template-columns:28px 1fr 100px;
+  }
+
+  .rank-value{
+    font-size:10px;
+  }
+}
+
+@media print{
+  .tabs,
+  .filter-box{
+    display:none;
+  }
+
+  .panel{
+    display:block!important;
+  }
+
+  .hero{
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="hero">
+  <div class="hero-inner">
+
+    <div class="eyebrow">
+      Analisis Kinerja Keuangan · Strictly Private & Confidential
+    </div>
+
+    <h1>
+      Laporan Laba Rugi Per Unit<br>
+      UID Jawa Tengah
+    </h1>
+
+    <p class="sub">
+      Analisis interaktif Laporan Laba Rugi berdasarkan unit kerja
+      dengan periode realisasi sampai dengan 31 Juli 2026.
+      Satuan utama ditampilkan dalam Rupiah dan Rupiah Juta.
+    </p>
+
+    <div class="metabar">
+      <div>
+        Periode Analisis
+        <strong>s.d. 31 Juli 2026</strong>
+      </div>
+
+      <div>
+        Entitas
+        <strong>UID Jawa Tengah</strong>
+      </div>
+
+      <div>
+        Cakupan
+        <strong>UID · 13 UP3 · UP2D</strong>
+      </div>
+
+      <div>
+        Basis
+        <strong>Realisasi Kumulatif</strong>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<nav class="tabs">
+  <div class="tabbar">
+
+    <button class="tab active" data-tab="unit">
+      Laporan Laba Rugi Per Unit
+    </button>
+
+    <button class="tab" data-tab="detail">
+      Detail Laba Rugi
+    </button>
+
+    <button class="tab" data-tab="analisis">
+      Analisis & Insight
+    </button>
+
+  </div>
+</nav>
+
+
+<main class="wrap">
+
+<!-- =========================================================
+     TAB 1 — LAPORAN LABA RUGI PER UNIT
+========================================================= -->
+
+<section id="unit" class="panel active">
+
+  <div class="section">
+
+    <h2 class="section-title">
+      <span class="num">01</span>
+      Ringkasan Kinerja Keuangan Per Unit
+    </h2>
+
+    <div class="rule"></div>
+
+    <p class="intro">
+      Dashboard ini membandingkan kinerja masing-masing unit berdasarkan
+      Pendapatan Usaha, Beban Usaha, Laba (Rugi) Usaha,
+      Pendapatan (Beban) Lain-lain, dan Laba (Rugi) Bersih.
+      Ranking secara default disusun dari nilai terbesar ke terkecil.
+    </p>
+
+
+    <!-- FILTER -->
+
+    <div class="filter-box">
+
+      <div class="filter-grid">
+
+        <div class="field">
+          <label>Indikator Ranking</label>
+
+          <select id="metricSelect">
+
+            <option value="revenue">
+              Pendapatan Usaha
+            </option>
+
+            <option value="expense">
+              Beban Usaha
+            </option>
+
+            <option value="operatingProfit">
+              Laba (Rugi) Usaha
+            </option>
+
+            <option value="other">
+              Pendapatan (Beban) Lain-lain
+            </option>
+
+            <option value="netProfit">
+              Laba (Rugi) Bersih
+            </option>
+
+          </select>
+        </div>
+
+
+        <div class="field">
+          <label>Unit Fokus</label>
+
+          <select id="unitSelect">
+            <option value="GABUNGAN">GABUNGAN</option>
+            <option value="UID">UID</option>
+            <option value="UP3 KUDUS">UP3 KUDUS</option>
+            <option value="UP3 SURAKARTA">UP3 SURAKARTA</option>
+            <option value="UP3 YOGYAKARTA">UP3 YOGYAKARTA</option>
+            <option value="UP3 MAGELANG">UP3 MAGELANG</option>
+            <option value="UP3 PURWOKERTO">UP3 PURWOKERTO</option>
+            <option value="UP3 TEGAL">UP3 TEGAL</option>
+            <option value="UP3 SEMARANG">UP3 SEMARANG</option>
+            <option value="UP3 SALATIGA">UP3 SALATIGA</option>
+            <option value="UP3 KLATEN">UP3 KLATEN</option>
+            <option value="UP3 PEKALONGAN">UP3 PEKALONGAN</option>
+            <option value="UP3 CILACAP">UP3 CILACAP</option>
+            <option value="UP3 DEMAK">UP3 DEMAK</option>
+            <option value="UP3 SUKOHARJO">UP3 SUKOHARJO</option>
+            <option value="UP2D">UP2D</option>
+          </select>
+        </div>
+
+
+        <div class="field">
+          <label>Pencarian Tabel</label>
+
+          <input
+            type="search"
+            id="tableSearch"
+            placeholder="Cari unit atau uraian..."
+          >
+        </div>
+
+
+        <button class="btn" id="resetBtn">
+          Reset
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- KPI -->
+
+    <div class="cards">
+
+      <div class="card">
+        <div class="label" id="kpi1Label">
+          Pendapatan Usaha
+        </div>
+
+        <div class="value" id="kpi1Value">
+          Rp 37,41 T
+        </div>
+
+        <div class="delta pos" id="kpi1Delta">
+          GABUNGAN
+        </div>
+
+        <div class="small">
+          Realisasi sampai dengan 31 Juli 2026
+        </div>
+      </div>
+
+
+      <div class="card teal">
+        <div class="label">
+          Beban Usaha
+        </div>
+
+        <div class="value" id="kpi2Value">
+          Rp 33,60 T
+        </div>
+
+        <div class="delta neutral">
+          Operasional
+        </div>
+
+        <div class="small">
+          Termasuk Pembelian Tenaga Listrik
+        </div>
+      </div>
+
+
+      <div class="card gold">
+        <div class="label">
+          Laba (Rugi) Usaha
+        </div>
+
+        <div class="value" id="kpi3Value">
+          Rp 3,81 T
+        </div>
+
+        <div class="delta pos" id="kpi3Delta">
+          Margin 10,18%
+        </div>
+
+        <div class="small">
+          Pendapatan dikurangi Beban Usaha
+        </div>
+      </div>
+
+
+      <div class="card green">
+        <div class="label">
+          Laba (Rugi) Bersih
+        </div>
+
+        <div class="value" id="kpi4Value">
+          Rp 3,19 T
+        </div>
+
+        <div class="delta pos" id="kpi4Delta">
+          Setelah pos lain-lain
+        </div>
+
+        <div class="small">
+          Laba tahun berjalan dari operasi dilanjutkan
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- CHART RANKING -->
+
+    <div class="grid-wide">
+
+      <div class="box">
+
+        <h3 id="rankingTitle">
+          Ranking Pendapatan Usaha Per Unit
+        </h3>
+
+        <div class="chart">
+          <canvas id="rankingChart"></canvas>
+        </div>
+
+      </div>
+
+
+      <div class="box">
+
+        <h3>
+          Ranking Unit
+        </h3>
+
+        <div class="rank-list" id="rankList"></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- COMPOSITION -->
+
+    <div class="grid">
+
+      <div class="box">
+
+        <h3>
+          Komposisi Pendapatan — Unit Fokus
+        </h3>
+
+        <div class="chart small-chart">
+          <canvas id="revenueChart"></canvas>
+        </div>
+
+      </div>
+
+
+      <div class="box">
+
+        <h3>
+          Komposisi Beban — Unit Fokus
+        </h3>
+
+        <div class="chart small-chart">
+          <canvas id="expenseChart"></canvas>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div class="box">
+
+      <h3>
+        Perbandingan Kinerja Keuangan Per Unit
+      </h3>
+
+      <div class="small" style="margin-bottom:10px">
+        Klik header kolom untuk mengurutkan. Nilai negatif ditampilkan
+        dalam warna merah.
+      </div>
+
+      <div class="table-wrap">
+
+        <table id="unitTable">
+
+          <thead>
+            <tr>
+              <th data-sort="unit">
+                Unit
+              </th>
+
+              <th data-sort="revenue">
+                Pendapatan Usaha
+              </th>
+
+              <th data-sort="expense">
+                Beban Usaha
+              </th>
+
+              <th data-sort="operatingProfit">
+                Laba (Rugi) Usaha
+              </th>
+
+              <th data-sort="other">
+                Pendapatan (Beban) Lain-lain
+              </th>
+
+              <th data-sort="netProfit">
+                Laba (Rugi) Bersih
+              </th>
+
+              <th data-sort="margin">
+                Margin Usaha
+              </th>
+            </tr>
+          </thead>
+
+          <tbody id="unitTableBody"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     TAB 2 — DETAIL LABA RUGI
+========================================================= -->
+
+<section id="detail" class="panel">
+
+  <div class="section">
+
+    <h2 class="section-title">
+      <span class="num">02</span>
+      Detail Laporan Laba Rugi Per Unit
+    </h2>
+
+    <div class="rule"></div>
+
+    <p class="intro">
+      Detail ini menampilkan komponen Pendapatan Usaha dan Beban Usaha
+      untuk unit yang dipilih. Nilai dapat digunakan untuk melihat
+      driver utama kinerja masing-masing unit.
+    </p>
+
+
+    <div class="filter-box">
+
+      <div class="filter-grid">
+
+        <div class="field">
+
+          <label>Unit</label>
+
+          <select id="detailUnitSelect">
+
+            <option value="GABUNGAN">GABUNGAN</option>
+            <option value="UID">UID</option>
+            <option value="UP3 KUDUS">UP3 KUDUS</option>
+            <option value="UP3 SURAKARTA">UP3 SURAKARTA</option>
+            <option value="UP3 YOGYAKARTA">UP3 YOGYAKARTA</option>
+            <option value="UP3 MAGELANG">UP3 MAGELANG</option>
+            <option value="UP3 PURWOKERTO">UP3 PURWOKERTO</option>
+            <option value="UP3 TEGAL">UP3 TEGAL</option>
+            <option value="UP3 SEMARANG">UP3 SEMARANG</option>
+            <option value="UP3 SALATIGA">UP3 SALATIGA</option>
+            <option value="UP3 KLATEN">UP3 KLATEN</option>
+            <option value="UP3 PEKALONGAN">UP3 PEKALONGAN</option>
+            <option value="UP3 CILACAP">UP3 CILACAP</option>
+            <option value="UP3 DEMAK">UP3 DEMAK</option>
+            <option value="UP3 SUKOHARJO">UP3 SUKOHARJO</option>
+            <option value="UP2D">UP2D</option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="grid">
+
+      <div class="box">
+
+        <h3>
+          Pendapatan Usaha
+        </h3>
+
+        <div class="chart">
+          <canvas id="detailRevenueChart"></canvas>
+        </div>
+
+      </div>
+
+
+      <div class="box">
+
+        <h3>
+          Beban Usaha
+        </h3>
+
+        <div class="chart">
+          <canvas id="detailExpenseChart"></canvas>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="box">
+
+      <h3>
+        Detail Pendapatan Usaha
+      </h3>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Uraian</th>
+              <th>Nilai</th>
+              <th>Kontribusi</th>
+            </tr>
+          </thead>
+
+          <tbody id="detailRevenueBody"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
+    <div class="box">
+
+      <h3>
+        Detail Beban Usaha
+      </h3>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Uraian</th>
+              <th>Nilai</th>
+              <th>Kontribusi</th>
+            </tr>
+          </thead>
+
+          <tbody id="detailExpenseBody"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
+    <div class="callout blue">
+
+      <b>Catatan metodologi:</b>
+
+      Pemakaian Material dan Jasa Borongan merupakan rincian dari
+      Pemeliharaan. Oleh karena itu, kedua komponen tersebut tidak
+      dijumlahkan kembali ke dalam total Beban Usaha agar tidak terjadi
+      double-counting.
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     TAB 3 — ANALISIS
+========================================================= -->
+
+<section id="analisis" class="panel">
+
+  <div class="section">
+
+    <h2 class="section-title">
+      <span class="num">03</span>
+      Analisis & Insight Manajemen
+    </h2>
+
+    <div class="rule"></div>
+
+
+    <div class="callout">
+
+      <b>Gambaran umum:</b>
+
+      GABUNGAN mencatat Pendapatan Usaha sebesar
+      <b>Rp37.405,39 miliar</b> dengan Beban Usaha
+      sebesar <b>Rp33.596,63 miliar</b>, sehingga menghasilkan
+      Laba Usaha sebesar <b>Rp3.808,77 miliar</b> dan
+      Laba Bersih sebesar <b>Rp3.187,70 miliar</b>.
+
+    </div>
+
+
+    <div class="cards">
+
+      <div class="card">
+
+        <div class="label">
+          Pendapatan Usaha
+        </div>
+
+        <div class="value">
+          Rp 37,41 T
+        </div>
+
+        <div class="delta pos">
+          5 sumber pendapatan
+        </div>
+
+        <div class="small">
+          Penjualan, subsidi, kompensasi,
+          penyambungan dan lain-lain
+        </div>
+
+      </div>
+
+
+      <div class="card teal">
+
+        <div class="label">
+          Pembelian Tenaga Listrik
+        </div>
+
+        <div class="value">
+          Rp 31,60 T
+        </div>
+
+        <div class="delta neg">
+          Komponen biaya dominan
+        </div>
+
+        <div class="small">
+          Driver utama Beban Usaha
+        </div>
+
+      </div>
+
+
+      <div class="card gold">
+
+        <div class="label">
+          Laba Usaha
+        </div>
+
+        <div class="value">
+          Rp 3,81 T
+        </div>
+
+        <div class="delta pos">
+          Margin 10,18%
+        </div>
+
+        <div class="small">
+          Sebelum Pendapatan/Beban Lain-lain
+        </div>
+
+      </div>
+
+
+      <div class="card green">
+
+        <div class="label">
+          Laba Bersih
+        </div>
+
+        <div class="value">
+          Rp 3,19 T
+        </div>
+
+        <div class="delta pos">
+          Positif
+        </div>
+
+        <div class="small">
+          Setelah Pendapatan/Beban Lain-lain
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <ul class="insights">
+
+      <li>
+
+        <div class="insight-num">
+          01
+        </div>
+
+        <div class="insight-body">
+
+          <b>Pendapatan Usaha didominasi Penjualan Tenaga Listrik.</b>
+
+          Penjualan Tenaga Listrik netto sebesar
+          Rp21,53 triliun merupakan komponen terbesar Pendapatan Usaha,
+          diikuti Subsidi Listrik Pemerintah sebesar Rp8,61 triliun
+          dan Pendapatan Kompensasi sebesar Rp7,09 triliun.
+
+        </div>
+
+      </li>
+
+
+      <li>
+
+        <div class="insight-num">
+          02
+        </div>
+
+        <div class="insight-body">
+
+          <b>Semarang menjadi kontributor terbesar di antara UP3.</b>
+
+          UP3 Semarang membukukan Pendapatan Usaha sekitar
+          Rp6,09 triliun, sehingga menjadi unit dengan nilai Pendapatan
+          Usaha terbesar dalam data unit yang diberikan.
+
+        </div>
+
+      </li>
+
+
+      <li>
+
+        <div class="insight-num">
+          03
+        </div>
+
+        <div class="insight-body">
+
+          <b>Pembelian Tenaga Listrik merupakan driver biaya utama.</b>
+
+          Nilai Pembelian Tenaga Listrik mencapai sekitar
+          Rp31,60 triliun atau sekitar 94% dari Beban Usaha Gabungan.
+          Efisiensi pada komponen ini memiliki dampak paling besar
+          terhadap Laba Usaha.
+
+        </div>
+
+      </li>
+
+
+      <li>
+
+        <div class="insight-num">
+          04
+        </div>
+
+        <div class="insight-body">
+
+          <b>Profitabilitas antar unit menunjukkan variasi yang signifikan.</b>
+
+          Beberapa unit membukukan Laba Usaha positif,
+          sementara terdapat unit dengan Laba (Rugi) Usaha negatif.
+          Hal ini penting untuk menjadi dasar analisis driver biaya,
+          pendapatan dan karakteristik operasi masing-masing unit.
+
+        </div>
+
+      </li>
+
+
+      <li>
+
+        <div class="insight-num">
+          05
+        </div>
+
+        <div class="insight-body">
+
+          <b>UP2D memiliki karakteristik berbeda dari UP3.</b>
+
+          UP2D membukukan Beban Usaha sebesar sekitar
+          Rp115,89 miliar dan Laba Usaha negatif sekitar
+          Rp115,89 miliar karena struktur pendapatannya berbeda
+          dari unit pelayanan pelanggan.
+
+        </div>
+
+      </li>
+
+
+      <li>
+
+        <div class="insight-num">
+          06
+        </div>
+
+        <div class="insight-body">
+
+          <b>Pos lain-lain menjadi faktor pengurang Laba Usaha.</b>
+
+          GABUNGAN mencatat Pendapatan (Beban) Lain-lain
+          sebesar negatif Rp621,07 miliar, sehingga Laba Bersih
+          berada di bawah Laba Usaha.
+
+        </div>
+
+      </li>
+
+    </ul>
+
+
+    <div class="reco">
+
+      <div class="reco-card">
+
+        <div class="k">
+          Fokus 01 · Pendapatan
+        </div>
+
+        <p>
+          Monitor kualitas pertumbuhan Pendapatan Usaha dengan
+          memisahkan kontribusi Penjualan Tenaga Listrik,
+          Subsidi Pemerintah dan Pendapatan Kompensasi.
+        </p>
+
+      </div>
+
+
+      <div class="reco-card">
+
+        <div class="k">
+          Fokus 02 · Efisiensi
+        </div>
+
+        <p>
+          Prioritaskan pengendalian Pembelian Tenaga Listrik
+          karena menjadi komponen biaya terbesar dan paling
+          material terhadap profitabilitas.
+        </p>
+
+      </div>
+
+
+      <div class="reco-card">
+
+        <div class="k">
+          Fokus 03 · Unit
+        </div>
+
+        <p>
+          Gunakan ranking Laba Usaha dan Margin Usaha sebagai
+          dasar identifikasi unit dengan kinerja terbaik,
+          unit yang perlu perhatian dan unit yang perlu
+          pendalaman driver biaya.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="box">
+
+      <h3>
+        Top Unit Berdasarkan Laba (Rugi) Usaha
+      </h3>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Ranking</th>
+              <th>Unit</th>
+              <th>Laba (Rugi) Usaha</th>
+              <th>Pendapatan Usaha</th>
+              <th>Margin</th>
+            </tr>
+          </thead>
+
+          <tbody id="profitRankingBody"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
+    <div class="callout red">
+
+      <b>Catatan:</b>
+
+      UP3 Yogyakarta hanya menghitung pembukuan periode Januari s.d Maret 2026.
+      UID dan UP2D menunjukkan Laba (Rugi) Usaha negatif 
+      karena tidak melakukan penjualan tenaga listrik langsung kepada pelanggan
+      sehingga tidak membukukan pendapatan dari penjualan tenaga listrik,
+      di sisi lain beberapa beban biaya pekerjaan di UP dibukukan di UID.
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+  <div class="wrap">
+
+    <div>
+      Sumber: Data Laporan Laba Rugi Perbandingan Antar Unit
+      · UID Jawa Tengah
+    </div>
+
+    <div>
+      Per 31 Juli 2026 · Strictly Private & Confidential
+    </div>
+
+  </div>
+
+</footer>
+
+
+<script>
+
+/* ============================================================
+   DATA MASTER
+============================================================ */
+
+const units = [
+  "GABUNGAN",
+  "UID",
+  "UP3 KUDUS",
+  "UP3 SURAKARTA",
+  "UP3 YOGYAKARTA",
+  "UP3 MAGELANG",
+  "UP3 PURWOKERTO",
+  "UP3 TEGAL",
+  "UP3 SEMARANG",
+  "UP3 SALATIGA",
+  "UP3 KLATEN",
+  "UP3 PEKALONGAN",
+  "UP3 CILACAP",
+  "UP3 DEMAK",
+  "UP3 SUKOHARJO",
+  "UP2D"
+];
+
+
+/* ============================================================
+   DATA KEUANGAN UTAMA
+   Urutan mengikuti kolom data sumber.
+============================================================ */
+
+const financial = {
+
+  revenue: [
+    37405391637322,
+    646023454,
+    5009787988662,
+    4083194720395,
+    1479935551498,
+    1827883019948,
+    2652538174174,
+    3573106632981,
+    6090035280299,
+    1681555263597,
+    1886122402113,
+    2001190419071,
+    2514077501264,
+    2485679058764,
+    2119639601102,
+    0
+  ],
+
+  expense: [
+    33596626538488,
+    152250405021,
+    4684452631579,
+    3516391786070,
+    1605280488967,
+    1678193367556,
+    2395333828698,
+    3314068595669,
+    4987527186433,
+    1453144442105,
+    1653748683020,
+    1559448467332,
+    2296756359876,
+    2321431211516,
+    1862705882840,
+    115893201806
+  ],
+
+  operatingProfit: [
+    3808765098834,
+    -151604381567,
+    325335357083,
+    566802934325,
+    -125344937469,
+    149689652392,
+    257204345476,
+    259038037312,
+    1102508093866,
+    228410821492,
+    232373719093,
+    441741951739,
+    217321141388,
+    164247847248,
+    256933718262,
+    -115893201806
+  ],
+
+  other: [
+    -621066193404,
+    -568788702293,
+    557412321,
+    -10073387735,
+    -10572751578,
+    2753744536,
+    -7734182037,
+    -8258740736,
+    -6901510948,
+    -5016508910,
+    897726446,
+    4971337251,
+    -3554128024,
+    2683248645,
+    730267916,
+    -12760018258
+  ],
+
+  netProfit: [
+    3187698905430,
+    -720393083860,
+    325892769404,
+    556729546590,
+    -135917689047,
+    152443396928,
+    249470163439,
+    250779296576,
+    1095606582918,
+    223394312582,
+    233271445539,
+    446713288990,
+    213767013364,
+    166931095893,
+    257663986178,
+    -128653220064
+  ]
+
+};
+
+
+/* ============================================================
+   DETAIL PENDAPATAN
+============================================================ */
+
+const revenueDetail = {
+
+  "Penjualan Tenaga Listrik (netto)": [
+    21527756137725,
+    0,
+    2645612908227,
+    2458818564412,
+    1167914458633,
+    982125608116,
+    1384086471030,
+    1983010650517,
+    3719423368347,
+    1025592138825,
+    1040661367411,
+    1162364950450,
+    1366065129120,
+    1369370151223,
+    1222710371414,
+    0
+  ],
+
+  "Subsidi Listrik Pemerintah": [
+    8611551311729,
+    0,
+    1454954529590,
+    674809886590,
+    184869447051,
+    535899679403,
+    851804697904,
+    903633150997,
+    1180557693959,
+    234322347933,
+    479704344123,
+    407114441319,
+    670565375203,
+    585993842710,
+    447321874947,
+    0
+  ],
+
+  "Pendapatan Kompensasi": [
+    7092526539471,
+    0,
+    889268735556,
+    932858382594,
+    117548128198,
+    300279375496,
+    404904246397,
+    668140827108,
+    1161644914783,
+    413365682137,
+    356659259142,
+    420228183839,
+    466709430070,
+    520414668050,
+    440504706101,
+    0
+  ],
+
+  "Penyambungan Pelanggan": [
+    163306101013,
+    0,
+    18558975791,
+    16292914384,
+    9321900096,
+    9351316695,
+    11295087146,
+    15960158804,
+    26934400886,
+    6622201332,
+    8658692451,
+    11022791761,
+    10629379306,
+    9689074927,
+    8969207434,
+    0
+  ],
+
+  "Lain-lain": [
+    10251547384,
+    646023454,
+    1392839498,
+    414972415,
+    281617520,
+    227040238,
+    447671697,
+    2361845555,
+    1474902324,
+    1652893370,
+    438738986,
+    460051702,
+    108187565,
+    211321854,
+    133441206,
+    0
+  ]
+
+};
+
+
+/* ============================================================
+   DETAIL BEBAN
+============================================================ */
+
+const expenseDetail = {
+
+  "Pembelian Tenaga Listrik": [
+    31596978412748,
+    0,
+    4492806678292,
+    3366007661578,
+    1523136727726,
+    1535994236614,
+    2243574217244,
+    3136608559225,
+    4784159587151,
+    1369626601954,
+    1548958182375,
+    1458916921697,
+    2158287881709,
+    2224860319925,
+    1754040837258,
+    0
+  ],
+
+  "Sewa AHG": [
+    15563094040,
+    9616647019,
+    470085000,
+    517287750,
+    225898875,
+    514665375,
+    533939829,
+    632672250,
+    556623375,
+    441238875,
+    435994125,
+    268162125,
+    391413750,
+    315059941,
+    307741751,
+    335664000
+  ],
+
+  "Bahan Bakar dan Minyak Pelumas": [
+    3180947623,
+    0,
+    3180947623,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+
+  "Pemeliharaan": [
+    503239736993,
+    36414425023,
+    46537694754,
+    35153087861,
+    11900684472,
+    34050291687,
+    32607414258,
+    37734061351,
+    54198453828,
+    22430846677,
+    24187785689,
+    23615197161,
+    33605827288,
+    24146748149,
+    27913702012,
+    58743516783
+  ],
+
+  "Pemakaian Material": [
+    36265017674,
+    0,
+    5823453423,
+    2819450807,
+    806036810,
+    1159502977,
+    854684724,
+    4249030938,
+    5909609160,
+    3683043368,
+    2192516814,
+    2944043111,
+    701320358,
+    2489572728,
+    1922130456,
+    710622000
+  ],
+
+  "Jasa Borongan": [
+    466974719319,
+    36414425023,
+    40714241331,
+    32333637054,
+    11094647662,
+    32890788710,
+    31752729534,
+    33485030413,
+    48288844668,
+    18747803309,
+    21995268875,
+    20671154050,
+    32904506930,
+    21657175421,
+    25991571556,
+    58032894783
+  ],
+
+  "Kepegawaian": [
+    511153101193,
+    76377197738,
+    35017945577,
+    39093151214,
+    25293362864,
+    34516550375,
+    33305486829,
+    43646184037,
+    39723078474,
+    22469476579,
+    32844028711,
+    24779844960,
+    30372474832,
+    22354291242,
+    29407221049,
+    21952806712
+  ],
+
+  "Penyusutan Aset Tetap": [
+    709226203676,
+    5295729785,
+    79238834050,
+    60146046005,
+    37812843911,
+    50666480791,
+    65793646267,
+    71773721451,
+    81483784914,
+    27898801129,
+    33820544223,
+    38485446707,
+    54038305178,
+    33318524328,
+    36311846182,
+    33141648755
+  ],
+
+  "Penyusutan Aset Tetap Sewa": [
+    6007345198,
+    6007345198,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+
+  "Lain-Lain": [
+    251277697017,
+    18539060258,
+    27200446283,
+    15474551662,
+    6910971119,
+    22451142714,
+    19519124271,
+    23673397355,
+    27405658691,
+    10277476891,
+    13502147897,
+    13382894682,
+    20060457119,
+    16436267931,
+    14724534588,
+    1719565556
+  ]
+
+};
+
+
+/* ============================================================
+   LABEL METRIC
+============================================================ */
+
+const metricLabels = {
+  revenue:"Pendapatan Usaha",
+  expense:"Beban Usaha",
+  operatingProfit:"Laba (Rugi) Usaha",
+  other:"Pendapatan (Beban) Lain-lain",
+  netProfit:"Laba (Rugi) Bersih"
+};
+
+
+/* ============================================================
+   HELPER
+============================================================ */
+
+function formatRupiah(value){
+
+  const sign = value < 0 ? "-" : "";
+  const abs = Math.abs(value);
+
+  return sign + "Rp " +
+    new Intl.NumberFormat("id-ID").format(
+      Math.round(abs)
+    );
+
+}
+
+
+function formatJuta(value){
+
+  return new Intl.NumberFormat("id-ID",{
+    maximumFractionDigits:0
+  }).format(value / 1000000);
+
+}
+
+
+function formatCompact(value){
+
+  const sign = value < 0 ? "-" : "";
+  const abs = Math.abs(value);
+
+  if(abs >= 1e12){
+
+    return sign +
+      "Rp " +
+      (abs / 1e12).toLocaleString("id-ID",{
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }) +
+      " T";
+
+  }
+
+  if(abs >= 1e9){
+
+    return sign +
+      "Rp " +
+      (abs / 1e9).toLocaleString("id-ID",{
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }) +
+      " M";
+
+  }
+
+  if(abs >= 1e6){
+
+    return sign +
+      "Rp " +
+      (abs / 1e6).toLocaleString("id-ID",{
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }) +
+      " Jt";
+
+  }
+
+  return formatRupiah(value);
+
+}
+
+
+function percent(value){
+
+  return value.toLocaleString("id-ID",{
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  }) + "%";
+
+}
+
+
+/* ============================================================
+   CHART CONFIG
+============================================================ */
+
+const chartColors = [
+  "#0B2E4F",
+  "#0E7C7B",
+  "#159A98",
+  "#C9A227",
+  "#2877A8",
+  "#7656A6",
+  "#B23A2E",
+  "#6B7280",
+  "#3C8D7C",
+  "#9A7B22"
+];
+
+const chartBase = {
+
+  responsive:true,
+
+  maintainAspectRatio:false,
+
+  plugins:{
+    legend:{
+      position:"bottom",
+      labels:{
+        boxWidth:12,
+        padding:12,
+        font:{
+          size:11
+        }
+      }
+    },
+
+    tooltip:{
+      callbacks:{
+        label:function(context){
+
+          return context.dataset.label
+            ? context.dataset.label + ": " +
+              formatCompact(context.raw)
+            : context.label + ": " +
+              formatCompact(context.raw);
+
+        }
+      }
+    }
+  }
+
+};
+
+
+let rankingChart = null;
+let revenueChart = null;
+let expenseChart = null;
+let detailRevenueChart = null;
+let detailExpenseChart = null;
+
+
+/* ============================================================
+   RANKING
+============================================================ */
+
+function getRanking(metric){
+
+  return units.map((unit,index)=>({
+
+    unit:unit,
+
+    value:financial[metric][index],
+
+    index:index
+
+  })).sort((a,b)=>b.value-a.value);
+
+}
+
+
+function renderRanking(){
+
+  const metric =
+    document.getElementById("metricSelect").value;
+
+  const ranking =
+    getRanking(metric);
+
+  document.getElementById("rankingTitle").textContent =
+    "Ranking " + metricLabels[metric] + " Per Unit";
+
+
+  const labels =
+    ranking.map(x=>x.unit);
+
+  const values =
+    ranking.map(x=>x.value);
+
+
+  if(rankingChart){
+    rankingChart.destroy();
+  }
+
+
+  rankingChart = new Chart(
+    document.getElementById("rankingChart"),
+    {
+
+      type:"bar",
+
+      data:{
+        labels:labels,
+
+        datasets:[{
+
+          label:metricLabels[metric],
+
+          data:values,
+
+          backgroundColor:
+            values.map(v =>
+              v < 0 ? "#B23A2E" : "#0E7C7B"
+            ),
+
+          borderRadius:3,
+
+          borderWidth:0
+
+        }]
+
+      },
+
+      options:{
+
+        ...chartBase,
+
+        indexAxis:"y",
+
+        scales:{
+
+          x:{
+            ticks:{
+              callback:function(value){
+                return formatCompact(value);
+              }
+            },
+
+            grid:{
+              color:"#E7E9EC"
+            }
+          },
+
+          y:{
+            grid:{
+              display:false
+            },
+
+            ticks:{
+              font:{
+                size:10
+              }
+            }
+          }
+
+        },
+
+        plugins:{
+
+          ...chartBase.plugins,
+
+          legend:{
+            display:false
+          }
+
+        }
+
+      }
+
+    }
+  );
+
+
+  const max =
+    Math.max(
+      ...ranking.map(x=>Math.abs(x.value))
+    );
+
+
+  document.getElementById("rankList").innerHTML =
+    ranking.map((x,i)=>{
+
+      const width =
+        max === 0
+          ? 0
+          : Math.abs(x.value)/max*100;
+
+      return `
+
+        <div class="rank-row">
+
+          <div class="rank-no">
+            ${i+1}
+          </div>
+
+          <div class="rank-info">
+
+            <div class="rank-label">
+              ${x.unit}
+            </div>
+
+            <div class="bar-bg">
+
+              <div
+                class="bar-fill"
+                style="
+                  width:${width}%;
+                  background:
+                    ${x.value < 0
+                      ? "linear-gradient(90deg,#B23A2E,#D06A5F)"
+                      : "linear-gradient(90deg,#0B2E4F,#0E7C7B)"
+                    };
+                "
+              ></div>
+
+            </div>
+
+          </div>
+
+          <div
+            class="rank-value
+              ${x.value < 0 ? "neg" : ""}"
+          >
+            ${formatCompact(x.value)}
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* ============================================================
+   UNIT KPI
+============================================================ */
+
+function renderKPI(){
+
+  const unit =
+    document.getElementById("unitSelect").value;
+
+  const index =
+    units.indexOf(unit);
+
+  const revenue =
+    financial.revenue[index];
+
+  const expense =
+    financial.expense[index];
+
+  const profit =
+    financial.operatingProfit[index];
+
+  const net =
+    financial.netProfit[index];
+
+  const margin =
+    revenue !== 0
+      ? profit/revenue*100
+      : 0;
+
+
+  document.getElementById("kpi1Label").textContent =
+    "Pendapatan Usaha";
+
+  document.getElementById("kpi1Value").textContent =
+    formatCompact(revenue);
+
+  document.getElementById("kpi1Delta").textContent =
+    unit;
+
+
+  document.getElementById("kpi2Value").textContent =
+    formatCompact(expense);
+
+
+  document.getElementById("kpi3Value").textContent =
+    formatCompact(profit);
+
+  document.getElementById("kpi3Delta").textContent =
+    "Margin " + percent(margin);
+
+
+  document.getElementById("kpi4Value").textContent =
+    formatCompact(net);
+
+  document.getElementById("kpi4Delta").textContent =
+    net >= 0
+      ? "Positif"
+      : "Negatif";
+
+
+  document.getElementById("kpi3Value")
+    .classList.toggle("neg",profit < 0);
+
+}
+
+
+/* ============================================================
+   COMPOSITION CHARTS
+============================================================ */
+
+function renderComposition(){
+
+  const unit =
+    document.getElementById("unitSelect").value;
+
+  const index =
+    units.indexOf(unit);
+
+
+  /* Pendapatan */
+
+  const revenueLabels =
+    Object.keys(revenueDetail);
+
+  const revenueValues =
+    revenueLabels.map(
+      key=>revenueDetail[key][index]
+    );
+
+
+  if(revenueChart){
+    revenueChart.destroy();
+  }
+
+
+  revenueChart = new Chart(
+    document.getElementById("revenueChart"),
+    {
+
+      type:"doughnut",
+
+      data:{
+
+        labels:revenueLabels,
+
+        datasets:[{
+
+          data:revenueValues,
+
+          backgroundColor:chartColors,
+
+          borderWidth:2,
+
+          borderColor:"#fff"
+
+        }]
+
+      },
+
+      options:{
+
+        ...chartBase,
+
+        cutout:"58%",
+
+        plugins:{
+
+          ...chartBase.plugins,
+
+          tooltip:{
+            callbacks:{
+              label:function(context){
+
+                const total =
+                  context.dataset.data
+                    .reduce((a,b)=>a+b,0);
+
+                const p =
+                  total
+                    ? context.raw/total*100
+                    : 0;
+
+                return context.label +
+                  ": " +
+                  formatCompact(context.raw) +
+                  " (" +
+                  percent(p) +
+                  ")";
+
+              }
+            }
+          }
+
+        }
+
+      }
+
+    }
+  );
+
+
+  /* Beban */
+
+  const expenseLabels =
+    Object.keys(expenseDetail);
+
+  const expenseValues =
+    expenseLabels.map(
+      key=>expenseDetail[key][index]
+    );
+
+
+  if(expenseChart){
+    expenseChart.destroy();
+  }
+
+
+  expenseChart = new Chart(
+    document.getElementById("expenseChart"),
+    {
+
+      type:"doughnut",
+
+      data:{
+
+        labels:expenseLabels,
+
+        datasets:[{
+
+          data:expenseValues,
+
+          backgroundColor:chartColors,
+
+          borderWidth:2,
+
+          borderColor:"#fff"
+
+        }]
+
+      },
+
+      options:{
+
+        ...chartBase,
+
+        cutout:"58%",
+
+        plugins:{
+
+          ...chartBase.plugins,
+
+          tooltip:{
+            callbacks:{
+              label:function(context){
+
+                const total =
+                  context.dataset.data
+                    .reduce((a,b)=>a+b,0);
+
+                const p =
+                  total
+                    ? context.raw/total*100
+                    : 0;
+
+                return context.label +
+                  ": " +
+                  formatCompact(context.raw) +
+                  " (" +
+                  percent(p) +
+                  ")";
+
+              }
+            }
+          }
+
+        }
+
+      }
+
+    }
+  );
+
+}
+
+
+/* ============================================================
+   UNIT TABLE
+============================================================ */
+
+let tableSort = {
+  key:"revenue",
+  direction:"desc"
+};
+
+
+function renderUnitTable(){
+
+  const search =
+    document.getElementById("tableSearch")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  let rows =
+    units.map((unit,index)=>({
+
+      unit:unit,
+
+      revenue:financial.revenue[index],
+
+      expense:financial.expense[index],
+
+      operatingProfit:financial.operatingProfit[index],
+
+      other:financial.other[index],
+
+      netProfit:financial.netProfit[index],
+
+      margin:
+        financial.revenue[index] !== 0
+          ? financial.operatingProfit[index] /
+            financial.revenue[index] * 100
+          : 0
+
+    }));
+
+
+  if(search){
+
+    rows =
+      rows.filter(row=>
+        row.unit.toLowerCase().includes(search)
+      );
+
+  }
+
+
+  rows.sort((a,b)=>{
+
+    const A = a[tableSort.key];
+    const B = b[tableSort.key];
+
+    if(typeof A === "string"){
+      return tableSort.direction === "asc"
+        ? A.localeCompare(B)
+        : B.localeCompare(A);
+    }
+
+    return tableSort.direction === "asc"
+      ? A-B
+      : B-A;
+
+  });
+
+
+  document.getElementById("unitTableBody").innerHTML =
+    rows.map(row=>`
+
+      <tr>
+
+        <td class="unit-name">
+          ${row.unit}
+        </td>
+
+        <td>
+          ${formatCompact(row.revenue)}
+        </td>
+
+        <td>
+          ${formatCompact(row.expense)}
+        </td>
+
+        <td class="${row.operatingProfit<0 ? "neg" : "pos"}">
+          ${formatCompact(row.operatingProfit)}
+        </td>
+
+        <td class="${row.other<0 ? "neg" : "pos"}">
+          ${formatCompact(row.other)}
+        </td>
+
+        <td class="${row.netProfit<0 ? "neg" : "pos"}">
+          ${formatCompact(row.netProfit)}
+        </td>
+
+        <td class="${row.margin<0 ? "neg" : "pos"}">
+          ${percent(row.margin)}
+        </td>
+
+      </tr>
+
+    `).join("");
+
+}
+
+
+/* ============================================================
+   DETAIL TAB
+============================================================ */
+
+function renderDetail(){
+
+  const unit =
+    document.getElementById("detailUnitSelect").value;
+
+  const index =
+    units.indexOf(unit);
+
+
+  const revLabels =
+    Object.keys(revenueDetail);
+
+  const revValues =
+    revLabels.map(
+      key=>revenueDetail[key][index]
+    );
+
+
+  const expLabels =
+    Object.keys(expenseDetail);
+
+  const expValues =
+    expLabels.map(
+      key=>expenseDetail[key][index]
+    );
+
+
+  if(detailRevenueChart){
+    detailRevenueChart.destroy();
+  }
+
+
+  detailRevenueChart = new Chart(
+    document.getElementById("detailRevenueChart"),
+    {
+
+      type:"bar",
+
+      data:{
+
+        labels:revLabels,
+
+        datasets:[{
+
+          label:"Pendapatan",
+
+          data:revValues,
+
+          backgroundColor:chartColors,
+
+          borderRadius:3
+
+        }]
+
+      },
+
+      options:{
+
+        ...chartBase,
+
+        indexAxis:"y",
+
+        plugins:{
+          legend:{
+            display:false
+          }
+        },
+
+        scales:{
+
+          x:{
+            ticks:{
+              callback:value=>formatCompact(value)
+            }
+          },
+
+          y:{
+            ticks:{
+              font:{
+                size:10
+              }
+            }
+          }
+
+        }
+
+      }
+
+    }
+  );
+
+
+  if(detailExpenseChart){
+    detailExpenseChart.destroy();
+  }
+
+
+  detailExpenseChart = new Chart(
+    document.getElementById("detailExpenseChart"),
+    {
+
+      type:"bar",
+
+      data:{
+
+        labels:expLabels,
+
+        datasets:[{
+
+          label:"Beban",
+
+          data:expValues,
+
+          backgroundColor:"#0E7C7B",
+
+          borderRadius:3
+
+        }]
+
+      },
+
+      options:{
+
+        ...chartBase,
+
+        indexAxis:"y",
+
+        plugins:{
+          legend:{
+            display:false
+          }
+        },
+
+        scales:{
+
+          x:{
+            ticks:{
+              callback:value=>formatCompact(value)
+            }
+          },
+
+          y:{
+            ticks:{
+              font:{
+                size:10
+              }
+            }
+          }
+
+        }
+
+      }
+
+    }
+  );
+
+
+  const revTotal =
+    revValues.reduce((a,b)=>a+b,0);
+
+  document.getElementById("detailRevenueBody").innerHTML =
+    revLabels.map((label,i)=>{
+
+      const value = revValues[i];
+
+      const contribution =
+        revTotal !== 0
+          ? value/revTotal*100
+          : 0;
+
+      return `
+
+        <tr>
+
+          <td>
+            ${label}
+          </td>
+
+          <td>
+            ${formatCompact(value)}
+          </td>
+
+          <td>
+            ${percent(contribution)}
+          </td>
+
+        </tr>
+
+      `;
+
+    }).join("");
+
+
+  /*
+    Untuk beban, Pemakaian Material dan Jasa Borongan
+    adalah rincian Pemeliharaan.
+    Karena itu kontribusi detail diberi penanda khusus.
+  */
+
+  const expTotal =
+    expValues.reduce((a,b)=>a+b,0);
+
+
+  document.getElementById("detailExpenseBody").innerHTML =
+    expLabels.map((label,i)=>{
+
+      const value = expValues[i];
+
+      const contribution =
+        expTotal !== 0
+          ? value/expTotal*100
+          : 0;
+
+      const isSub =
+        label === "Pemakaian Material" ||
+        label === "Jasa Borongan";
+
+      return `
+
+        <tr>
+
+          <td>
+            ${isSub ? "↳ " : ""}
+            ${label}
+          </td>
+
+          <td>
+            ${formatCompact(value)}
+          </td>
+
+          <td>
+            ${percent(contribution)}
+          </td>
+
+        </tr>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* ============================================================
+   PROFIT RANKING
+============================================================ */
+
+function renderProfitRanking(){
+
+  const rows =
+    units.map((unit,index)=>({
+
+      unit,
+
+      profit:
+        financial.operatingProfit[index],
+
+      revenue:
+        financial.revenue[index],
+
+      margin:
+        financial.revenue[index]
+          ? financial.operatingProfit[index] /
+            financial.revenue[index] * 100
+          : 0
+
+    }))
+    .sort((a,b)=>b.profit-a.profit);
+
+
+  document.getElementById("profitRankingBody").innerHTML =
+    rows.map((row,i)=>`
+
+      <tr>
+
+        <td>
+          ${i+1}
+        </td>
+
+        <td class="unit-name">
+          ${row.unit}
+        </td>
+
+        <td class="${row.profit<0 ? "neg" : "pos"}">
+          ${formatCompact(row.profit)}
+        </td>
+
+        <td>
+          ${formatCompact(row.revenue)}
+        </td>
+
+        <td class="${row.margin<0 ? "neg" : "pos"}">
+          ${percent(row.margin)}
+        </td>
+
+      </tr>
+
+    `).join("");
+
+}
+
+
+/* ============================================================
+   EVENT
+============================================================ */
+
+document
+  .getElementById("metricSelect")
+  .addEventListener("change",renderRanking);
+
+
+document
+  .getElementById("unitSelect")
+  .addEventListener("change",function(){
+
+    renderKPI();
+    renderComposition();
+
+  });
+
+
+document
+  .getElementById("detailUnitSelect")
+  .addEventListener("change",renderDetail);
+
+
+document
+  .getElementById("tableSearch")
+  .addEventListener("input",renderUnitTable);
+
+
+document
+  .getElementById("resetBtn")
+  .addEventListener("click",function(){
+
+    document.getElementById("metricSelect").value =
+      "revenue";
+
+    document.getElementById("unitSelect").value =
+      "GABUNGAN";
+
+    document.getElementById("detailUnitSelect").value =
+      "GABUNGAN";
+
+    document.getElementById("tableSearch").value =
+      "";
+
+    tableSort = {
+      key:"revenue",
+      direction:"desc"
+    };
+
+    renderRanking();
+    renderKPI();
+    renderComposition();
+    renderUnitTable();
+    renderDetail();
+
+  });
+
+
+/* ============================================================
+   TABLE SORTING
+============================================================ */
+
+document
+  .querySelectorAll("#unitTable th")
+  .forEach(th=>{
+
+    th.addEventListener("click",function(){
+
+      const key =
+        this.dataset.sort;
+
+      if(tableSort.key === key){
+
+        tableSort.direction =
+          tableSort.direction === "asc"
+            ? "desc"
+            : "asc";
+
+      }else{
+
+        tableSort.key = key;
+        tableSort.direction = "desc";
+
+      }
+
+      renderUnitTable();
+
+    });
+
+  });
+
+
+/* ============================================================
+   TABS
+============================================================ */
+
+document
+  .querySelectorAll(".tab")
+  .forEach(button=>{
+
+    button.addEventListener("click",function(){
+
+      document
+        .querySelectorAll(".tab")
+        .forEach(x=>
+          x.classList.remove("active")
+        );
+
+      document
+        .querySelectorAll(".panel")
+        .forEach(x=>
+          x.classList.remove("active")
+        );
+
+      this.classList.add("active");
+
+      document
+        .getElementById(this.dataset.tab)
+        .classList.add("active");
+
+
+      /*
+        Resize Chart.js ketika tab baru dibuka.
+      */
+
+      setTimeout(()=>{
+
+        if(rankingChart)
+          rankingChart.resize();
+
+        if(revenueChart)
+          revenueChart.resize();
+
+        if(expenseChart)
+          expenseChart.resize();
+
+        if(detailRevenueChart)
+          detailRevenueChart.resize();
+
+        if(detailExpenseChart)
+          detailExpenseChart.resize();
+
+      },100);
+
+    });
+
+  });
+
+
+/* ============================================================
+   INITIALIZE
+============================================================ */
+
+renderRanking();
+renderKPI();
+renderComposition();
+renderUnitTable();
+renderDetail();
+renderProfitRanking();
+
+</script>
+
+</body>
+</html>

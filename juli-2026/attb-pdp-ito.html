@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitoring ATTB, PDP &amp; Persediaan Material - UID Jawa Tengah</title>
+    <!-- Kode Favicon -->
+    <link rel="icon" type="image/png" href="Logo PLN Favicon.png">
+<style>
+  :root{
+    --navy:#0c2d48;
+    --blue:#145da0;
+    --blue-mid:#2e8bc0;
+    --blue-light:#b1d4e0;
+    --bg:#f4f7fa;
+    --card:#ffffff;
+    --ink:#1c2b36;
+    --ink-soft:#5b6b76;
+    --green:#0f7a4a;
+    --green-bg:#e3f5ea;
+    --amber:#b9740e;
+    --amber-bg:#fdf1de;
+    --red:#a72b2b;
+    --red-bg:#fbe7e7;
+    --border:#e1e7ec;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    font-family:'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color:var(--ink);
+  }
+  .page{
+    max-width:1100px;
+    margin:0 auto;
+    padding:32px 24px 64px;
+  }
+  header{
+    background:linear-gradient(135deg, var(--navy), var(--blue));
+    color:#fff;
+    border-radius:16px;
+    padding:32px 36px;
+    margin-bottom:22px;
+    position:relative;
+    overflow:hidden;
+  }
+  header::after{
+    content:"";
+    position:absolute;
+    right:-60px; top:-60px;
+    width:220px; height:220px;
+    background:rgba(255,255,255,0.08);
+    border-radius:50%;
+  }
+  header .eyebrow{
+    font-size:13px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--blue-light);
+    margin:0 0 8px;
+    font-weight:600;
+  }
+  header h1{
+    font-size:26px;
+    margin:0 0 6px;
+    font-weight:700;
+  }
+  header p.sub{
+    margin:0;
+    font-size:14px;
+    color:#dbe9f4;
+  }
+
+  /* ===== TABS ===== */
+  .tabs{
+    display:flex;
+    gap:10px;
+    margin-bottom:28px;
+    flex-wrap:wrap;
+  }
+  .tab-btn{
+    background:var(--card);
+    border:1px solid var(--border);
+    color:var(--navy);
+    font-weight:700;
+    font-size:13.5px;
+    padding:11px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    box-shadow:0 1px 3px rgba(12,45,72,0.05);
+    transition:all .15s;
+    font-family:inherit;
+  }
+  .tab-btn:hover{ border-color:var(--blue-mid); color:var(--blue); }
+  .tab-btn.active{
+    background:linear-gradient(135deg, var(--navy), var(--blue));
+    color:#fff;
+    border-color:transparent;
+  }
+  .tab-panel[hidden]{ display:none; }
+
+  section{margin-bottom:32px;}
+  h2.section-title{
+    font-size:16px;
+    color:var(--navy);
+    margin:0 0 16px;
+    padding-left:12px;
+    border-left:4px solid var(--blue-mid);
+    font-weight:700;
+  }
+  .section-caption{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin:-10px 0 16px 16px;
+  }
+
+  .kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+    gap:14px;
+  }
+  .kpi-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px 20px;
+    box-shadow:0 1px 3px rgba(12,45,72,0.05);
+  }
+  .kpi-card .label{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin:0 0 6px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.4px;
+  }
+  .kpi-card .value{
+    font-size:26px;
+    font-weight:700;
+    color:var(--navy);
+    margin:0;
+  }
+  .kpi-card .value.good{color:var(--green);}
+  .kpi-card .value.warn{color:var(--red);}
+  .kpi-card .note{font-size:12px;color:var(--ink-soft);margin:4px 0 0;}
+
+  .chart-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:24px;
+    box-shadow:0 1px 3px rgba(12,45,72,0.05);
+  }
+  .legend{
+    display:flex; flex-wrap:wrap; gap:18px;
+    font-size:12.5px; color:var(--ink-soft);
+    margin-bottom:14px;
+  }
+  .legend span{display:flex; align-items:center; gap:6px;}
+  .dot{width:10px;height:10px;border-radius:2px;display:inline-block;}
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    background:var(--card);
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 1px 3px rgba(12,45,72,0.05);
+    font-size:13.5px;
+  }
+  thead th{
+    background:var(--navy);
+    color:#fff;
+    text-align:right;
+    padding:10px 14px;
+    font-weight:600;
+    font-size:12.5px;
+  }
+  thead th:first-child{text-align:left;}
+  tbody td{
+    padding:9px 14px;
+    text-align:right;
+    border-bottom:1px solid var(--border);
+    color:var(--ink);
+  }
+  tbody td:first-child{text-align:left; font-weight:600;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr.total{background:#eef4fa; font-weight:700;}
+  .table-scroll{ overflow-x:auto; border-radius:12px; }
+  .table-scroll table{ box-shadow:none; }
+  .badge{
+    display:inline-block;
+    padding:2px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:700;
+  }
+  .badge.good{background:var(--green-bg); color:var(--green);}
+  .badge.mid{background:var(--amber-bg); color:var(--amber);}
+  .badge.low{background:var(--red-bg); color:var(--red);}
+
+  .insight-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+    gap:16px;
+  }
+  .insight-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:4px solid var(--blue-mid);
+    border-radius:10px;
+    padding:16px 18px;
+    box-shadow:0 1px 3px rgba(12,45,72,0.05);
+  }
+  .insight-card h3{
+    margin:0 0 6px;
+    font-size:14.5px;
+    color:var(--navy);
+  }
+  .insight-card p{
+    margin:0;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    line-height:1.6;
+  }
+  .insight-card.warn{border-left-color:var(--red);}
+  .insight-card.warn h3{color:var(--red);}
+  .insight-card.good{border-left-color:var(--green);}
+  .insight-card.good h3{color:var(--green);}
+
+  .detail-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+    gap:16px;
+    margin-top:16px;
+  }
+  .detail-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 18px;
+    box-shadow:0 1px 3px rgba(12,45,72,0.05);
+  }
+  .detail-card .dc-head{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:10px;
+  }
+  .detail-card h3{ margin:0; font-size:14px; color:var(--navy); }
+  .detail-card dl{ margin:0; font-size:12.5px; color:var(--ink-soft); line-height:1.6; }
+  .detail-card dt{ font-weight:700; color:var(--ink); margin-top:8px; }
+  .detail-card dt:first-child{ margin-top:0; }
+  .detail-card dd{ margin:0 0 0 0; }
+
+  footer{
+    text-align:center;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:32px;
+  }
+
+  @media (max-width:600px){
+    header{padding:24px 20px;}
+    header h1{font-size:21px;}
+    .tab-btn{ flex:1 1 auto; text-align:center; padding:10px 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <p class="eyebrow">UID Jawa Tengah</p>
+    <h1>Monitoring ATTB, PDP &amp; Persediaan Material</h1>
+    <p class="sub">Usulan Penghapusan ATTB (s.d. 31 Juli 2026) &middot; Saldo PDP (s.d. Jul 2026) &middot; ITO &amp; DOI Persediaan (s.d. 31 Jul 2026)</p>
+  </header>
+
+  <div class="tabs" id="tabNav">
+    <button class="tab-btn active" data-tab="attb">Penghapusan ATTB</button>
+    <button class="tab-btn" data-tab="pdp">PDP</button>
+    <button class="tab-btn" data-tab="ito">ITO &amp; DOI</button>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- TAB 1 — PENGHAPUSAN ATTB                                              -->
+  <!-- ===================================================================== -->
+  <div class="tab-panel" id="tab-attb">
+
+    <section>
+      <h2 class="section-title">Ringkasan (UID Jateng)</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <p class="label">Realisasi semester 1</p>
+          <p class="value">Rp51,85 M</p>
+        </div>
+        <div class="kpi-card">
+          <p class="label">Target semester 1</p>
+          <p class="value">Rp18,10 M</p>
+        </div>
+        <div class="kpi-card">
+          <p class="label">% thd target sem 1</p>
+          <p class="value good">286%</p>
+          <p class="note">Melampaui target semester 1 hampir 3x lipat</p>
+        </div>
+        <div class="kpi-card">
+          <p class="label">% thd target sem 2 (tahunan)</p>
+          <p class="value">85,95%</p>
+          <p class="note">dari target Rp60,33 M, tercapai hanya dalam 6 bulan</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Capaian tiap unit terhadap target tahunan (% thd target semester 2)</h2>
+      <div class="chart-card">
+        <div class="legend">
+          <span><span class="dot" style="background:#0f7a4a;"></span>Sudah capai target tahunan (&ge;100%)</span>
+          <span><span class="dot" style="background:#b9740e;"></span>50%&ndash;99%</span>
+          <span><span class="dot" style="background:#a72b2b;"></span>&lt;50%</span>
+        </div>
+        <div style="position:relative;width:100%;height:520px;">
+          <canvas id="chartUnit" role="img" aria-label="Grafik batang horizontal persentase realisasi semester 1 terhadap target semester 2 (tahunan) untuk 13 unit">
+            Persentase capaian tiap unit terhadap target semester 2: UP2D Jateng 255,82%, UP3 Tegal 149,57%, UP3 Cilacap 123,76%, UP3 Pekalongan 120,65%, UP3 Salatiga 115,90%, UP3 Semarang 95,28%, UP3 Klaten 77,16%, UP3 Surakarta 70,19%, UP3 Grobogan 46,88%, UP3 Purwokerto 40,76%, UP3 Sukoharjo 35,63%, UP3 Magelang 27,12%, UP3 Kudus 23,91%.
+          </canvas>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Rincian data per unit</h2>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Unit</th>
+            <th>Target sem 1 (Rp)</th>
+            <th>Target sem 2 (Rp)</th>
+            <th>Realisasi sem 1 (Rp)</th>
+            <th>% thd sem 1</th>
+            <th>% thd sem 2</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Proses usulan penghapusan ATTB</h2>
+      <p class="section-caption">Sebaran nilai perolehan Rp159,61 M yang sedang berproses, per tahap. Diurutkan dari nilai terbesar ke terkecil.</p>
+      <div class="chart-card">
+        <div class="legend">
+          <span><span class="dot" style="background:#145da0;"></span>Nilai perolehan per proses (Rp)</span>
+        </div>
+        <div style="position:relative;width:100%;height:260px;">
+          <canvas id="chartTahapan" role="img" aria-label="Grafik batang nilai perolehan per tahapan proses usulan penghapusan ATTB"></canvas>
+        </div>
+      </div>
+
+      <div class="table-scroll" style="margin-top:16px;">
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th style="text-align:left;">Tahapan Proses Usulan</th>
+            <th>Nilai Perolehan (Rp)</th>
+            <th>Persentase</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyTahapan"></tbody>
+      </table>
+      </div>
+
+      <div class="kpi-grid" style="margin-top:16px;">
+        <div class="kpi-card">
+          <p class="label">Saldo write off persetujuan 2026</p>
+          <p class="value">Rp0</p>
+          <p class="note">Belum ada write off yang direalisasikan tahun 2026</p>
+        </div>
+        <div class="kpi-card">
+          <p class="label">Saldo mutasi</p>
+          <p class="value warn">Rp55,01 M</p>
+          <p class="note">Perlu ditelusuri pengaruhnya terhadap saldo ATTB keseluruhan</p>
+        </div>
+      </div>
+
+      <div class="detail-grid">
+        <div class="detail-card">
+          <div class="dc-head"><h3>01 &middot; Belum Diusulkan</h3><span class="badge low">16,30%</span></div>
+          <dl>
+            <dt>Isu / Kendala</dt>
+            <dd>ATTB tahun lama dan usulan yang perlu diidentifikasi kembali karena ditolak SPI.</dd>
+            <dt>Mitigasi</dt>
+            <dd>Berkoordinasi dengan UP3 untuk proses identifikasi; mengusulkan ulang ATTB yang ditolak SPI.</dd>
+            <dt>Rencana Tindak Lanjut</dt>
+            <dd>Sebagian saldo hasil akan diteliti dan diusulkan kembali.</dd>
+          </dl>
+        </div>
+        <div class="detail-card">
+          <div class="dc-head"><h3>02 &middot; Terbit AE.4 &amp; Ulasan GRC</h3><span class="badge low">0,23%</span></div>
+          <dl>
+            <dt>Isu / Kendala</dt>
+            <dd>Koordinasi untuk proses GRC unit.</dd>
+            <dt>Mitigasi</dt>
+            <dd>&ndash;</dd>
+            <dt>Rencana Tindak Lanjut</dt>
+            <dd>&ndash;</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Insight utama</h2>
+      <div class="insight-grid">
+        <div class="insight-card good">
+          <h3>Capaian jauh melampaui target</h3>
+          <p>Realisasi semester 1 sudah 286% dari target semester 1 dan 85,95% dari target tahunan &mdash; tercapai hanya dalam 6 bulan pertama.</p>
+        </div>
+        <div class="insight-card good">
+          <h3>Lima unit sudah lampaui target tahunan</h3>
+          <p>UP2D Jateng (255,82%), UP3 Tegal (149,57%), UP3 Cilacap (123,76%), UP3 Pekalongan (120,65%), dan UP3 Salatiga (115,90%) sudah melewati 100% target tahunan hanya di semester 1.</p>
+        </div>
+        <div class="insight-card warn">
+          <h3>Dua unit tertinggal jauh</h3>
+          <p>UP3 Kudus (80% target sem 1, 23,91% target tahunan) dan UP3 Magelang (90% target sem 1, 27,12% target tahunan) belum capai target semester 1 dan berisiko tidak mengejar target tahun ini.</p>
+        </div>
+        <div class="insight-card warn">
+          <h3>Bottleneck di tahap akhir persetujuan</h3>
+          <p>50,98% (Rp81,37 M) dari nilai usulan berstatus "Terbit Persetujuan (Belum Writeoff) DEKOM" &mdash; sudah disetujui namun belum dieksekusi write off. Ini prioritas tindak lanjut tercepat karena tidak perlu proses persetujuan tambahan.</p>
+        </div>
+        <div class="insight-card">
+          <h3>Backlog usulan tahun lama 16,3%</h3>
+          <p>Rp26,02 M ATTB masih berstatus "Belum Diusulkan", sebagian besar ATTB tahun lama yang ditolak SPI dan perlu identifikasi ulang sebelum dapat diusulkan kembali.</p>
+        </div>
+        <div class="insight-card">
+          <h3>Perlu cek anomali UP2D Jateng</h3>
+          <p>Lonjakan 853% dari target sem 1 di UP2D Jateng patut ditelusuri &mdash; kemungkinan didorong realisasi satu kali (aset besar), bukan tren rutin bulanan.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- TAB 2 — PDP                                                           -->
+  <!-- ===================================================================== -->
+  <div class="tab-panel" id="tab-pdp" hidden>
+
+    <section>
+      <h2 class="section-title">Ringkasan saldo PDP (UID Jateng)</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <p class="label">Total saldo PDP UID Jateng</p>
+          <p class="value">Rp669,86 M</p>
+        </div>
+        <div class="kpi-card">
+          <p class="label">Unit dengan saldo terbesar</p>
+          <p class="value">UP3 Semarang</p>
+          <p class="note">Rp140,44 M (20,97% dari total)</p>
+        </div>
+        <div class="kpi-card">
+          <p class="label">Unit dengan saldo terkecil</p>
+          <p class="value">UP3 Cilacap</p>
+          <p class="note">Rp20,89 M (3,12% dari total)</p>
+        </div>
+        <div class="kpi-card">
+          <p class="label">Kategori aging</p>
+          <p class="value good">100% AR01</p>
+          <p class="note">Seluruh saldo tercatat lancar, tanpa aging lanjutan</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Saldo PDP per unit</h2>
+      <p class="section-caption">Diurutkan dari saldo terbesar ke terkecil.</p>
+      <div class="chart-card">
+        <div style="position:relative;width:100%;height:420px;">
+          <canvas id="chartPDP" role="img" aria-label="Grafik batang horizontal saldo PDP per unit"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Rincian saldo PDP per unit</h2>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left;">Unit</th>
+            <th>Saldo PDP (Rp)</th>
+            <th>Kontribusi</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyPDP"></tbody>
+      </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Insight utama</h2>
+      <div class="insight-grid">
+        <div class="insight-card warn">
+          <h3>Dua unit dominasi 38,5% saldo PDP</h3>
+          <p>UP3 Semarang (Rp140,44 M) dan UP3 Kudus (Rp117,57 M) bersama menyumbang 38,52% dari total saldo PDP UID Jateng &mdash; menandakan proyek konstruksi besar sedang berjalan di kedua unit ini.</p>
+        </div>
+        <div class="insight-card good">
+          <h3>Tidak ada saldo teraging di luar AR01</h3>
+          <p>Seluruh nilai PDP pada 13 unit tercatat dalam kategori AR01 tanpa saldo di kolom aging lanjutan &mdash; mengindikasikan saldo relatif lancar tanpa tunggakan administrasi.</p>
+        </div>
+        <div class="insight-card">
+          <h3>Rentang saldo antar unit lebar</h3>
+          <p>Saldo terkecil (UP3 Cilacap, Rp20,89 M) hingga terbesar (UP3 Semarang, Rp140,44 M) &mdash; rentang lebih dari 6,7x, perlu pemetaan proyek konstruksi penyebab konsentrasi PDP di unit besar.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- TAB 3 — ITO & DOI                                                     -->
+  <!-- ===================================================================== -->
+  <div class="tab-panel" id="tab-ito" hidden>
+
+    <section>
+      <h2 class="section-title">Ringkasan persediaan material (BBM + Material), 1 Jan &ndash; 31 Jul 2026</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <p class="label">Saldo per 1 Januari 2026</p>
+          <p class="value">Rp109,90 M</p>
+        </div>
+        <div class="kpi-card">
+          <p class="label">Saldo per 31 Juli 2026</p>
+          <p class="value warn">Rp160,13 M</p>
+          <p class="note">Naik 45,72% dari saldo awal tahun</p>
+        </div>
+        <div class="kpi-card">
+          <p class="label">ITO gabungan</p>
+          <p class="value">15,34 kali</p>
+          <p class="note">Material saja (tanpa BBM): 4,37 kali</p>
+        </div>
+        <div class="kpi-card">
+          <p class="label">Umur persediaan gabungan</p>
+          <p class="value">28,26 hari</p>
+          <p class="note">Material saja (tanpa BBM): 48,47 hari</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Komposisi saldo akhir persediaan per kategori</h2>
+      <p class="section-caption">Saldo per 31 Juli 2026, diurutkan dari terbesar ke terkecil.</p>
+      <div class="chart-card">
+        <div style="position:relative;width:100%;height:360px;">
+          <canvas id="chartITO" role="img" aria-label="Grafik batang horizontal komposisi saldo akhir persediaan per kategori"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Rincian ITO &amp; umur persediaan per kategori</h2>
+      <p class="section-caption">Diurutkan dari saldo akhir terbesar ke terkecil. ITO tinggi &amp; umur persediaan rendah menandakan perputaran cepat (baik).</p>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left;">Kategori</th>
+            <th>Saldo Awal (1 Jan 2026)</th>
+            <th>Saldo Akhir (31 Jul 2026)</th>
+            <th>ITO (kali)</th>
+            <th>Umur Persediaan (hari)</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyITO"></tbody>
+      </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Persediaan UIP &amp; Unit Pengusahaan</h2>
+      <p class="section-caption">Material Bursa dan Material Hapus, tidak termasuk dalam perhitungan ITO material utama.</p>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left;">Kategori</th>
+            <th>Saldo Awal (1 Jan 2026)</th>
+            <th>Saldo Akhir (31 Jul 2026)</th>
+            <th>Perubahan</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyUIP"></tbody>
+      </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Insight utama</h2>
+      <div class="insight-grid">
+        <div class="insight-card warn">
+          <h3>Dua kategori dominasi 55% saldo persediaan</h3>
+          <p>Switchgear dan Jaringan (28,70%) serta Alat Ukur Pembatas dan Kontrol (26,69%) bersama menyumbang 55,4% dari total saldo persediaan akhir periode (Rp160,13 M).</p>
+        </div>
+        <div class="insight-card warn">
+          <h3>Material Scada paling lambat berputar</h3>
+          <p>ITO hanya 0,81 kali dengan umur persediaan 263 hari &mdash; jauh di atas kategori lain, menandakan modal tertahan pada persediaan yang jarang terpakai.</p>
+        </div>
+        <div class="insight-card good">
+          <h3>Biosolar &amp; Transformator berputar cepat</h3>
+          <p>ITO masing-masing 26,30x (8 hari) dan 13,27x (16 hari) &mdash; mencerminkan pola konsumsi rutin bahan bakar dan pembelian aktif transformator untuk proyek berjalan.</p>
+        </div>
+        <div class="insight-card">
+          <h3>Saldo persediaan naik 45,7% dari awal tahun</h3>
+          <p>Dari Rp109,90 M (1 Jan 2026) menjadi Rp160,13 M (31 Jul 2026), didorong pembelian besar Switchgear, Alat Ukur, dan Transformator untuk mendukung proyek konstruksi berjalan.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>Sumber: Usulan Penghapusan ATTB, Saldo PDP, dan ITO &amp; DOI Persediaan Material &ndash; UID Jateng, Periode s.d. Juli 2026</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+/* ===================== HELPERS ===================== */
+function fmtRp(n){
+  return 'Rp' + (n/1e6).toLocaleString('id-ID', {maximumFractionDigits:0}) + ' jt';
+}
+function fmtMiliar(n){
+  return 'Rp' + (n/1e9).toLocaleString('id-ID', {maximumFractionDigits:2}) + ' M';
+}
+function badgeClass(p){ return p >= 100 ? 'good' : (p >= 50 ? 'mid' : 'low'); }
+function itoBadgeClass(v){ return v >= 5 ? 'good' : (v >= 1 ? 'mid' : 'low'); }
+function umurBadgeClass(v){ return v <= 30 ? 'good' : (v <= 90 ? 'mid' : 'low'); }
+
+var charts = {};
+var chartsDone = {};
+
+/* ===================== TAB SWITCHING ===================== */
+var tabInit = { attb: initAttbTab, pdp: initPdpTab, ito: initItoTab };
+function showTab(name){
+  document.querySelectorAll('.tab-panel').forEach(function(p){ p.hidden = (p.id !== 'tab-'+name); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.tab===name); });
+  if(!chartsDone[name]){ tabInit[name](); chartsDone[name] = true; }
+  setTimeout(function(){
+    Object.keys(charts).forEach(function(k){ if(charts[k]) charts[k].resize(); });
+  }, 60);
+}
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){ showTab(btn.dataset.tab); });
+});
+
+/* ===================== TAB 1: ATTB ===================== */
+const data = [
+  {unit:'UP3 KUDUS', t1:2233430924, t2:7445335407, r1:1780212557, p1:80, p2:23.91},
+  {unit:'UP3 SURAKARTA', t1:2285655418, t2:7623240485, r1:5350397211, p1:234, p2:70.19},
+  {unit:'UP3 MAGELANG', t1:1550241256, t2:5171745634, r1:1402362093, p1:90, p2:27.12},
+  {unit:'UP3 PURWOKERTO', t1:1768162269, t2:5900155650, r1:2404803966, p1:136, p2:40.76},
+  {unit:'UP3 TEGAL', t1:1694983645, t2:5655553068, r1:8459018910, p1:499, p2:149.57},
+  {unit:'UP3 SEMARANG', t1:2245597365, t2:7476002243, r1:7123262658, p1:317, p2:95.28},
+  {unit:'UP3 SALATIGA', t1:798239540, t2:2658148737, r1:3080739977, p1:386, p2:115.90},
+  {unit:'UP3 KLATEN', t1:796636140, t2:2652789308, r1:2046865406, p1:257, p2:77.16},
+  {unit:'UP3 PEKALONGAN', t1:1090762515, t2:3635918904, r1:4386785778, p1:402, p2:120.65},
+  {unit:'UP3 CILACAP', t1:889732038, t2:2963966206, r1:3668292161, p1:412, p2:123.76},
+  {unit:'UP3 GROBOGAN', t1:836360151, t2:2785568459, r1:1305967674, p1:156, p2:46.88},
+  {unit:'UP3 SUKOHARJO', t1:740826058, t2:2466241796, r1:878691006, p1:119, p2:35.63},
+  {unit:'UP2D JATENG', t1:1168372682, t2:3895334101, r1:9965105168, p1:853, p2:255.82},
+];
+const total = {unit:'UID JATENG (TOTAL)', t1:18099000000, t2:60330000000, r1:51852504565, p1:286, p2:85.95};
+
+const TAHAPAN = [
+  {no:1, label:'Belum Diusulkan', nilai:26020576969, pct:16.30},
+  {no:2, label:'Telah Terbit AE.4 dan Ulasan GRC', nilai:365755236, pct:0.23},
+  {no:3, label:'Verifikasi Divisi Pembina', nilai:0, pct:0},
+  {no:4, label:'Verifikasi Divisi Akuntansi', nilai:0, pct:0},
+  {no:5, label:'Proses Persetujuan (DEKOM)', nilai:51852504565, pct:32.49},
+  {no:6, label:'Proses Persetujuan (RUPS)', nilai:0, pct:0},
+  {no:7, label:'Terbit Persetujuan (Belum Writeoff) DEKOM', nilai:81372291702, pct:50.98},
+  {no:8, label:'Terbit Persetujuan (Belum Writeoff) RUPS', nilai:0, pct:0},
+  {no:9, label:'Saldo Koreksi', nilai:0, pct:0}
+];
+
+function initAttbTab(){
+  const tbody = document.getElementById('tbody');
+  data.forEach(d => {
+    tbody.innerHTML += `<tr>
+      <td>${d.unit}</td>
+      <td>${fmtRp(d.t1)}</td>
+      <td>${fmtRp(d.t2)}</td>
+      <td>${fmtRp(d.r1)}</td>
+      <td><span class="badge ${badgeClass(d.p1)}">${d.p1.toFixed(0)}%</span></td>
+      <td><span class="badge ${badgeClass(d.p2)}">${d.p2.toFixed(2)}%</span></td>
+    </tr>`;
+  });
+  tbody.innerHTML += `<tr class="total">
+    <td>${total.unit}</td>
+    <td>${fmtRp(total.t1)}</td>
+    <td>${fmtRp(total.t2)}</td>
+    <td>${fmtRp(total.r1)}</td>
+    <td><span class="badge ${badgeClass(total.p1)}">${total.p1.toFixed(0)}%</span></td>
+    <td><span class="badge ${badgeClass(total.p2)}">${total.p2.toFixed(2)}%</span></td>
+  </tr>`;
+
+  const sorted = [...data].sort((a,b) => b.p2 - a.p2);
+  const colorFor = v => v >= 100 ? '#0f7a4a' : (v >= 50 ? '#b9740e' : '#a72b2b');
+
+  charts.unit = new Chart(document.getElementById('chartUnit'), {
+    type: 'bar',
+    data: {
+      labels: sorted.map(d => d.unit),
+      datasets: [{
+        data: sorted.map(d => d.p2),
+        backgroundColor: sorted.map(d => colorFor(d.p2)),
+        borderRadius: 4,
+        barThickness: 22
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ctx.parsed.x.toFixed(2) + '%' } }
+      },
+      scales: {
+        x: { title: { display: true, text: '% terhadap target semester 2 (tahunan)' }, ticks: { callback: v => v + '%' }, grid: { color: '#e1e7ec' } },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+
+  const tbodyTahapan = document.getElementById('tbodyTahapan');
+  TAHAPAN.forEach(t => {
+    tbodyTahapan.innerHTML += `<tr>
+      <td>${t.no}</td>
+      <td>${t.label}</td>
+      <td>${fmtRp(t.nilai)}</td>
+      <td><span class="badge ${t.pct>=30?'good':(t.pct>0?'mid':'low')}">${t.pct.toFixed(2).replace('.',',')}%</span></td>
+    </tr>`;
+  });
+
+  const tahapanSorted = TAHAPAN.filter(t => t.nilai > 0).sort((a,b) => b.nilai - a.nilai);
+  charts.tahapan = new Chart(document.getElementById('chartTahapan'), {
+    type: 'bar',
+    data: {
+      labels: tahapanSorted.map(t => t.label),
+      datasets: [{
+        data: tahapanSorted.map(t => t.nilai),
+        backgroundColor: '#145da0',
+        borderRadius: 4,
+        barThickness: 26
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => fmtRp(ctx.parsed.x) } }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Nilai Perolehan (Rp)' }, ticks: { callback: v => fmtRp(v) }, grid: { color: '#e1e7ec' } },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+}
+
+/* ===================== TAB 2: PDP ===================== */
+const PDP = [
+  {unit:'UP3 SEMARANG', saldo:140443333649},
+  {unit:'UP3 KUDUS', saldo:117573521522},
+  {unit:'UP3 TEGAL', saldo:71938180150},
+  {unit:'UP3 SURAKARTA', saldo:53601577531},
+  {unit:'UP2D', saldo:49085087545},
+  {unit:'UP3 PEKALONGAN', saldo:47243232443},
+  {unit:'UP3 SUKOHARJO', saldo:36525799838},
+  {unit:'UP3 GROBOGAN', saldo:35450987538},
+  {unit:'UP3 MAGELANG', saldo:30328185305},
+  {unit:'UP3 SALATIGA', saldo:23267066790},
+  {unit:'UP3 KLATEN', saldo:22562815244},
+  {unit:'UP3 PURWOKERTO', saldo:20952520362},
+  {unit:'UP3 CILACAP', saldo:20891458290}
+];
+const PDP_TOTAL = 669863766207;
+
+function initPdpTab(){
+  const sorted = [...PDP].sort((a,b) => b.saldo - a.saldo);
+
+  charts.pdp = new Chart(document.getElementById('chartPDP'), {
+    type: 'bar',
+    data: {
+      labels: sorted.map(d => d.unit),
+      datasets: [{
+        data: sorted.map(d => d.saldo),
+        backgroundColor: '#2e8bc0',
+        borderRadius: 4,
+        barThickness: 20
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => fmtRp(ctx.parsed.x) } }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Saldo PDP (Rp)' }, ticks: { callback: v => fmtRp(v) }, grid: { color: '#e1e7ec' } },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+
+  const tbodyPDP = document.getElementById('tbodyPDP');
+  sorted.forEach(d => {
+    const pct = (d.saldo / PDP_TOTAL * 100);
+    tbodyPDP.innerHTML += `<tr>
+      <td>${d.unit}</td>
+      <td>${fmtRp(d.saldo)}</td>
+      <td><span class="badge ${pct>=15?'good':(pct>=5?'mid':'low')}">${pct.toFixed(2).replace('.',',')}%</span></td>
+    </tr>`;
+  });
+  tbodyPDP.innerHTML += `<tr class="total">
+    <td>UID JAWA TENGAH (TOTAL)</td>
+    <td>${fmtRp(PDP_TOTAL)}</td>
+    <td>100,00%</td>
+  </tr>`;
+}
+
+/* ===================== TAB 3: ITO & DOI ===================== */
+const ITO = [
+  {label:'Switchgear dan Jaringan', awal:52631650123, akhir:45949970282, ito:2.97, umur:71.38},
+  {label:'Alat Ukur Pembatas dan Kontrol', awal:30364402655, akhir:42743045737, ito:4.40, umur:48.16},
+  {label:'Transformator', awal:3022200299, akhir:23642783696, ito:13.27, umur:15.98},
+  {label:'Persediaan Umum', awal:11895209394, akhir:19921152642, ito:2.70, umur:78.51},
+  {label:'Kabel', awal:4784711313, akhir:19006143040, ito:3.34, umur:63.49},
+  {label:'Menara dan Tiang', awal:5774021583, akhir:6866298863, ito:3.47, umur:61.18},
+  {label:'Material Scada', awal:1188398447, akhir:1995242553, ito:0.81, umur:263.13},
+  {label:'Minyak Biosolar', awal:234414976, akhir:7444008, ito:26.30, umur:8.06}
+];
+const UIP_UNIT = [
+  {label:'Material Bursa', awal:4527297736, akhir:4004055662},
+  {label:'Material Hapus', awal:548405121, akhir:453875756}
+];
+
+function initItoTab(){
+  const sorted = [...ITO].sort((a,b) => b.akhir - a.akhir);
+
+  charts.ito = new Chart(document.getElementById('chartITO'), {
+    type: 'bar',
+    data: {
+      labels: sorted.map(d => d.label),
+      datasets: [{
+        data: sorted.map(d => d.akhir),
+        backgroundColor: '#145da0',
+        borderRadius: 4,
+        barThickness: 20
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => fmtRp(ctx.parsed.x) } }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Saldo per 31 Juli 2026 (Rp)' }, ticks: { callback: v => fmtRp(v) }, grid: { color: '#e1e7ec' } },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+
+  const tbodyITO = document.getElementById('tbodyITO');
+  sorted.forEach(d => {
+    tbodyITO.innerHTML += `<tr>
+      <td>${d.label}</td>
+      <td>${fmtRp(d.awal)}</td>
+      <td>${fmtRp(d.akhir)}</td>
+      <td><span class="badge ${itoBadgeClass(d.ito)}">${d.ito.toFixed(2).replace('.',',')}x</span></td>
+      <td><span class="badge ${umurBadgeClass(d.umur)}">${d.umur.toFixed(2).replace('.',',')} hr</span></td>
+    </tr>`;
+  });
+  tbodyITO.innerHTML += `<tr class="total">
+    <td>JUMLAH PERSEDIAAN MATERIAL</td>
+    <td>${fmtRp(109660593814)}</td>
+    <td>${fmtRp(160124636813)}</td>
+    <td>4,37x</td>
+    <td>48,47 hr</td>
+  </tr>
+  <tr class="total">
+    <td>JUMLAH BBM &amp; PERSEDIAAN MATERIAL</td>
+    <td>${fmtRp(109895008790)}</td>
+    <td>${fmtRp(160132080821)}</td>
+    <td>15,34x</td>
+    <td>28,26 hr</td>
+  </tr>`;
+
+  const tbodyUIP = document.getElementById('tbodyUIP');
+  UIP_UNIT.forEach(d => {
+    const chg = ((d.akhir - d.awal) / d.awal * 100);
+    tbodyUIP.innerHTML += `<tr>
+      <td>${d.label}</td>
+      <td>${fmtRp(d.awal)}</td>
+      <td>${fmtRp(d.akhir)}</td>
+      <td><span class="badge ${chg<0?'good':'mid'}">${chg>=0?'+':''}${chg.toFixed(2).replace('.',',')}%</span></td>
+    </tr>`;
+  });
+}
+
+/* ===================== INIT DEFAULT TAB ===================== */
+showTab('attb');
+</script>
+</body>
+</html>

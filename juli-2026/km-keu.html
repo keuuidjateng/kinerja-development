@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitoring Kontrak Manajemen — Indikator 10</title>
+    <!-- Kode Favicon -->
+    <link rel="icon" type="image/png" href="Logo PLN Favicon.png">
+<style>
+  :root {
+    --ink: #0E2A3F;
+    --ink-soft: #45596B;
+    --paper: #F6F5F1;
+    --paper-card: #FFFFFF;
+    --line: #DDDACF;
+    --green: #1F5C4E;
+    --green-soft: #E4EEE9;
+    --amber: #B2790E;
+    --amber-soft: #F5EAD6;
+    --red: #B24A2E;
+    --red-soft: #F5E4DD;
+    --grey: #8B8577;
+    --grey-soft: #EDEBE3;
+    --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
+    --sans: 'Segoe UI', Helvetica, Arial, sans-serif;
+    --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px 80px; }
+
+  /* HEADER */
+  header.hero {
+    background: var(--ink);
+    color: #F6F5F1;
+    padding: 56px 0 46px;
+    margin-bottom: 44px;
+    border-bottom: 6px solid var(--green);
+  }
+  header.hero .wrap { padding-top:0; padding-bottom:0; }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11.5px;
+    color: #9FB8AE;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  h1.title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1.18;
+    margin: 0 0 10px;
+    color: #FFFFFF;
+    letter-spacing: 0.2px;
+  }
+  .subtitle {
+    font-size: 16px;
+    color: #C7D2CD;
+    max-width: 700px;
+    margin-bottom: 30px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 24px;
+  }
+  .hero-meta .hm { min-width: 150px; }
+  .hero-meta .hm-label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #9FB8AE;
+    margin-bottom: 6px;
+  }
+  .hero-meta .hm-val {
+    font-family: var(--mono);
+    font-size: 21px;
+    color: #FFFFFF;
+  }
+  .hero-meta .hm-sub { font-size: 12px; color: #9FB8AE; margin-top: 3px; }
+
+  section { margin-bottom: 54px; }
+  .section-head {
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin-bottom: 22px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; gap:16px; flex-wrap:wrap;
+  }
+  .section-head h2 {
+    font-family: var(--serif); font-weight:400; font-size: 24px; margin:0; color: var(--ink);
+  }
+  .section-head .section-note { font-size: 12.5px; color: var(--ink-soft); }
+
+  /* KPI CARDS */
+  .kpi-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .kpi-card {
+    background: var(--paper-card); border: 1px solid var(--line); border-radius: 4px;
+    padding: 20px 20px 18px;
+  }
+  .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); margin-bottom: 10px; }
+  .kpi-val { font-family: var(--mono); font-size: 26px; color: var(--ink); font-weight:600; }
+  .kpi-sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 6px; }
+
+  /* GAUGES */
+  .gauge-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .gauge-card {
+    background: var(--paper-card); border: 1px solid var(--line); border-radius: 4px;
+    padding: 22px 22px 24px; text-align:center;
+  }
+  .gauge-eyebrow { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+  .gauge-svg { width: 200px; height: 110px; }
+  .gauge-bg { fill:none; stroke: var(--grey-soft); stroke-width: 14; }
+  .gauge-fg { fill:none; stroke-width: 14; stroke-linecap: round; }
+  .gauge-tick { stroke: var(--ink); stroke-width: 2; opacity: 0.55; }
+  .gauge-tick-cap { stroke: var(--amber); stroke-width: 2; opacity: 0.8; stroke-dasharray: 2 2; }
+  .gauge-value { font-family: var(--serif); font-size: 34px; margin-top: -22px; }
+  .gauge-caption { font-size: 12px; color: var(--ink-soft); margin-bottom: 8px; }
+  .gap { display:inline-block; font-size: 11.5px; font-weight:600; padding: 3px 10px; border-radius: 20px; margin-bottom: 14px; }
+  .gap-over { background: var(--amber-soft); color: var(--amber); }
+  .gap-under { background: var(--grey-soft); color: var(--ink-soft); }
+  .gap-even { background: var(--green-soft); color: var(--green); }
+  .gauge-figs { display:flex; justify-content:space-between; border-top: 1px solid var(--line); padding-top: 12px; margin-top: 4px; }
+  .gauge-figs div { display:flex; flex-direction:column; text-align:left; }
+  .gauge-figs span { font-size: 10.5px; color: var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; }
+  .gauge-figs b { font-family: var(--mono); font-size: 13.5px; margin-top:3px; }
+
+  /* CHART CARD */
+  .chart-card {
+    background: var(--paper-card); border: 1px solid var(--line); border-radius: 4px;
+    padding: 22px 24px;
+  }
+  .chart-card h3 { font-family: var(--serif); font-weight:400; font-size: 17px; margin: 0 0 4px; color: var(--ink); }
+  .chart-card .chart-sub { font-size: 12px; color: var(--ink-soft); margin-bottom: 18px; }
+
+  /* INSIGHTS */
+  .insight-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .insight-card {
+    background: var(--paper-card); border: 1px solid var(--line); border-left: 4px solid var(--green);
+    border-radius: 2px; padding: 18px 20px;
+  }
+  .insight-card.warn { border-left-color: var(--amber); }
+  .insight-card.risk { border-left-color: var(--red); }
+  .insight-label {
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; font-weight:700;
+    color: var(--green); margin-bottom: 8px;
+  }
+  .insight-card.warn .insight-label { color: var(--amber); }
+  .insight-card.risk .insight-label { color: var(--red); }
+  .insight-text { font-size: 14px; color: var(--ink); line-height:1.55; }
+  .insight-text b { color: var(--ink); }
+
+  /* INDICATOR DETAIL CARDS */
+  .kat-summary {
+    display:flex; gap: 24px; margin-bottom: 20px; flex-wrap:wrap;
+    background: var(--paper-card); border:1px solid var(--line); border-radius:4px; padding: 18px 22px;
+  }
+  .kat-summary .ks { min-width: 140px; }
+  .kat-summary .ks-label { font-size: 10.5px; text-transform:uppercase; letter-spacing:.06em; color: var(--ink-soft); }
+  .kat-summary .ks-val { font-family: var(--mono); font-size: 17px; margin-top: 4px; }
+
+  .item-row {
+    background: var(--paper-card); border: 1px solid var(--line); border-radius: 4px;
+    padding: 20px 22px; margin-bottom: 14px;
+  }
+  .item-main { display:flex; align-items:center; gap: 10px; margin-bottom: 6px; flex-wrap:wrap; }
+  .item-no { font-family: var(--mono); font-size: 12px; color: var(--grey); background: var(--grey-soft); padding: 1px 7px; border-radius: 3px; }
+  .item-name { font-size: 15.5px; font-weight:600; color: var(--ink); flex:1; min-width:200px; }
+  .item-tag { font-size: 10.5px; text-transform:uppercase; letter-spacing:.04em; font-weight:700; padding: 3px 9px; border-radius: 20px; white-space:nowrap; }
+  .tag-high { background: var(--green-soft); color: var(--green); }
+  .tag-mid { background: var(--amber-soft); color: var(--amber); }
+  .tag-pol { background: var(--grey-soft); color: var(--ink-soft); }
+  .item-formula { font-size: 12.5px; color: var(--ink-soft); font-style: italic; margin-bottom: 16px; padding-bottom:14px; border-bottom: 1px dashed var(--line); }
+
+  .item-figures { display:flex; gap: 30px; margin-bottom: 14px; flex-wrap:wrap; }
+  .fig { display:flex; flex-direction:column; }
+  .fig-label { font-size: 10.5px; text-transform:uppercase; letter-spacing:.05em; color: var(--ink-soft); margin-bottom:3px; }
+  .fig-val { font-family: var(--mono); font-size: 14px; color: var(--ink); }
+  .fig-val.accent { color: var(--green); font-weight:700; }
+
+  .item-bar-wrap { display:flex; align-items:center; gap: 12px; margin-bottom: 4px; }
+  .item-bar-track { position:relative; flex:1; height: 10px; background: var(--grey-soft); border-radius: 5px; overflow:visible; }
+  .item-bar-fill { position:absolute; left:0; top:0; height:100%; border-radius: 5px; background: var(--green); }
+  .item-bar-mid { position:absolute; left:33.33%; top:-4px; width:2px; height:18px; background: var(--ink); opacity:0.5; }
+  .item-bar-cap { position:absolute; left:36.67%; top:-4px; width:2px; height:18px; background: var(--amber); opacity:0.75; border-left: 2px dashed var(--amber); background:none; }
+  .item-bar-pct { font-family: var(--mono); font-size: 13px; color: var(--ink); font-weight:700; white-space:nowrap; min-width: 90px; text-align:right; }
+  .item-bar-scale { display:flex; justify-content:space-between; font-size:10px; color: var(--ink-soft); margin-bottom:12px; padding: 0 1px; }
+
+  .item-bar-wrap.small .item-bar-track { height: 7px; }
+  .item-bar-wrap.small .item-bar-pct { font-size: 12px; font-weight:600; min-width:70px; }
+
+  /* RANGE BAND VISUAL */
+  .range-block { margin-top: 6px; }
+  .range-title { font-size: 11px; text-transform:uppercase; letter-spacing:.06em; color: var(--ink-soft); margin-bottom: 10px; }
+  .range-track { position:relative; height: 30px; background: var(--grey-soft); border-radius: 6px; margin-bottom: 6px; }
+  .range-band { position:absolute; top:0; height:100%; background: var(--green-soft); border-left: 2px solid var(--green); border-right: 2px solid var(--green); }
+  .range-marker { position:absolute; top:-7px; width: 3px; height: 44px; background: var(--ink); border-radius:2px; }
+  .range-marker-label { position:absolute; top:-30px; transform: translateX(-50%); font-family: var(--mono); font-size: 12px; font-weight:700; color: var(--ink); background: #fff; border:1px solid var(--line); padding:1px 6px; border-radius:3px; white-space:nowrap; }
+  .range-scale-labels { display:flex; justify-content:space-between; font-size: 10.5px; color: var(--ink-soft); font-family: var(--mono); }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--line); padding-top: 24px; font-size: 12px; color: var(--ink-soft); }
+  footer .fnote { margin-bottom: 6px; }
+  .legend { display:flex; gap: 18px; flex-wrap:wrap; margin-top: 10px; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; font-size:11.5px; color: var(--ink-soft); }
+  .legend i { width:10px; height:10px; border-radius:50%; display:inline-block; }
+  .legend i.line { width:14px; height:2px; border-radius:0; }
+
+  @media (max-width: 860px) {
+    .kpi-grid { grid-template-columns: repeat(2,1fr); }
+    .gauge-grid { grid-template-columns: 1fr; }
+    .insight-grid { grid-template-columns: 1fr; }
+    h1.title { font-size: 28px; }
+    .item-figures { gap: 18px; }
+  }
+  @media print {
+    body { background: #fff; }
+    header.hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Laporan Internal &middot; Monitoring Kontrak Manajemen</div>
+    <h1 class="title">Indikator 10 — Pengendalian Anggaran &amp; Biaya</h1>
+    <div class="subtitle">Monitoring capaian 3 indikator kinerja: pengendalian anggaran investasi (AKI), usulan penghapusan ATTB, dan pengendalian Non Allowable Cost (NAC). Posisi realisasi s.d. Juli 2026 dibandingkan target s.d. Juli 2026 dan target penuh s.d. Desember 2026.</div>
+    <div class="hero-meta">
+      <div class="hm">
+        <div class="hm-label">Rata-rata Capaian s.d Juli</div>
+        <div class="hm-val" id="hmAvgJuli">176,41%</div>
+        <div class="hm-sub">rata-rata 3 indikator, bobot setara</div>
+      </div>
+      <div class="hm">
+        <div class="hm-label">Rata-rata Capaian s.d Des</div>
+        <div class="hm-val" id="hmAvgDes">154,25%</div>
+        <div class="hm-sub">proyeksi, 2 dari 3 indikator terhitung</div>
+      </div>
+      <div class="hm">
+        <div class="hm-label">Bobot Total</div>
+        <div class="hm-val">4,00</div>
+        <div class="hm-sub">3 indikator &times; bobot 1,33</div>
+      </div>
+      <div class="hm">
+        <div class="hm-label">Indikator Melampaui Target</div>
+        <div class="hm-val">3 / 3</div>
+        <div class="hm-sub">seluruh indikator &gt; 100%</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <div class="section-head">
+      <h2>Ringkasan Kinerja</h2>
+      <div class="section-note">Seluruh indikator berbobot setara (1,33), posisi s.d. Juli 2026</div>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Rata-rata Capaian s.d Juli</div>
+        <div class="kpi-val">176,41%</div>
+        <div class="kpi-sub">rata-rata tertimbang bobot setara</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Indikator Tertinggi</div>
+        <div class="kpi-val">286,49%</div>
+        <div class="kpi-sub">b. Usulan Penghapusan ATTB</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Indikator Terdekat Ambang</div>
+        <div class="kpi-val">109,21%</div>
+        <div class="kpi-sub">a. Pengendalian AKI (tipe Range)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Rata-rata Capaian s.d Des</div>
+        <div class="kpi-val">154,25%</div>
+        <div class="kpi-sub">proyeksi thd target penuh tahun</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Capaian per Indikator thd Target s.d Juli 2026</h2>
+      <div class="section-note">Garis tengah menandai capaian 100% (target tercapai) &middot; garis putus amber menandai ambang cap 110% Kontrak Manajemen</div>
+    </div>
+    <div class="gauge-grid" id="gaugeGrid"></div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Perbandingan Capaian: s.d Juli vs Proyeksi s.d Desember</h2>
+      <div class="section-note">Grafik interaktif &mdash; arahkan kursor untuk detail nilai</div>
+    </div>
+    <div class="chart-card">
+      <h3>% Capaian thd Target per Indikator</h3>
+      <div class="chart-sub">Indikator a (Range) belum memiliki data capaian s.d Desember karena realisasi masih berjalan</div>
+      <canvas id="barCompare" height="110"></canvas>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Insight &amp; Analisis</h2>
+      <div class="section-note">Temuan utama dari data monitoring Indikator 10</div>
+    </div>
+    <div class="insight-grid">
+      <div class="insight-card warn">
+        <div class="insight-label">Capaian Riil vs Skor Kontrak Manajemen</div>
+        <div class="insight-text">Rata-rata capaian riil ketiga indikator mencapai <b>176,41%</b> &mdash; namun sesuai ketentuan Kontrak Manajemen, capaian di atas <b>110%</b> dibatasi (di-cap) menjadi 110% dalam perhitungan skor Kontrak Manajemen. Bila capping diterapkan, skor menjadi sekitar <b>109,7%</b> (rata-rata dari 109,21%, 110%, dan 110%) &mdash; jauh lebih moderat dibanding angka riil yang ditampilkan.</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-label">Usulan Penghapusan ATTB Paling Menonjol</div>
+        <div class="insight-text">Realisasi usulan penghapusan ATTB mencapai <b>Rp51.852,50 Juta</b>, jauh melampaui target s.d Juli (Rp18.098,94 Juta) dengan capaian <b>286,49%</b>. Namun terhadap target penuh tahun (Rp60.329,80 Juta), realisasi ini baru mencapai <b>85,95%</b> &mdash; menandakan proses verifikasi kemungkinan terkonsentrasi di paruh pertama tahun, bukan indikasi target akhir tahun akan terlampaui otomatis.</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-label">Pengendalian NAC Sesuai Arah, Ruang Anggaran Masih Luas</div>
+        <div class="insight-text">Sebagai indikator berpolaritas Negatif (semakin rendah semakin baik), realisasi NAC s.d Juli sebesar <b>Rp169,90 Miliar</b> berada di bawah target (Rp226,87 Miliar), menghasilkan capaian <b>133,53%</b>. Terhadap pagu penuh tahun Rp378,11 Miliar, realisasi baru menyerap <b>44,9%</b>, menyisakan ruang sekitar <b>Rp208,21 Miliar</b> untuk 5 bulan sisa tahun anggaran.</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-label">Pengendalian AKI Berada di Dalam Rentang, Mendekati Batas Atas</div>
+        <div class="insight-text">Untuk indikator bertipe Range, realisasi <b>104,21%</b> masih berada di dalam target 95&ndash;105%, namun sudah mendekati batas atas rentang. Perlu dicatat adanya penyesuaian target Juli akibat tambahan Anggaran Kas Investasi sebesar <b>Rp429,48 Miliar</b>, yang turut memengaruhi basis perhitungan rasio penyerapan.</div>
+      </div>
+      <div class="insight-card warn">
+        <div class="insight-label">Proyeksi s.d Desember Melandai dari Capaian s.d Juli</div>
+        <div class="insight-text">Rata-rata capaian dua indikator yang dapat dihitung terhadap target penuh tahun (ATTB &amp; NAC) adalah <b>154,25%</b> &mdash; lebih rendah dari capaian s.d Juli (176,41%). Ini adalah pola wajar karena basis target Desember jauh lebih besar (mencakup 12 bulan) dibanding target Juli (7 bulan), sehingga rasio capaian secara alami mengecil meski nilai realisasi bertumbuh.</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-label">Bobot Merata, Tidak Ada Indikator Dominan Secara Struktural</div>
+        <div class="insight-text">Ketiga indikator memiliki bobot yang sama besar, <b>1,33</b> (total 4,00), sehingga kontribusi terhadap skor gabungan Indikator 10 murni ditentukan oleh capaian aktual masing-masing, bukan oleh perbedaan bobot penilaian.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Rincian per Indikator</h2>
+      <div class="section-note">Formula, target, realisasi, dan capaian masing-masing indikator</div>
+    </div>
+    <div class="kat-summary">
+      <div class="ks"><div class="ks-label">Jumlah Indikator</div><div class="ks-val">3</div></div>
+      <div class="ks"><div class="ks-label">Bobot per Indikator</div><div class="ks-val">1,33</div></div>
+      <div class="ks"><div class="ks-label">Rata-rata Capaian s.d Juli</div><div class="ks-val" style="color:var(--green)">176,41%</div></div>
+      <div class="ks"><div class="ks-label">Rata-rata Capaian s.d Des</div><div class="ks-val" style="color:var(--green)">154,25%</div></div>
+    </div>
+
+    <!-- Indikator a — Range -->
+    <div class="item-row">
+      <div class="item-main">
+        <span class="item-no">10_1</span>
+        <span class="item-name">a. Pengendalian Penggunaan Anggaran Investasi sesuai RKAP</span>
+        <span class="item-tag tag-pol">Polaritas: Range</span>
+        <span class="item-tag tag-high">Dalam Rentang Target</span>
+      </div>
+      <div class="item-formula">Formula: Kesesuaian Realisasi Anggaran Kas Investasi terhadap BA Komitmen Penyerapan AKI &middot; Satuan % &middot; Bobot 1,33</div>
+      <div class="item-figures">
+        <div class="fig"><span class="fig-label">Target s.d Juli 2026</span><span class="fig-val">95&ndash;105%</span></div>
+        <div class="fig"><span class="fig-label">Realisasi</span><span class="fig-val accent">104,21%</span></div>
+        <div class="fig"><span class="fig-label">% thd Target s.d Juli</span><span class="fig-val accent">109,21%</span></div>
+        <div class="fig"><span class="fig-label">Target s.d Des 2026</span><span class="fig-val">95&ndash;105%</span></div>
+        <div class="fig"><span class="fig-label">% thd Target s.d Des</span><span class="fig-val" style="color:var(--ink-soft)">Belum dapat dihitung</span></div>
+      </div>
+      <div class="range-block">
+        <div class="range-title">Posisi Realisasi dalam Rentang Target (skala 85%&ndash;115%)</div>
+        <div class="range-track">
+          <div class="range-band" style="left:33.33%; width:33.33%"></div>
+          <div class="range-marker" style="left:64.03%">
+            <span class="range-marker-label" style="left:0">104,21%</span>
+          </div>
+        </div>
+        <div class="range-scale-labels">
+          <span>85%</span><span>95% (batas bawah)</span><span>100%</span><span>105% (batas atas)</span><span>115%</span>
+        </div>
+      </div>
+      <div class="item-bar-wrap small" style="margin-top:14px">
+        <div class="item-bar-track">
+          <div class="item-bar-fill" style="width:36.4%; background:var(--green)"></div>
+          <div class="item-bar-mid"></div>
+          <div class="item-bar-cap"></div>
+        </div>
+        <span class="item-bar-pct">109,21%</span>
+      </div>
+      <div class="item-bar-scale"><span>Skor Capaian Kontrak Manajemen (skala 0&ndash;300%)</span></div>
+    </div>
+
+    <!-- Indikator b — Positif -->
+    <div class="item-row">
+      <div class="item-main">
+        <span class="item-no">10_2</span>
+        <span class="item-name">b. Usulan Penghapusan ATTB</span>
+        <span class="item-tag tag-pol">Polaritas: Positif</span>
+        <span class="item-tag tag-high">Melampaui Target</span>
+      </div>
+      <div class="item-formula">Formula: Nilai usulan penghapusan ATTB yang selesai diverifikasi oleh DIV AKT &middot; Satuan Rp Juta &middot; Bobot 1,33</div>
+      <div class="item-figures">
+        <div class="fig"><span class="fig-label">Target s.d Juli 2026</span><span class="fig-val">Rp 18.098,94 Jt</span></div>
+        <div class="fig"><span class="fig-label">Realisasi</span><span class="fig-val accent">Rp 51.852,50 Jt</span></div>
+        <div class="fig"><span class="fig-label">% thd Target s.d Juli</span><span class="fig-val accent">286,49%</span></div>
+        <div class="fig"><span class="fig-label">Target s.d Des 2026</span><span class="fig-val">Rp 60.329,80 Jt</span></div>
+        <div class="fig"><span class="fig-label">% thd Target s.d Des</span><span class="fig-val" style="color:var(--amber)">85,95%</span></div>
+      </div>
+      <div class="item-bar-wrap">
+        <div class="item-bar-track">
+          <div class="item-bar-fill" style="width:95.5%; background:var(--green)"></div>
+          <div class="item-bar-mid"></div>
+          <div class="item-bar-cap"></div>
+        </div>
+        <span class="item-bar-pct">286,49%</span>
+      </div>
+      <div class="item-bar-scale"><span>Skor Capaian s.d Juli (skala 0&ndash;300%)</span><span>Target 100% &middot; Cap KM 110%</span></div>
+      <div class="item-bar-wrap small" style="margin-top:10px">
+        <div class="item-bar-track">
+          <div class="item-bar-fill" style="width:28.65%; background:var(--amber)"></div>
+          <div class="item-bar-mid"></div>
+        </div>
+        <span class="item-bar-pct">85,95%</span>
+      </div>
+      <div class="item-bar-scale"><span>Progres thd Target Penuh Tahun (Des 2026)</span></div>
+    </div>
+
+    <!-- Indikator c — Negatif -->
+    <div class="item-row">
+      <div class="item-main">
+        <span class="item-no">10_3</span>
+        <span class="item-name">c. Pengendalian NAC (Non Allowable Cost)</span>
+        <span class="item-tag tag-pol">Polaritas: Negatif</span>
+        <span class="item-tag tag-high">Melampaui Target</span>
+      </div>
+      <div class="item-formula">Formula: Kesesuaian Realisasi Anggaran NAC terhadap SKAO terbit &middot; Satuan Rp Miliar &middot; Bobot 1,33</div>
+      <div class="item-figures">
+        <div class="fig"><span class="fig-label">Target s.d Juli 2026</span><span class="fig-val">Rp 226,87 M</span></div>
+        <div class="fig"><span class="fig-label">Realisasi</span><span class="fig-val accent">Rp 169,90 M</span></div>
+        <div class="fig"><span class="fig-label">% thd Target s.d Juli</span><span class="fig-val accent">133,53%</span></div>
+        <div class="fig"><span class="fig-label">Target s.d Des 2026</span><span class="fig-val">Rp 378,11 M</span></div>
+        <div class="fig"><span class="fig-label">% thd Target s.d Des</span><span class="fig-val accent">222,55%</span></div>
+      </div>
+      <div class="item-bar-wrap">
+        <div class="item-bar-track">
+          <div class="item-bar-fill" style="width:44.5%; background:var(--green)"></div>
+          <div class="item-bar-mid"></div>
+          <div class="item-bar-cap"></div>
+        </div>
+        <span class="item-bar-pct">133,53%</span>
+      </div>
+      <div class="item-bar-scale"><span>Skor Capaian s.d Juli (skala 0&ndash;300%)</span><span>Target 100% &middot; Cap KM 110%</span></div>
+      <div class="item-bar-wrap small" style="margin-top:10px">
+        <div class="item-bar-track">
+          <div class="item-bar-fill" style="width:74.2%; background:var(--green)"></div>
+          <div class="item-bar-mid"></div>
+        </div>
+        <span class="item-bar-pct">222,55%</span>
+      </div>
+      <div class="item-bar-scale"><span>Progres thd Target Penuh Tahun (Des 2026) &middot; nilai &gt;100% karena realisasi jauh di bawah pagu</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="fnote"><b>Sumber data:</b> Rekap Indikator Kinerja Kontrak Manajemen No. 10 &mdash; posisi realisasi s.d. Juli 2026.</div>
+    <div class="fnote"><b>Catatan 1:</b> Juli 2026 mendapatkan tambahan AKI sebesar Rp429.477.510.240,00, sehingga target AKI bulan Juli 2026 disesuaikan dengan realisasinya.</div>
+    <div class="fnote"><b>Catatan 2:</b> Jika % capaian terhadap target &gt; 110%, maka persentase yang digunakan dalam perhitungan skor Kontrak Manajemen adalah 110% (capping).</div>
+    <div class="legend">
+      <span><i style="background:var(--green)"></i> Capaian &ge; 100% (target tercapai/terlampaui)</span>
+      <span><i style="background:var(--amber)"></i> Capaian 70&ndash;99% (mendekati target)</span>
+      <span><i class="line" style="background:var(--ink)"></i> Garis 100% &mdash; target tercapai</span>
+      <span><i class="line" style="background:var(--amber); border-top:2px dashed var(--amber); background:none;"></i> Garis 110% &mdash; ambang cap Kontrak Manajemen</span>
+    </div>
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  function fmtPct(n, d){
+    d = (d === undefined) ? 1 : d;
+    if (n === null || n === undefined) return '\u2014';
+    return n.toLocaleString('id-ID',{minimumFractionDigits:d, maximumFractionDigits:d}) + '%';
+  }
+
+  // ---------- gauges ----------
+  var indicators = [
+    {no:"10_1", label:"A. PENGENDALIAN AKI", value:109.21, sub:"realisasi 104,21% dalam rentang 95\u2013105%", tag:"Dalam rentang target", tagCls:"gap-even", realTxt:"104,21%", targetTxt:"95\u2011105%"},
+    {no:"10_2", label:"B. USULAN PENGHAPUSAN ATTB", value:286.49, sub:"realisasi thd target s.d Juli 2026", tag:"Jauh melampaui target", tagCls:"gap-over", realTxt:"Rp 51.852,50 Jt", targetTxt:"Rp 18.098,94 Jt"},
+    {no:"10_3", label:"C. PENGENDALIAN NAC", value:133.53, sub:"realisasi thd target s.d Juli 2026", tag:"Melampaui target", tagCls:"gap-even", realTxt:"Rp 169,90 M", targetTxt:"Rp 226,87 M"}
+  ];
+
+  var SCALE_MAX = 300; // gauge arc represents 0-300%
+  var TARGET_POS = (100/SCALE_MAX*100).toFixed(2);   // position of 100% line on arc
+  var CAP_POS = (110/SCALE_MAX*100).toFixed(2);       // position of 110% cap line on arc
+
+  var gaugeGrid = document.getElementById('gaugeGrid');
+  indicators.forEach(function(ind){
+    var dash = Math.max(0, Math.min(100, ind.value/SCALE_MAX*100)).toFixed(1);
+    var color = ind.value >= 100 ? '#1F5C4E' : '#B2790E';
+    // tick angle helpers using pathLength=100 trick: position along arc 0-100 maps to stroke-dasharray offset;
+    // we approximate tick marks with small radial lines computed via arc parametric formula.
+    function tickLine(posPct, cls){
+      var angle = Math.PI * (1 - posPct/100); // 0 at left(180deg) to 100 at right(0deg)
+      var cx = 100, cy = 92, r1 = 78, r2 = 92;
+      var x1 = cx + r1*Math.cos(angle), y1 = cy - r1*Math.sin(angle);
+      var x2 = cx + r2*Math.cos(angle), y2 = cy - r2*Math.sin(angle);
+      return '<line x1="'+x1.toFixed(1)+'" y1="'+y1.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'" class="'+cls+'"/>';
+    }
+    var card = document.createElement('div');
+    card.className = 'gauge-card';
+    card.innerHTML =
+      '<div class="gauge-eyebrow">' + ind.label + '</div>' +
+      '<svg viewBox="0 0 200 110" class="gauge-svg">' +
+        '<path d="M 22 92 A 78 78 0 0 1 178 92" pathLength="100" class="gauge-bg"/>' +
+        '<path d="M 22 92 A 78 78 0 0 1 178 92" pathLength="100" class="gauge-fg" style="stroke:' + color + '" stroke-dasharray="' + dash + ' 100"/>' +
+        tickLine(TARGET_POS, 'gauge-tick') +
+        tickLine(CAP_POS, 'gauge-tick-cap') +
+      '</svg>' +
+      '<div class="gauge-value" style="color:' + color + '">' + fmtPct(ind.value, 2) + '</div>' +
+      '<div class="gauge-caption">' + ind.sub + '</div>' +
+      '<span class="gap ' + ind.tagCls + '">' + ind.tag + '</span>' +
+      '<div class="gauge-figs">' +
+        '<div><span>Realisasi</span><b>' + ind.realTxt + '</b></div>' +
+        '<div><span>Target s.d Juli</span><b>' + ind.targetTxt + '</b></div>' +
+      '</div>';
+    gaugeGrid.appendChild(card);
+  });
+
+  // ---------- comparison chart ----------
+  if (window.Chart) {
+    var ctx = document.getElementById('barCompare').getContext('2d');
+    new Chart(ctx, {
+      data: {
+        labels: ['a. Pengendalian AKI', 'b. Penghapusan ATTB', 'c. Pengendalian NAC'],
+        datasets: [
+          {
+            type: 'bar',
+            label: '% thd Target s.d Juli 2026',
+            data: [109.21, 286.49, 133.53],
+            backgroundColor: '#0E2A3F',
+            borderRadius: 3,
+            maxBarThickness: 46
+          },
+          {
+            type: 'bar',
+            label: '% thd Target s.d Des 2026',
+            data: [null, 85.95, 222.55],
+            backgroundColor: '#1F5C4E',
+            borderRadius: 3,
+            maxBarThickness: 46
+          },
+          {
+            type: 'line',
+            label: 'Target 100%',
+            data: [100, 100, 100],
+            borderColor: '#B24A2E',
+            borderDash: [6,4],
+            borderWidth: 2,
+            pointRadius: 0,
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { font: { family: "'Segoe UI', Arial, sans-serif", size: 12 }, color: '#45596B', padding: 16, usePointStyle: true }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(c){
+                if (c.parsed.y === null) return c.dataset.label + ': belum dapat dihitung';
+                return ' ' + c.dataset.label + ': ' + c.parsed.y.toLocaleString('id-ID',{minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            grid: { color: '#DDDACF' },
+            ticks: { color: '#45596B', font: { family: "'SFMono-Regular', Consolas, monospace", size: 11 }, callback: function(v){ return v + '%'; } }
+          },
+          x: {
+            grid: { display: false },
+            ticks: { color: '#0E2A3F', font: { family: "'Segoe UI', Arial, sans-serif", size: 12, weight: '600' } }
+          }
+        }
+      }
+    });
+  }
+
+})();
+</script>
+
+</body>
+</html>

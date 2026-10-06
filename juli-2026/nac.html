@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Komposisi & Distribusi Non Allowable Cost — UID Jawa Tengah</title>
+    <!-- Kode Favicon -->
+    <link rel="icon" type="image/png" href="Logo PLN Favicon.png">
+<style>
+  :root {
+    --ink: #0E2A3F;
+    --ink-soft: #45596B;
+    --paper: #F6F5F1;
+    --paper-card: #FFFFFF;
+    --line: #DDDACF;
+    --green: #1F5C4E;
+    --green-soft: #E4EEE9;
+    --amber: #B2790E;
+    --amber-soft: #F5EAD6;
+    --red: #B24A2E;
+    --red-soft: #F5E4DD;
+    --grey: #8B8577;
+    --grey-soft: #EDEBE3;
+    --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
+    --sans: 'Segoe UI', Helvetica, Arial, sans-serif;
+    --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px 80px; }
+
+  /* HEADER */
+  header.hero {
+    background: var(--ink);
+    color: #F6F5F1;
+    padding: 56px 0 46px;
+    margin-bottom: 44px;
+    border-bottom: 6px solid var(--green);
+  }
+  header.hero .wrap { padding-top:0; padding-bottom:0; }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11.5px;
+    color: #9FB8AE;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  h1.title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 42px;
+    line-height: 1.15;
+    margin: 0 0 10px;
+    color: #FFFFFF;
+    letter-spacing: 0.2px;
+  }
+  .subtitle {
+    font-size: 16px;
+    color: #C7D2CD;
+    max-width: 680px;
+    margin-bottom: 30px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 24px;
+  }
+  .hero-meta .hm { min-width: 150px; }
+  .hero-meta .hm-label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #9FB8AE;
+    margin-bottom: 6px;
+  }
+  .hero-meta .hm-val {
+    font-family: var(--mono);
+    font-size: 21px;
+    color: #FFFFFF;
+  }
+  .hero-meta .hm-sub { font-size: 12px; color: #9FB8AE; margin-top: 3px; }
+
+  section { margin-bottom: 54px; }
+  .section-head {
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin-bottom: 22px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; gap: 16px; flex-wrap: wrap;
+  }
+  .section-head h2 {
+    font-family: var(--serif); font-weight:400; font-size: 24px; margin:0; color: var(--ink);
+  }
+  .section-head .section-note { font-size: 12.5px; color: var(--ink-soft); }
+
+  /* KPI CARDS */
+  .kpi-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .kpi-card {
+    background: var(--paper-card); border: 1px solid var(--line); border-radius: 4px;
+    padding: 20px 20px 18px;
+  }
+  .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); margin-bottom: 10px; }
+  .kpi-val { font-family: var(--mono); font-size: 26px; color: var(--ink); font-weight:600; }
+  .kpi-sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 6px; }
+
+  /* GAUGES */
+  .gauge-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .gauge-card {
+    background: var(--paper-card); border: 1px solid var(--line); border-radius: 4px;
+    padding: 22px 22px 24px; text-align:center;
+  }
+  .gauge-eyebrow { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+  .gauge-svg { width: 200px; height: 110px; }
+  .gauge-bg { fill:none; stroke: var(--grey-soft); stroke-width: 14; }
+  .gauge-fg { fill:none; stroke-width: 14; stroke-linecap: round; }
+  .gauge-tick { stroke: var(--ink); stroke-width: 2; opacity: 0.55; }
+  .gauge-value { font-family: var(--serif); font-size: 38px; margin-top: -22px; }
+  .gauge-caption { font-size: 12px; color: var(--ink-soft); margin-bottom: 8px; }
+  .gap { display:inline-block; font-size: 11.5px; font-weight:600; padding: 3px 10px; border-radius: 20px; margin-bottom: 14px; }
+  .gap-over { background: var(--amber-soft); color: var(--amber); }
+  .gap-under { background: var(--grey-soft); color: var(--ink-soft); }
+  .gap-even { background: var(--green-soft); color: var(--green); }
+  .gap-risk { background: var(--red-soft); color: var(--red); }
+  .gauge-figs { display:flex; justify-content:space-between; border-top: 1px solid var(--line); padding-top: 12px; margin-top: 4px; }
+  .gauge-figs div { display:flex; flex-direction:column; text-align:left; }
+  .gauge-figs span { font-size: 10.5px; color: var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; }
+  .gauge-figs b { font-family: var(--mono); font-size: 13.5px; margin-top:3px; }
+
+  /* CHART CARDS */
+  .chart-grid { display:grid; grid-template-columns: 340px 1fr; gap: 20px; }
+  .chart-card {
+    background: var(--paper-card); border: 1px solid var(--line); border-radius: 4px;
+    padding: 22px 24px;
+  }
+  .chart-card h3 { font-family: var(--serif); font-weight:400; font-size: 17px; margin: 0 0 4px; color: var(--ink); }
+  .chart-card .chart-sub { font-size: 12px; color: var(--ink-soft); margin-bottom: 16px; }
+  .chart-legend-manual { display:flex; gap:18px; justify-content:center; margin-top: 14px; flex-wrap: wrap; }
+  .chart-legend-manual span { display:inline-flex; align-items:center; gap:6px; font-size:12px; color: var(--ink-soft); }
+  .chart-legend-manual i { width:10px; height:10px; border-radius:50%; display:inline-block; }
+  .donut-center-label { text-align:center; margin-top: -4px; }
+  .donut-center-label .dcl-val { font-family: var(--mono); font-size: 20px; font-weight:700; color: var(--ink); }
+  .donut-center-label .dcl-sub { font-size: 11px; color: var(--ink-soft); }
+
+  /* INSIGHTS */
+  .insight-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .insight-card {
+    background: var(--paper-card); border: 1px solid var(--line); border-left: 4px solid var(--green);
+    border-radius: 2px; padding: 18px 20px;
+  }
+  .insight-card.warn { border-left-color: var(--amber); }
+  .insight-card.risk { border-left-color: var(--red); }
+  .insight-label {
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; font-weight:700;
+    color: var(--green); margin-bottom: 8px;
+  }
+  .insight-card.warn .insight-label { color: var(--amber); }
+  .insight-card.risk .insight-label { color: var(--red); }
+  .insight-text { font-size: 14px; color: var(--ink); line-height:1.55; }
+  .insight-text b { color: var(--ink); }
+
+  /* TOP CONTRIBUTORS */
+  .top-row {
+    display: grid; grid-template-columns: 40px 1fr 150px; align-items:center;
+    gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line);
+  }
+  .top-row:last-child { border-bottom:none; }
+  .top-rank { font-family: var(--serif); font-size: 20px; color: var(--grey); }
+  .top-name { font-size: 14px; color: var(--ink); font-weight:600; margin-bottom: 3px; }
+  .top-meta { font-size: 11.5px; color: var(--ink-soft); margin-bottom: 7px; }
+  .top-track { height: 6px; background: var(--grey-soft); border-radius: 4px; overflow:hidden; }
+  .top-fill { height:100%; background: var(--green); border-radius: 4px; }
+  .top-val { font-family: var(--mono); font-size: 15px; text-align:right; color: var(--ink); font-weight:600; }
+  .top-wrap { background: var(--paper-card); border: 1px solid var(--line); border-radius: 4px; padding: 8px 22px; }
+
+  /* CATEGORY BLOCK */
+  .kat-summary {
+    display:flex; gap: 24px; margin-bottom: 20px; flex-wrap:wrap;
+    background: var(--paper-card); border:1px solid var(--line); border-radius:4px; padding: 18px 22px;
+  }
+  .kat-summary .ks { min-width: 140px; }
+  .kat-summary .ks-label { font-size: 10.5px; text-transform:uppercase; letter-spacing:.06em; color: var(--ink-soft); }
+  .kat-summary .ks-val { font-family: var(--mono); font-size: 17px; margin-top: 4px; }
+
+  .item-row {
+    background: var(--paper-card); border: 1px solid var(--line); border-radius: 4px;
+    padding: 16px 20px; margin-bottom: 10px;
+  }
+  .item-main { display:flex; align-items:center; gap: 10px; margin-bottom: 12px; flex-wrap:wrap; }
+  .item-no { font-family: var(--mono); font-size: 12px; color: var(--grey); background: var(--grey-soft); padding: 1px 7px; border-radius: 3px; }
+  .item-name { font-size: 14.5px; font-weight:600; color: var(--ink); flex:1; min-width:200px; }
+  .item-tag { font-size: 10.5px; text-transform:uppercase; letter-spacing:.04em; font-weight:700; padding: 3px 9px; border-radius: 20px; white-space:nowrap; }
+  .tag-high { background: var(--green-soft); color: var(--green); }
+  .tag-mid { background: var(--amber-soft); color: var(--amber); }
+  .tag-minor { background: var(--grey-soft); color: var(--ink-soft); }
+  .tag-contra { background: var(--grey-soft); color: var(--ink-soft); }
+
+  .item-figures { display:flex; gap: 30px; margin-bottom: 12px; flex-wrap:wrap; }
+  .fig { display:flex; flex-direction:column; }
+  .fig-label { font-size: 10.5px; text-transform:uppercase; letter-spacing:.05em; color: var(--ink-soft); margin-bottom:3px; }
+  .fig-val { font-family: var(--mono); font-size: 14px; color: var(--ink); }
+
+  .item-bar-wrap { display:flex; align-items:center; gap: 12px; }
+  .item-bar-track { position:relative; flex:1; height: 8px; background: var(--grey-soft); border-radius: 5px; overflow:visible; }
+  .item-bar-fill { position:absolute; left:0; top:0; height:100%; border-radius: 5px; }
+  .status-fill-high { background: var(--green); }
+  .status-fill-mid { background: var(--amber); }
+  .status-fill-minor { background: var(--grey); }
+  .status-fill-contra { background: var(--grey); }
+  .item-bar-mid { position:absolute; top:-3px; width:2px; height:14px; background: var(--ink); opacity:0.35; }
+  .item-bar-pct { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); white-space:nowrap; min-width: 118px; text-align:right; }
+
+  /* UNIT RANKING TABLE (compact) */
+  .unit-table-wrap { background: var(--paper-card); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  table.unit-table { width:100%; border-collapse: collapse; font-size: 13.5px; }
+  table.unit-table th {
+    text-align:left; font-size: 10.5px; text-transform:uppercase; letter-spacing:.06em; color: var(--ink-soft);
+    padding: 12px 16px; border-bottom: 2px solid var(--ink); background: var(--grey-soft);
+  }
+  table.unit-table td { padding: 11px 16px; border-bottom: 1px solid var(--line); color: var(--ink); vertical-align: middle; }
+  table.unit-table tr:last-child td { border-bottom: none; }
+  table.unit-table td.num { font-family: var(--mono); text-align:right; white-space:nowrap; }
+  table.unit-table td.rank { color: var(--grey); font-family: var(--serif); }
+  .mini-track { width: 100%; height: 6px; background: var(--grey-soft); border-radius: 4px; overflow:hidden; min-width: 80px; }
+  .mini-fill { height:100%; background: var(--green); border-radius: 4px; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--line); padding-top: 24px; font-size: 12px; color: var(--ink-soft); }
+  footer .fnote { margin-bottom: 6px; }
+  .legend { display:flex; gap: 18px; flex-wrap:wrap; margin-top: 10px; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; font-size:11.5px; color: var(--ink-soft); }
+  .legend i { width:10px; height:10px; border-radius:50%; display:inline-block; }
+
+  @media (max-width: 860px) {
+    .kpi-grid { grid-template-columns: repeat(2,1fr); }
+    .gauge-grid { grid-template-columns: 1fr; }
+    .chart-grid { grid-template-columns: 1fr; }
+    .insight-grid { grid-template-columns: 1fr; }
+    .top-row { grid-template-columns: 30px 1fr; }
+    .top-val { grid-column: 2; text-align:left; margin-top:4px; }
+    h1.title { font-size: 30px; }
+    table.unit-table { font-size: 12.5px; }
+    table.unit-table th:nth-child(4), table.unit-table td:nth-child(4) { display:none; }
+  }
+  @media print {
+    body { background: #fff; }
+    header.hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Laporan Internal &middot; Analisis Komposisi Biaya</div>
+    <h1 class="title">Non Allowable Cost — UID Jawa Tengah</h1>
+    <div class="subtitle">Analisis komposisi dan distribusi biaya Non Allowable Cost (NAC) berdasarkan jenis biaya (Kategori A &amp; B) dan sebaran realisasi pada 14 unit &mdash; UID beserta 13 Unit Pelayanan/UP2D di wilayah Jawa Tengah.</div>
+    <div class="hero-meta">
+      <div class="hm">
+        <div class="hm-label">Total NAC</div>
+        <div class="hm-val" id="hmTotal">&mdash;</div>
+        <div class="hm-sub" id="hmTotalSub">seluruh unit &amp; jenis biaya</div>
+      </div>
+      <div class="hm">
+        <div class="hm-label">Kategori A</div>
+        <div class="hm-val" id="hmKatA">&mdash;</div>
+        <div class="hm-sub" id="hmKatASub">&mdash;</div>
+      </div>
+      <div class="hm">
+        <div class="hm-label">Kategori B</div>
+        <div class="hm-val" id="hmKatB">&mdash;</div>
+        <div class="hm-sub" id="hmKatBSub">&mdash;</div>
+      </div>
+      <div class="hm">
+        <div class="hm-label">Unit Pelaksana</div>
+        <div class="hm-val">14 Unit</div>
+        <div class="hm-sub">UID + 13 unit pelayanan/UP2D</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <div class="section-head">
+      <h2>Ringkasan Kinerja</h2>
+      <div class="section-note">Seluruh angka dalam Rupiah, gabungan Kategori A dan B</div>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Realisasi NAC</div>
+        <div class="kpi-val" id="kpiTotal">&mdash;</div>
+        <div class="kpi-sub" id="kpiTotalSub">&mdash;</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Kategori A (Beban Usaha)</div>
+        <div class="kpi-val" id="kpiA">&mdash;</div>
+        <div class="kpi-sub" id="kpiASub">&mdash;</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Kategori B</div>
+        <div class="kpi-val" id="kpiB">&mdash;</div>
+        <div class="kpi-sub" id="kpiBSub">&mdash;</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Kontributor Unit Terbesar</div>
+        <div class="kpi-val" id="kpiTopUnit">&mdash;</div>
+        <div class="kpi-sub" id="kpiTopUnitSub">&mdash;</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Tingkat Konsentrasi Biaya</h2>
+      <div class="section-note">Seberapa besar total NAC bertumpu pada satu jenis biaya, satu unit, atau beberapa pos terbesar</div>
+    </div>
+    <div class="gauge-grid" id="gaugeGrid"></div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Komposisi Kategori &amp; Sebaran Unit</h2>
+      <div class="section-note">Visualisasi interaktif &mdash; arahkan kursor pada grafik untuk detail nilai</div>
+    </div>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h3>Komposisi Kategori Biaya</h3>
+        <div class="chart-sub">Kategori C, D, dan E tidak memiliki realisasi (Rp 0)</div>
+        <canvas id="donutKategori" height="220"></canvas>
+        <div class="donut-center-label">
+          <div class="dcl-val" id="donutCenterVal">&mdash;</div>
+          <div class="dcl-sub">Total NAC</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3>Distribusi Realisasi per Unit Pelaksana</h3>
+        <div class="chart-sub">14 unit, diurutkan dari realisasi terbesar ke terkecil</div>
+        <canvas id="barUnit" height="220"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Insight &amp; Analisis</h2>
+      <div class="section-note">Temuan utama dari data komposisi NAC</div>
+    </div>
+    <div class="insight-grid">
+      <div class="insight-card risk">
+        <div class="insight-label">Dominasi Ekstrem Beban PPh 21 Pegawai</div>
+        <div class="insight-text">Beban Pajak Penghasilan Pasal 21 Pegawai adalah pos tunggal terbesar: <b>Rp117,36 Miliar</b>, setara <b>69,1%</b> dari total NAC perusahaan dan <b>75,7%</b> dari Kategori A. Struktur biaya NAC nyaris seluruhnya digerakkan oleh satu akun ini &mdash; setiap perubahan kebijakan atau volume PPh 21 akan berdampak langsung dan proporsional besar terhadap total NAC.</div>
+      </div>
+      <div class="insight-card warn">
+        <div class="insight-label">Penyumbang Terbesar Terkonsentrasi pada UID</div>
+        <div class="insight-text">Unit UID (Kantor induk) menyumbang <b>Rp67,79 Miliar (39,9%)</b> dari total NAC &mdash; hampir <b>5,7 kali lipat</b> unit dengan realisasi terbesar kedua, TGL (Rp11,79 Miliar). Sebanyak 13 unit pelayanan lainnya rata-rata hanya menyumbang sekitar Rp7,85 Miliar, menunjukkan beban NAC sangat terpusat di level UID.</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-label">Pola Kontra pada Penyisihan Piutang Ragu-ragu</div>
+        <div class="insight-text">Pos Beban Penyisihan Piutang Ragu-ragu bernilai net <b>Rp7,94 Miliar</b>, namun komposisinya kontras: UID mencatat <b>+Rp31,86 Miliar</b> (pembentukan penyisihan), sementara <b>12 dari 13 unit pelayanan mencatat nilai negatif</b> (koreksi/pembalikan), terbesar di SMG (-Rp4,51 Miliar) dan KDS (-Rp3,17 Miliar).</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-label">Struktur Kategori A vs Kategori B</div>
+        <div class="insight-text">Kategori A menyerap <b>91,2%</b> (Rp154,93 Miliar) dari total NAC, sedangkan Kategori B hanya <b>8,8%</b> (Rp14,97 Miliar). Dominasi ini wajar karena Kategori A mencakup beban kepegawaian rutin berskala besar (PPh 21, tunjangan cuti, iuran BPJS), sementara Kategori B lebih bersifat operasional-administratif dengan basis lebih kecil.</div>
+      </div>
+      <div class="insight-card warn">
+        <div class="insight-label">Kategori B Ditopang Dua Pos Operasional</div>
+        <div class="insight-text">Dalam Kategori B, <b>Administrasi (46,0%)</b> dan <b>Pemeliharaan (31,6%)</b> bersama-sama menyumbang <b>77,6%</b> dari total kategori ini. Pendapatan Luar Usaha menyusul dengan 22,1%, sedangkan Kepegawaian nyaris tidak signifikan (0,3%) &mdash; menunjukkan Kategori B murni digerakkan oleh biaya operasional aset dan administrasi, bukan biaya personel.</div>
+      </div>
+      <div class="insight-card risk">
+        <div class="insight-label">Anomali Unit SMG: Koreksi Piutang Menekan Total</div>
+        <div class="insight-text">Di unit SMG, beban PPh 21 Pegawai saja (Rp8,93 Miliar) sudah melebihi <b>113,6%</b> dari total realisasi NAC unit tersebut (Rp7,86 Miliar) &mdash; total unit justru lebih kecil dari satu pos biayanya karena tertekan koreksi Penyisihan Piutang Ragu-ragu sebesar -Rp4,51 Miliar, koreksi terbesar di antara seluruh unit.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Kontributor Jenis Biaya Terbesar</h2>
+      <div class="section-note">8 jenis biaya dengan realisasi tertinggi, lintas Kategori A &amp; B</div>
+    </div>
+    <div class="top-wrap" id="topItemsWrap"></div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Peringkat 14 Unit Pelaksana</h2>
+      <div class="section-note">Diurutkan dari realisasi NAC terbesar ke terkecil</div>
+    </div>
+    <div class="unit-table-wrap">
+      <table class="unit-table">
+        <thead>
+          <tr>
+            <th style="width:40px">#</th>
+            <th>Unit</th>
+            <th style="width:200px">Proporsi</th>
+            <th style="width:130px">% dari Total</th>
+            <th style="width:170px">Realisasi</th>
+          </tr>
+        </thead>
+        <tbody id="unitTableBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Rincian Kategori A</h2>
+      <div class="section-note">Beban Usaha &mdash; kepegawaian, tunjangan, penyusutan, dan penyisihan</div>
+    </div>
+    <div class="kat-summary" id="katSummaryA"></div>
+    <div id="katItemsA"></div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Rincian Kategori B</h2>
+      <div class="section-note">Pemeliharaan, kepegawaian, administrasi, dan pendapatan luar usaha</div>
+    </div>
+    <div class="kat-summary" id="katSummaryB"></div>
+    <div id="katItemsB"></div>
+  </section>
+
+  <footer>
+    <div class="fnote"><b>Sumber data:</b> Rekapitulasi Non Allowable Cost UID Jawa Tengah, per jenis biaya dan per unit pelaksana (UID, KDS, SKA, MGL, PKT, TGL, SMG, SLG, KLT, PKL, CLP, GRB, SKH, UP2D). Kategori C, D, dan E tidak memiliki realisasi pada periode data ini.</div>
+    <div class="fnote" id="footAvgNote">Garis ambang pada bar komposisi menandai batas 10% dari total kategori &mdash; ambang kontribusi dominan.</div>
+    <div class="legend">
+      <span><i style="background:var(--green)"></i> Dominan (&ge;10% dari kategori)</span>
+      <span><i style="background:var(--amber)"></i> Signifikan (3&ndash;10% dari kategori)</span>
+      <span><i style="background:var(--grey)"></i> Minor (&lt;3% dari kategori)</span>
+      <span><i style="background:var(--grey);opacity:0.6"></i> Akun kontra / penyisihan</span>
+    </div>
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var UNITS = ["UID","KDS","SKA","MGL","PKT","TGL","SMG","SLG","KLT","PKL","CLP","GRB","SKH","UP2D"];
+  function u(){
+    var vals = arguments, o = {};
+    for (var i=0;i<UNITS.length;i++){ o[UNITS[i]] = vals[i] || 0; }
+    return o;
+  }
+
+  var dataA = [
+    {name:"Administrasi Wisma & Rumah Dinas", units:u(9643568,4133821,0,0,1993347,612612,1457600,918918,0,0,0,0,0,0)},
+    {name:"Penyusutan Wisma & Rumah Dinas", units:u(46862496,43369002,66361744,36446033,210370750,0,8594709,0,0,0,13294752,0,18648846,0)},
+    {name:"Beban Tunjangan Cuti Tahunan", units:u(1503245000,622563000,771933000,578800000,649320000,702767000,777673000,437487000,562102000,388908000,532572000,433792000,555541000,358858000)},
+    {name:"Beban Penghargaan Kesetiaan Kerja (Winduan)", units:u(309978000,57616000,225084000,132334000,290588000,242808000,59932000,64036000,76670000,47798000,144148000,104009000,126018000,30370000)},
+    {name:"Iuran Pemberi Kerja BPJS Kesehatan", units:u(680154640,336697520,328332360,313029400,296391880,379355560,373259040,219992480,276160040,242991000,262828080,212634480,282361680,199916240)},
+    {name:"Iuran Pemberi Kerja BPJS Hari Tua", units:u(775620788,328921305,329368968,311148318,292585603,377572198,366535986,218064939,280108426,236773545,256847303,206890421,282759883,194151026)},
+    {name:"Iuran Pemberi Kerja BPJS Kecelakaan Kerja", units:u(266226680,112900070,113053735,106799596,100428087,129599167,125811067,74849327,96145358,81270941,88161117,71013785,97055447,66641067)},
+    {name:"Iuran Pemberi Kerja BPJS Kecelakaan Kematian", units:u(62888172,26669295,26705592,25228242,23723157,30613962,29719134,17680941,22711494,19197855,20825457,16774899,22926477,15741974)},
+    {name:"Iuran Pemberi Kerja BPJS Jaminan Pensiun", units:u(322978322,165025150,160371840,153610896,144604852,186264632,182617666,107302516,134758432,119709838,129724856,104720042,136537378,98745072)},
+    {name:"Beban Pajak Penghasilan Pasal 21 Pegawai", units:u(25644581567,8092510346,8554449680,7576978755,7717219811,9757063180,8926219502,5027049675,7256375655,5551039749,6681804011,4958376994,6751274358,4860626009)},
+    {name:"Pembinaan Spiritual, Budaya, dan Olah Raga (SBO)", units:u(91670000,34883037,68612915,65730020,60540808,40360000,0,47856067,0,51892121,56504754,46126330,58234491,21332500)},
+    {name:"Beban Penyisihan Piutang Ragu-ragu", units:u(31856354863,-3165590421,-2990494769,-1096196471,-1405777088,-2104420133,-4509077192,-1202370750,-1557295810,-1307742191,-1462726825,-1555888467,-1557481646,0), contra:true},
+    {name:"Bahan Makanan & Konsumsi", units:u(1457350290,327185534,237470520,269174151,324425457,353371279,335207149,117478865,206973158,246577551,165511835,190554055,204921967,112852966)},
+    {name:"Beban Penyisihan Material", units:u(-29543243,99049808,12675776,10925572,40540689,17705500,25194448,2186653,12412629,-41176510,-12156891,-6111923,21581210,-29291223), contra:true},
+    {name:"Penyusutan Aset Tetap dari Hibah", units:u(0,58706086,17503227,3634264,26556245,2232747,9590766,790000,0,0,0,2901580,22880811,0)},
+    {name:"Penyusutan Aset Tetap - Revaluasi (Fungsi Pendukung)", units:u(407833,1642904,5087323,154190,1133767,4089646,1416023,443760,2897189,595395,483676,52809,2421798,363981)}
+  ];
+  var dataB = [
+    {name:"Pemeliharaan", units:u(948352977,511205855,216259351,268299224,148987028,592347547,626048389,222656897,116953310,304794177,123775318,366104640,170501596,111773924)},
+    {name:"Kepegawaian", units:u(5803560,0,0,0,637409,4028850,9690975,1713075,1186500,777000,12288031,6503079,1789358,2491125)},
+    {name:"Administrasi", units:u(3431149595,293682596,488066980,186768935,265712639,329719124,226729732,295115401,206594956,275948294,318643906,156609253,172668103,243380275)},
+    {name:"Pendapatan Luar Usaha", units:u(405339653,291890462,144986534,0,899534295,745197787,279592162,26339708,80752150,234100641,41387415,65013046,61811649,32010000)}
+  ];
+
+  function itemTotal(item){
+    var s = 0;
+    for (var i=0;i<UNITS.length;i++){ s += item.units[UNITS[i]]; }
+    return s;
+  }
+  function topUnitOf(item){
+    var best = UNITS[0], bestVal = item.units[UNITS[0]];
+    for (var i=1;i<UNITS.length;i++){
+      if (item.units[UNITS[i]] > bestVal){ best = UNITS[i]; bestVal = item.units[UNITS[i]]; }
+    }
+    return {unit: best, val: bestVal};
+  }
+
+  dataA.forEach(function(i){ i.total = itemTotal(i); });
+  dataB.forEach(function(i){ i.total = itemTotal(i); });
+
+  var totalA = dataA.reduce(function(s,i){ return s+i.total; }, 0);
+  var totalB = dataB.reduce(function(s,i){ return s+i.total; }, 0);
+  var grand = totalA + totalB;
+
+  var unitTotals = {};
+  UNITS.forEach(function(k){
+    unitTotals[k] = dataA.reduce(function(s,i){ return s+i.units[k]; },0) + dataB.reduce(function(s,i){ return s+i.units[k]; },0);
+  });
+
+  var UNIT_LABEL = {
+    UID:"UID (Kantor Induk)", KDS:"KDS", SKA:"SKA", MGL:"MGL", PKT:"PKT", TGL:"TGL",
+    SMG:"SMG", SLG:"SLG", KLT:"KLT", PKL:"PKL", CLP:"CLP", GRB:"GRB", SKH:"SKH", UP2D:"UP2D"
+  };
+
+  // ---------- formatters ----------
+  function fmtRp(n){
+    var neg = n < 0;
+    var s = Math.round(Math.abs(n)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return (neg ? '-' : '') + 'Rp ' + s;
+  }
+  function fmtMiliar(n, d){
+    d = (d === undefined) ? 2 : d;
+    return (n/1e9).toLocaleString('id-ID',{minimumFractionDigits:d, maximumFractionDigits:d}) + ' Miliar';
+  }
+  function fmtMiliarShort(n, d){
+    d = (d === undefined) ? 2 : d;
+    return (n/1e9).toLocaleString('id-ID',{minimumFractionDigits:d, maximumFractionDigits:d}) + ' M';
+  }
+  function fmtPct(n, d){
+    d = (d === undefined) ? 1 : d;
+    return n.toLocaleString('id-ID',{minimumFractionDigits:d, maximumFractionDigits:d}) + '%';
+  }
+
+  // ---------- hero + KPI ----------
+  document.getElementById('hmTotal').textContent = fmtMiliarShort(grand);
+  document.getElementById('hmTotalSub').textContent = fmtRp(grand);
+  document.getElementById('hmKatA').textContent = fmtPct(totalA/grand*100);
+  document.getElementById('hmKatASub').textContent = fmtMiliar(totalA) + ' dari total';
+  document.getElementById('hmKatB').textContent = fmtPct(totalB/grand*100);
+  document.getElementById('hmKatBSub').textContent = fmtMiliar(totalB) + ' dari total';
+
+  document.getElementById('kpiTotal').textContent = fmtMiliarShort(grand);
+  document.getElementById('kpiTotalSub').textContent = fmtRp(grand);
+  document.getElementById('kpiA').textContent = fmtMiliarShort(totalA);
+  document.getElementById('kpiASub').textContent = fmtPct(totalA/grand*100) + ' dari total NAC';
+  document.getElementById('kpiB').textContent = fmtMiliarShort(totalB);
+  document.getElementById('kpiBSub').textContent = fmtPct(totalB/grand*100) + ' dari total NAC';
+
+  var unitSorted = UNITS.slice().sort(function(a,b){ return unitTotals[b]-unitTotals[a]; });
+  document.getElementById('kpiTopUnit').textContent = unitSorted[0] + ' \u00b7 ' + fmtMiliarShort(unitTotals[unitSorted[0]]);
+  document.getElementById('kpiTopUnitSub').textContent = fmtPct(unitTotals[unitSorted[0]]/grand*100) + ' dari total NAC';
+
+  // ---------- gauges (concentration) ----------
+  var pph21 = dataA.filter(function(i){ return i.name.indexOf('Pasal 21') !== -1; })[0];
+  var allItems = dataA.map(function(i){ return {name:i.name, total:i.total, kat:'A'}; })
+    .concat(dataB.map(function(i){ return {name:i.name, total:i.total, kat:'B'}; }));
+  allItems.sort(function(a,b){ return b.total - a.total; });
+  var top3sum = allItems.slice(0,3).reduce(function(s,i){ return s+i.total; },0);
+
+  var gauges = [
+    {label:"PPH 21 PASAL 21 PEGAWAI", value: pph21.total/grand*100, color:"#B24A2E", caption:"dari total realisasi NAC", tag:"gap-risk", tagText:"Konsentrasi sangat tinggi pada satu pos", realVal:pph21.total, refVal:grand, refLabel:"Total NAC"},
+    {label:"UNIT UID (KANTOR INDUK)", value: unitTotals.UID/grand*100, color:"#B2790E", caption:"dari total realisasi NAC", tag:"gap-over", tagText:"5,7x lipat unit terbesar kedua (TGL)", realVal:unitTotals.UID, refVal:grand, refLabel:"Total NAC"},
+    {label:"TOP-3 JENIS BIAYA (PARETO)", value: top3sum/grand*100, color:"#B24A2E", caption:"dari total realisasi NAC", tag:"gap-risk", tagText:"Hampir 4/5 total berasal dari 3 pos (Beban PPh 21 Pegawai, Beban Tunjangan Cuti Tahunan, Beban Penyisihan Piutang", realVal:top3sum, refVal:grand, refLabel:"Total NAC"}
+  ];
+
+  var gaugeGrid = document.getElementById('gaugeGrid');
+  gauges.forEach(function(g){
+    var dash = Math.max(0, Math.min(100, g.value)).toFixed(1);
+    var card = document.createElement('div');
+    card.className = 'gauge-card';
+    card.innerHTML =
+      '<div class="gauge-eyebrow">' + g.label + '</div>' +
+      '<svg viewBox="0 0 200 110" class="gauge-svg">' +
+        '<path d="M 22 92 A 78 78 0 0 1 178 92" pathLength="100" class="gauge-bg"/>' +
+        '<path d="M 22 92 A 78 78 0 0 1 178 92" pathLength="100" class="gauge-fg" style="stroke:' + g.color + '" stroke-dasharray="' + dash + ' 100"/>' +
+      '</svg>' +
+      '<div class="gauge-value" style="color:' + g.color + '">' + fmtPct(g.value) + '</div>' +
+      '<div class="gauge-caption">' + g.caption + '</div>' +
+      '<span class="gap ' + g.tag + '">' + g.tagText + '</span>' +
+      '<div class="gauge-figs">' +
+        '<div><span>Nilai Pos</span><b>' + fmtMiliarShort(g.realVal) + '</b></div>' +
+        '<div><span>' + g.refLabel + '</span><b>' + fmtMiliarShort(g.refVal) + '</b></div>' +
+      '</div>';
+    gaugeGrid.appendChild(card);
+  });
+
+  // ---------- top items list ----------
+  var topItemsWrap = document.getElementById('topItemsWrap');
+  var top8 = allItems.slice(0,8);
+  var maxTop = top8[0].total;
+  top8.forEach(function(item, idx){
+    var row = document.createElement('div');
+    row.className = 'top-row';
+    row.innerHTML =
+      '<div class="top-rank">' + String(idx+1).padStart(2,'0') + '</div>' +
+      '<div class="top-info">' +
+        '<div class="top-name">' + item.name + '</div>' +
+        '<div class="top-meta">Kategori ' + item.kat + ' \u00b7 ' + fmtPct(item.total/grand*100) + ' dari total realisasi</div>' +
+        '<div class="top-track"><div class="top-fill" style="width:' + (item.total/maxTop*100).toFixed(1) + '%"></div></div>' +
+      '</div>' +
+      '<div class="top-val">' + fmtMiliarShort(item.total) + '</div>';
+    topItemsWrap.appendChild(row);
+  });
+
+  // ---------- unit ranking table ----------
+  var unitTableBody = document.getElementById('unitTableBody');
+  var maxUnit = unitTotals[unitSorted[0]];
+  unitSorted.forEach(function(k, idx){
+    var v = unitTotals[k];
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="rank">' + (idx+1) + '</td>' +
+      '<td><b>' + UNIT_LABEL[k] + '</b></td>' +
+      '<td><div class="mini-track"><div class="mini-fill" style="width:' + (v/maxUnit*100).toFixed(1) + '%; background:' + (idx===0?'#0E2A3F':'#1F5C4E') + '"></div></div></td>' +
+      '<td class="num">' + fmtPct(v/grand*100) + '</td>' +
+      '<td class="num">' + fmtRp(v) + '</td>';
+    unitTableBody.appendChild(tr);
+  });
+
+  // ---------- category detail sections ----------
+  var HIGH_THRESH = 10, MID_THRESH = 3;
+
+  function classify(item, catTotal){
+    if (item.contra) return {cls:'contra', label:'Akun Kontra', fillCls:'status-fill-contra'};
+    var share = item.total/catTotal*100;
+    if (share >= HIGH_THRESH) return {cls:'high', label:'Dominan', fillCls:'status-fill-high'};
+    if (share >= MID_THRESH) return {cls:'mid', label:'Signifikan', fillCls:'status-fill-mid'};
+    return {cls:'minor', label:'Minor', fillCls:'status-fill-minor'};
+  }
+
+  function renderCategory(data, catTotal, containerId, summaryId, catLabel){
+    var sorted = data.slice().sort(function(a,b){ return b.total - a.total; });
+    var container = document.getElementById(containerId);
+    sorted.forEach(function(item, idx){
+      var share = item.total/catTotal*100;
+      var barWidth = Math.max(0, Math.min(100, share));
+      var info = classify(item, catTotal);
+      var tu = topUnitOf(item);
+      var row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML =
+        '<div class="item-main">' +
+          '<span class="item-no">' + (idx+1) + '</span>' +
+          '<span class="item-name">' + item.name + '</span>' +
+          '<span class="item-tag tag-' + info.cls + '">' + info.label + '</span>' +
+        '</div>' +
+        '<div class="item-figures">' +
+          '<div class="fig"><span class="fig-label">Total Realisasi</span><span class="fig-val">' + fmtRp(item.total) + '</span></div>' +
+          '<div class="fig"><span class="fig-label">% dari ' + catLabel + '</span><span class="fig-val">' + fmtPct(share) + '</span></div>' +
+          '<div class="fig"><span class="fig-label">Kontributor Utama</span><span class="fig-val">' + tu.unit + ' \u00b7 ' + fmtRp(tu.val) + '</span></div>' +
+        '</div>' +
+        '<div class="item-bar-wrap">' +
+          '<div class="item-bar-track">' +
+            '<div class="item-bar-fill ' + info.fillCls + '" style="width:' + barWidth.toFixed(1) + '%"></div>' +
+            '<div class="item-bar-mid" style="left:' + HIGH_THRESH + '%"></div>' +
+          '</div>' +
+          '<span class="item-bar-pct">' + fmtPct(share) + ' dari ' + catLabel + '</span>' +
+        '</div>';
+      container.appendChild(row);
+    });
+
+    var summary = document.getElementById(summaryId);
+    summary.innerHTML =
+      '<div class="ks"><div class="ks-label">Total ' + catLabel + '</div><div class="ks-val">' + fmtMiliar(catTotal) + '</div></div>' +
+      '<div class="ks"><div class="ks-label">% dari Total NAC</div><div class="ks-val">' + fmtPct(catTotal/grand*100) + '</div></div>' +
+      '<div class="ks"><div class="ks-label">Jumlah Jenis Biaya Aktif</div><div class="ks-val">' + data.filter(function(i){return i.total !== 0;}).length + ' pos</div></div>' +
+      '<div class="ks"><div class="ks-label">Pos Terbesar</div><div class="ks-val">' + sorted[0].name.split(' ').slice(0,3).join(' ') + '&hellip;</div></div>';
+  }
+
+  renderCategory(dataA, totalA, 'katItemsA', 'katSummaryA', 'Kategori A');
+  renderCategory(dataB, totalB, 'katItemsB', 'katSummaryB', 'Kategori B');
+
+  // ---------- charts ----------
+  if (window.Chart) {
+    var ctxDonut = document.getElementById('donutKategori').getContext('2d');
+    new Chart(ctxDonut, {
+      type: 'doughnut',
+      data: {
+        labels: ['Kategori A', 'Kategori B'],
+        datasets: [{
+          data: [totalA, totalB],
+          backgroundColor: ['#0E2A3F', '#1F5C4E'],
+          borderColor: '#FFFFFF',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        cutout: '68%',
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { font: { family: "'Segoe UI', Arial, sans-serif", size: 12 }, color: '#45596B', padding: 16 }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(ctx){
+                var v = ctx.parsed;
+                return ' ' + ctx.label + ': ' + fmtRp(v) + ' (' + fmtPct(v/grand*100) + ')';
+              }
+            }
+          }
+        }
+      }
+    });
+    document.getElementById('donutCenterVal').textContent = fmtMiliarShort(grand);
+
+    var ctxBar = document.getElementById('barUnit').getContext('2d');
+    var barLabels = unitSorted.map(function(k){ return k; });
+    var barValues = unitSorted.map(function(k){ return unitTotals[k]; });
+    var barColors = unitSorted.map(function(k, idx){ return idx === 0 ? '#0E2A3F' : '#1F5C4E'; });
+    new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: barLabels,
+        datasets: [{
+          label: 'Realisasi NAC',
+          data: barValues,
+          backgroundColor: barColors,
+          borderRadius: 3,
+          maxBarThickness: 34
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(ctx){
+                var v = ctx.parsed.x;
+                return ' ' + fmtRp(v) + ' (' + fmtPct(v/grand*100) + ')';
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: '#DDDACF' },
+            ticks: {
+              color: '#45596B',
+              font: { family: "'SFMono-Regular', Consolas, monospace", size: 10 },
+              callback: function(val){ return (val/1e9).toLocaleString('id-ID',{maximumFractionDigits:0}) + ' M'; }
+            }
+          },
+          y: {
+            grid: { display: false },
+            ticks: { color: '#0E2A3F', font: { family: "'Segoe UI', Arial, sans-serif", size: 12, weight: '600' } }
+          }
+        }
+      }
+    });
+  }
+
+})();
+</script>
+
+</body>
+</html>

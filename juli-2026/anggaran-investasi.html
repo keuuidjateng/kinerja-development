@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLN UID Jawa Tengah — Monitoring Realisasi Investasi</title>
+    <!-- Kode Favicon -->
+    <link rel="icon" type="image/png" href="Logo PLN Favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f7f5;--bg-card:#ffffff;--bg-sec:#f2f1ee;--bg-ter:#e8e7e3;
+  --text:#1a1917;--text2:#5c5b57;--text3:#8a8984;
+  --border:rgba(0,0,0,0.10);--border2:rgba(0,0,0,0.18);
+  --pln:#0A3D7C;--pln2:#0d4f9e;--gold:#F5C400;
+  --green:#3B6D11;--green-bg:#EAF3DE;
+  --amber:#854F0B;--amber-bg:#FAEEDA;
+  --red:#A32D2D;--red-bg:#FCEBEB;
+  --blue:#185FA5;--blue-bg:#E6F1FB;
+  --purple:#5B3E96;--purple-bg:#EFE9F8;
+  --teal:#0E7C7B;--teal-bg:#E1F4F3;
+  --r:8px;--rl:12px;
+  --font:'Inter',system-ui,sans-serif;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#141413;--bg-card:#1e1e1c;--bg-sec:#262624;--bg-ter:#2e2e2c;
+    --text:#f0efe8;--text2:#a8a7a3;--text3:#6a6966;
+    --border:rgba(255,255,255,0.10);--border2:rgba(255,255,255,0.18);
+    --green-bg:#1a2e08;--amber-bg:#2e1e04;--red-bg:#2e0f0f;--blue-bg:#0a1f38;
+    --purple-bg:#1c1530;--teal-bg:#07211f;
+  }
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 20px}
+
+/* HEADER */
+.header{background:var(--pln);border-radius:var(--rl);padding:20px 28px;margin-bottom:20px;position:relative;overflow:hidden}
+.header::after{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.header-eyebrow{font-size:11px;font-weight:500;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.header-title{color:#fff;font-size:20px;font-weight:700;letter-spacing:-0.3px}
+.header-sub{color:rgba(255,255,255,0.65);font-size:13px;margin-top:3px}
+.header-period{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);color:var(--gold);font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;margin-top:12px}
+
+/* TABS */
+.tabs{display:flex;gap:4px;margin-bottom:20px;flex-wrap:wrap;background:var(--bg-sec);padding:4px;border-radius:var(--r);border:0.5px solid var(--border)}
+.tab{padding:7px 16px;font-size:12px;font-family:var(--font);font-weight:500;border:none;border-radius:6px;cursor:pointer;background:transparent;color:var(--text2);transition:all .15s;white-space:nowrap}
+.tab.active{background:var(--pln);color:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
+.tab:hover:not(.active){background:var(--bg-card);color:var(--text)}
+
+/* SECTIONS */
+.section{display:none}.section.active{display:block}
+.sec-hdr{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin-bottom:18px}
+.kpi{background:var(--bg-sec);border-radius:var(--r);padding:13px 15px;border:0.5px solid var(--border)}
+.kpi-label{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:5px}
+.kpi-value{font-size:21px;font-weight:700;color:var(--text);line-height:1;letter-spacing:-0.5px}
+.kpi-value.sm{font-size:15px}
+.kpi-sub{font-size:11px;color:var(--text2);margin-top:4px}
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:600;margin-top:5px}
+.bg{background:var(--green-bg);color:var(--green)}
+.ba{background:var(--amber-bg);color:var(--amber)}
+.br{background:var(--red-bg);color:var(--red)}
+.bb{background:var(--blue-bg);color:var(--blue)}
+.bp{background:var(--purple-bg);color:var(--purple)}
+.bt{background:var(--teal-bg);color:var(--teal)}
+
+/* CARDS */
+.card{background:var(--bg-card);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:14px}
+.card-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px;justify-content:space-between}
+.card-title .ttl{display:flex;align-items:center;gap:8px}
+.card-title .dot{width:8px;height:8px;border-radius:50%;background:var(--pln);flex-shrink:0}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:650px){.two-col{grid-template-columns:1fr}}
+
+/* PROGRESS */
+.prog-row{margin-bottom:10px}
+.prog-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:3px}
+.prog-label strong{font-weight:600;color:var(--text)}
+.prog-bar{height:7px;background:var(--bg-ter);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;border-radius:4px;transition:width .6s ease}
+
+/* INSIGHT BOXES */
+.ins{border-left:3px solid var(--pln);padding:10px 14px;background:var(--bg-sec);border-radius:0 var(--r) var(--r) 0;margin-bottom:8px}
+.ins.warn{border-left-color:#EF9F27}
+.ins.danger{border-left-color:#E24B4A}
+.ins.ok{border-left-color:#639922}
+.ins-title{font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px}
+.ins-text{font-size:11px;color:var(--text2);line-height:1.6}
+
+/* TABLE */
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:11px;font-family:var(--font)}
+th{font-size:10px;font-weight:600;color:var(--text2);text-align:left;padding:6px 8px;border-bottom:0.5px solid var(--border);background:var(--bg-sec);white-space:nowrap}
+td{padding:6px 8px;border-bottom:0.5px solid var(--border);color:var(--text);vertical-align:middle;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td.r{text-align:right;font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+tr.tot td{font-weight:700;background:var(--blue-bg);color:var(--blue)}
+tr:hover:not(.tot) td{background:var(--bg-sec)}
+.mini-bar{display:inline-block;width:56px;height:5px;background:var(--bg-ter);border-radius:3px;overflow:hidden;vertical-align:middle;margin-left:6px}
+.mini-bar i{display:block;height:100%;border-radius:3px}
+
+/* RECS */
+.rec{display:flex;gap:12px;padding:10px 0;border-bottom:0.5px solid var(--border)}
+.rec:last-child{border-bottom:none}
+.rec-n{width:24px;height:24px;border-radius:50%;background:var(--pln);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+.rec-title{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px}
+.rec-text{font-size:11px;color:var(--text2);line-height:1.55}
+
+/* DIVIDER */
+.divider{height:0.5px;background:var(--border);margin:12px 0}
+.sub-hdr{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.6px;margin:10px 0 8px}
+
+/* CHART WRAPPER */
+.chart-wrap{position:relative;width:100%}
+
+/* FOOTER */
+.footer{margin-top:24px;padding:14px 0;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text3);flex-wrap:wrap;gap:8px}
+
+/* STATUS DOT */
+.sdot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+
+/* SEGMENTED BAR (program funnel) */
+.seg-track{display:flex;height:34px;border-radius:8px;overflow:hidden;background:var(--bg-ter)}
+.seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden}
+.seg-legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:10px;font-size:11px;color:var(--text2)}
+.seg-legend span{display:inline-flex;align-items:center;gap:5px}
+.seg-legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
+
+@media(max-width:650px){
+  .header{padding:16px 18px}
+  .header-title{font-size:17px}
+  table{font-size:10px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+  <div class="header-eyebrow">PLN UID Jawa Tengah</div>
+  <div class="header-title">Monitoring Realisasi Anggaran Investasi</div>
+  <div class="header-sub">AKI (eBudget) vs Realisasi Bayar &amp; Progres Komitmen per Program</div>
+  <div class="header-period">&#128197; Rekap Bulanan Tahun 2026 (s.d. Juli — Realisasi Berjalan)</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('overview')">&#9632; Overview</button>
+  <button class="tab" onclick="showTab('bulanan')">Realisasi Bulanan</button>
+  <button class="tab" onclick="showTab('program')">Program &amp; Komitmen</button>
+  <button class="tab" onclick="showTab('bidang')">AI Per Bidang</button>
+  <button class="tab" onclick="showTab('unit')">AI Per Unit</button>
+  <button class="tab" onclick="showTab('insight')">&#128161; Analisis &amp; Rekomendasi</button>
+</div>
+
+<!-- ===================== OVERVIEW ===================== -->
+<div class="section active" id="tab-overview">
+  <div class="sec-hdr">Ringkasan Eksekutif</div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">Nilai AI</div>
+      <div class="kpi-value sm">Rp 2.495,5 M</div>
+      <div class="kpi-sub">Total anggaran investasi 7 program</div>
+      <span class="badge bb">149 PRK</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">AKI (eBudget)</div>
+      <div class="kpi-value sm">Rp 1.113,1 M</div>
+      <div class="kpi-sub">44,6% dari Nilai AI</div>
+      <span class="badge ba">Berjalan s.d Okt</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">SKKI</div>
+      <div class="kpi-value sm">Rp 2.399,4 M</div>
+      <div class="kpi-sub">96,2% dari Nilai AI</div>
+      <span class="badge bb">Basis kontrak</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Total Komitmen</div>
+      <div class="kpi-value sm">Rp 1.737,2 M</div>
+      <div class="kpi-sub">71,07% dari SKKI</div>
+      <span class="badge bg">144/149 PRK (96,64%)</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Realisasi Bayar</div>
+      <div class="kpi-value sm">Rp 833,9 M</div>
+      <div class="kpi-sub">74,92% dari AKI</div>
+      <span class="badge bg">Di atas run-rate</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Sisa SKKI Belum Kontrak</div>
+      <div class="kpi-value sm">Rp 662,2 M</div>
+      <div class="kpi-sub">27,6% dari total SKKI</div>
+      <span class="badge br">Perlu percepatan</span>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title"><span class="ttl"><span class="dot"></span>Sebaran Penetapan AI sampai ke Realisasi (Rp Miliar)</span></div>
+      <div class="chart-wrap" style="height:230px"><canvas id="funnelChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="ttl"><span class="dot"></span>Komposisi Nilai AI per Program</span></div>
+      <div class="chart-wrap" style="height:200px"><canvas id="donutChart"></canvas></div>
+      <div id="donut-legend" class="seg-legend"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ttl"><span class="dot"></span>Tren Bulanan — AKI (eBudget) vs Realisasi Bayar (Rp Miliar)</span></div>
+    <div class="chart-wrap" style="height:250px"><canvas id="trendChart"></canvas></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ttl"><span class="dot"></span>% Disburse (Realisasi Bayar / AKI) per Program</span></div>
+    <div class="chart-wrap" style="height:260px"><canvas id="disburseChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ===================== REALISASI BULANAN ===================== -->
+<div class="section" id="tab-bulanan">
+  <div class="sec-hdr">Realisasi Bulanan — AKI (eBudget) vs Realisasi Bayar 2026</div>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-label">Total AKI (eBudget)</div><div class="kpi-value sm">Rp 1.113,1 M</div><div class="kpi-sub">Jan–Okt terjadwal</div></div>
+    <div class="kpi"><div class="kpi-label">Total Realisasi Bayar</div><div class="kpi-value sm">Rp 833,9 M</div><div class="kpi-sub">Jan–Jul terealisasi</div></div>
+    <div class="kpi"><div class="kpi-label">% Realisasi thd AKI</div><div class="kpi-value">74,92%</div><div class="kpi-sub">Kumulatif s.d Juli</div><span class="badge bg">Sehat</span></div>
+    <div class="kpi"><div class="kpi-label">AKI Belum Terealisasi</div><div class="kpi-value sm">Rp 313,0 M</div><div class="kpi-sub">Terjadwal Agu–Okt</div><span class="badge ba">Perlu monitoring</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ttl"><span class="dot"></span>Grafik AKI vs Realisasi per Bulan (Rp Miliar)</span></div>
+    <div class="chart-wrap" style="height:280px"><canvas id="monthlyBarChart"></canvas></div>
+  </div>
+
+  <div class="ins warn">
+    <div class="ins-title">&#9888; Juli — Realisasi Melebihi AKI Bulan Berjalan</div>
+    <div class="ins-text">Realisasi bayar Juli tercatat Rp 206,5 M, melampaui AKI terjadwal bulan tersebut (Rp 172,8 M) sebesar +Rp 33,7 M (+19,5%). Indikasi adanya pencairan tertunda dari periode sebelumnya yang baru terbayar di Juli, atau percepatan penagihan menjelang pertengahan tahun.</div>
+  </div>
+  <div class="ins danger">
+    <div class="ins-title">Agustus–Oktober Belum Ada Realisasi</div>
+    <div class="ins-text">AKI terjadwal Agustus–Oktober sebesar Rp 313,0 M (Agu Rp 119,6 M, Sep Rp 85,6 M, Okt Rp 107,7 M) belum tercatat realisasinya. Bila seluruh nilai ini baru cair di akhir tahun bersamaan dengan sisa komitmen, berpotensi terjadi penumpukan pembayaran (year-end rush).</div>
+  </div>
+  <div class="ins">
+    <div class="ins-title">November &amp; Desember Kosong</div>
+    <div class="ins-text">Data AKI maupun realisasi untuk November dan Desember belum terisi (bukan Rp 0, melainkan belum diinput). Perlu konfirmasi ke unit terkait apakah tidak ada rencana pencairan pada dua bulan tersebut atau data belum tersedia.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ttl"><span class="dot"></span>Detail Realisasi Bulanan</span></div>
+    <div class="tw"><table>
+      <thead><tr><th>Bulan</th><th class="r">AKI / eBudget (Rp)</th><th class="r">Realisasi (Rp)</th><th class="r">Selisih (Rp)</th><th class="r">% Realisasi</th><th>Status</th></tr></thead>
+      <tbody id="monthlyTableBody"></tbody>
+      <tfoot><tr class="tot"><td>TOTAL</td><td class="r">1.113.134.843.844</td><td class="r">833.911.604.943</td><td class="r">(279.223.238.901)</td><td class="r">74,92%</td><td><span class="badge bg">Berjalan</span></td></tr></tfoot>
+    </table></div>
+  </div>
+</div>
+
+<!-- ===================== PROGRAM & KOMITMEN ===================== -->
+<div class="section" id="tab-program">
+  <div class="sec-hdr">Program &amp; Komitmen — Nilai AI, AKI, SKKI, PRK, Komitmen, dan Realisasi Bayar</div>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-label">Total PRK</div><div class="kpi-value">149</div><div class="kpi-sub">144 terkontrak (96,64%)</div></div>
+    <div class="kpi"><div class="kpi-label">Total Komitmen</div><div class="kpi-value sm">Rp 1.737,2 M</div><div class="kpi-sub">Nota Dinas Usulan Pengadaan & Terkontrak</div></div>
+    <div class="kpi"><div class="kpi-label">Nota Dinas</div><div class="kpi-value sm">Rp 32,1 M</div><div class="kpi-sub">1,84% dari total komitmen</div></div>
+    <div class="kpi"><div class="kpi-label">Nilai Terkontrak (SPK)</div><div class="kpi-value sm">Rp 1.705,2 M</div><div class="kpi-sub">98,16% dari total komitmen</div></div>
+    <div class="kpi"><div class="kpi-label">Permintaan Bayar</div><div class="kpi-value sm">Rp 864,9 M</div><div class="kpi-sub">Outstanding belum dibayar: Rp 31,0 M</div><span class="badge ba">96,42% tertagih</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ttl"><span class="dot"></span>Sebaran AI → AKI → SKKI → Komitmen → Realisasi (Rp Miliar)</span></div>
+    <div class="chart-wrap" style="height:300px"><canvas id="programStackChart"></canvas></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ttl"><span class="dot"></span>Progres Terkontrak &amp; %Disburse per Program</span></div>
+    <div id="progList"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ttl"><span class="dot"></span>Detail Lengkap per Program (Rp)</span></div>
+    <div class="tw"><table id="programTable">
+      <thead><tr>
+        <th>Program</th><th class="r">Nilai AI</th><th class="r">Nilai AKI</th><th class="r">Nilai SKKI</th>
+        <th class="r">PRK</th><th class="r">%PRK</th><th class="r">Nota Dinas</th><th class="r">Terkontrak (SPK)</th>
+        <th class="r">Total Komitmen</th><th class="r">%Terkontrak</th><th class="r">Sisa SKKI</th>
+        <th class="r">Permintaan Bayar</th><th class="r">Realisasi Bayar</th><th class="r">%Disburse</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ===================== AI PER UNIT ===================== -->
+<div class="section" id="tab-bidang">
+  <div class="sec-hdr">AI Per Bidang — SKKI, Kontrak, dan Realisasi Bayar s.d M-4 Juli 2026</div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">Total SKKI Terbit</div>
+      <div class="kpi-value sm">Rp 1.850,6 M</div>
+      <div class="kpi-sub">5 bidang (Kantor UID)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Total Terkontrak</div>
+      <div class="kpi-value sm">Rp 1.307,1 M</div>
+      <div class="kpi-sub">70,63% dari SKKI terbit</div>
+      <span class="badge bb">Rata-rata bidang</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Realisasi Bayar s.d M-4 Juli</div>
+      <div class="kpi-value sm">Rp 626,8 M</div>
+      <div class="kpi-sub">47,96% dari nilai terkontrak</div>
+      <span class="badge ba">Perlu percepatan</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Sisa Belum Terbayar</div>
+      <div class="kpi-value sm">Rp 680,3 M</div>
+      <div class="kpi-sub">52,04% dari nilai terkontrak</div>
+      <span class="badge br">Belum ada rencana bayar</span>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title"><span class="ttl"><span class="dot"></span>SKKI vs Terkontrak vs Realisasi Bayar per Bidang (Rp Miliar)</span></div>
+      <div class="chart-wrap" style="height:340px"><canvas id="bidangBarChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="ttl"><span class="dot"></span>% Terkontrak vs % Realisasi per Bidang</span></div>
+      <div class="chart-wrap" style="height:340px"><canvas id="bidangPctChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ttl"><span class="dot"></span>Sisa Belum Terbayar per Bidang (Rp Miliar) — Terbesar ke Terkecil</span></div>
+    <div class="chart-wrap" style="height:340px"><canvas id="bidangSisaChart"></canvas></div>
+  </div>
+
+  <div class="ins danger">
+    <div class="ins-title">&#128721; NIAGA — Sisa Belum Terbayar Terbesar Secara Nominal</div>
+    <div class="ins-text">Bidang NIAGA mencatat sisa belum terbayar tertinggi di antara seluruh bidang, Rp 422,8 M, dengan %Terkontrak baru 64,99% dari SKKI terbit (Rp 933,6 M dari Rp 1.436,4 M) — di bawah rata-rata bidang (70,63%). Nilai SKKI yang belum terkontrak di NIAGA juga terbesar, Rp 502,9 M.</div>
+  </div>
+  <div class="ins warn">
+    <div class="ins-title">&#9888; SARANA — Kontrak Hampir Tuntas, Realisasi Bayar Nyaris Nihil</div>
+    <div class="ins-text">SARANA telah mengontrak 98,94% dari SKKI (Rp 30,0 M dari Rp 30,3 M), namun realisasi bayar baru Rp 0,49 M atau 1,63% dari nilai kontrak — gap terbesar antara komitmen dan penagihan di antara seluruh bidang. Sisa belum terbayar Rp 29,5 M, setara 98,37% dari nilai kontrak.</div>
+  </div>
+  <div class="ins ok">
+    <div class="ins-title">&#9989; K3L — Satu-satunya Bidang Tuntas 100%</div>
+    <div class="ins-text">K3L adalah satu-satunya bidang dengan SKKI terkontrak penuh (100%) dan realisasi bayar juga 100% dari nilai kontrak — tidak ada sisa belum terbayar, meski nilai nominalnya kecil (Rp 2,59 juta).</div>
+  </div>
+  <div class="ins">
+    <div class="ins-title">UPPK — Belum Ada Aktivitas AI Tercatat</div>
+    <div class="ins-text">Bidang UPPK belum memiliki SKKI terbit, kontrak, maupun realisasi bayar sepanjang tahun berjalan (seluruhnya nihil). Perlu konfirmasi apakah bidang ini memang belum memiliki alokasi AI tahun ini atau data belum diinput.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ttl"><span class="dot"></span>Detail SKKI, Kontrak, dan Realisasi Bayar per Bidang (Rp)</span></div>
+    <div class="tw"><table id="bidangTable">
+      <thead><tr>
+        <th>Bidang</th><th class="r">SKKI Terbit</th><th class="r">Total Terkontrak</th><th class="r">%Terkontrak</th>
+        <th class="r">Realisasi Bayar s.d M-4 Juli</th><th class="r">% thd Kontrak</th>
+        <th class="r">Total Realisasi Bayar</th><th class="r">Sisa Belum Terbayar</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </div>
+</div>
+
+<div class="section" id="tab-unit">
+  <div class="sec-hdr">AI Per Unit — SKKI, Kontrak, dan Realisasi Bayar s.d M-4 Juli 2026</div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">Total SKKI Terbit</div>
+      <div class="kpi-value sm">Rp 548,8 M</div>
+      <div class="kpi-sub">14 unit (13 UP3 + UP2D)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Total Terkontrak</div>
+      <div class="kpi-value sm">Rp 398,0 M</div>
+      <div class="kpi-sub">72,53% dari SKKI terbit</div>
+      <span class="badge bb">Rata-rata unit</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Realisasi Bayar s.d M-4 Juli</div>
+      <div class="kpi-value sm">Rp 207,1 M</div>
+      <div class="kpi-sub">52,02% dari nilai terkontrak</div>
+      <span class="badge ba">Perlu percepatan</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Sisa Belum Terbayar</div>
+      <div class="kpi-value sm">Rp 191,0 M</div>
+      <div class="kpi-sub">47,98% dari nilai terkontrak</div>
+      <span class="badge br">Belum ada rencana bayar</span>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title"><span class="ttl"><span class="dot"></span>SKKI vs Terkontrak vs Realisasi Bayar per Unit (Rp Miliar)</span></div>
+      <div class="chart-wrap" style="height:340px"><canvas id="unitBarChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="ttl"><span class="dot"></span>% Terkontrak vs % Realisasi per Unit</span></div>
+      <div class="chart-wrap" style="height:340px"><canvas id="unitPctChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ttl"><span class="dot"></span>Sisa Belum Terbayar per Unit (Rp Miliar) — Terbesar ke Terkecil</span></div>
+    <div class="chart-wrap" style="height:340px"><canvas id="unitSisaChart"></canvas></div>
+  </div>
+
+  <div class="ins danger">
+    <div class="ins-title">&#128721; UP2D Jateng &amp; DIY — %Terkontrak Terendah</div>
+    <div class="ins-text">UP2D Jateng &amp; DIY baru mengontrak 39,12% dari SKKI terbit (Rp 32,6 M dari Rp 83,5 M) — terendah di antara seluruh unit dan jauh di bawah rata-rata 72,53%. Nilai SKKI yang belum terkontrak di unit ini juga terbesar kedua (Rp 50,8 M) setelah UP3 Semarang.</div>
+  </div>
+  <div class="ins warn">
+    <div class="ins-title">&#9888; UP3 Semarang — Sisa Belum Terbayar Terbesar</div>
+    <div class="ins-text">UP3 Semarang mencatat sisa belum terbayar tertinggi, Rp 37,2 M, meski nilai SKKI terbitnya terbesar (Rp 95,7 M). %Terkontrak (64,52%) dan %realisasi thd kontrak (39,70%) sama-sama di bawah rata-rata unit lain.</div>
+  </div>
+  <div class="ins ok">
+    <div class="ins-title">&#9989; UP3 Yogyakarta — Satu-satunya Unit Tuntas 100%</div>
+    <div class="ins-text">UP3 Yogyakarta adalah satu-satunya unit dengan SKKI terkontrak penuh (100%) dan realisasi bayar juga 100% dari nilai kontrak — tidak ada sisa belum terbayar. Pola pengelolaannya layak direplikasi ke unit lain.</div>
+  </div>
+  
+  <div class="card">
+    <div class="card-title"><span class="ttl"><span class="dot"></span>Detail SKKI, Kontrak, dan Realisasi Bayar per Unit (Rp)</span></div>
+    <div class="tw"><table id="unitTable">
+      <thead><tr>
+        <th>Unit</th><th class="r">SKKI Terbit</th><th class="r">Total Terkontrak</th><th class="r">%Terkontrak</th>
+        <th class="r">Realisasi Bayar s.d M-4 Juli</th><th class="r">% thd Kontrak</th>
+        <th class="r">Total Realisasi Bayar</th><th class="r">Sisa Belum Terbayar</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ===================== ANALISA & REKOMENDASI ===================== -->
+<div class="section" id="tab-insight">
+  <div class="sec-hdr">Analisis &amp; Rekomendasi</div>
+
+  <div class="card">
+    <div class="card-title"><span class="ttl"><span class="dot"></span>Temuan Utama</span></div>
+    <div class="ins ok">
+      <div class="ins-title">&#9989; LUN — Luncuran Menjadi Program Terbaik</div>
+      <div class="ins-text">Program Luncuran mencatat kinerja tertinggi: 100% PRK terkontrak, 99,97% nilai SKKI terkontrak, dan 93,56% realisasi bayar terhadap AKI — nyaris tuntas secara administratif maupun finansial.</div>
+    </div>
+    <div class="ins danger">
+      <div class="ins-title">&#128721; SPF — Sarana Penunjang Fungsi Belum Bergerak</div>
+      <div class="ins-text">Program SPF (Rp 1,52 M) belum memiliki AKI, belum ada PRK yang terkontrak (0 dari 1), dan realisasi bayar masih nihil sepanjang tahun berjalan. Perlu klarifikasi status program: masih relevan, tertunda, atau perlu revisi AKI/SKKI.</div>
+    </div>
+    <div class="ins warn">
+      <div class="ins-title">&#9888; SAR &amp; DIS Menyumbang 93,4% dari Sisa SKKI Belum Terkontrak</div>
+      <div class="ins-text">Dari total Rp 662,2 M SKKI yang belum terkontrak, program SAR menyumbang Rp 548,8 M (82,9%) dan DIS Rp 69,7 M (10,5%). Meski SAR memiliki nilai AI terbesar (Rp 1.415,3 M) dan %Disburse relatif baik (73,62%), nilai sisa SKKI yang besar berisiko menumpuk di akhir tahun bila proses kontrak tidak dipercepat.</div>
+    </div>
+    <div class="ins danger">
+      <div class="ins-title">&#128721; EDP — Komitmen Tinggi, namun Kecepatan Penagihan Perlu Ditingkatkan</div>
+      <div class="ins-text">EDP telah terkontrak 87,36% dari SKKI (Rp 41,4 M dari Rp 47,4 M), namun permintaan bayar baru Rp 0,64 M dan realisasi hanya Rp 0,58 M (%Disburse 6,02%) — gap terbesar antara nilai komitmen dan proses penagihan di antara seluruh program aktif.</div>
+    </div>
+    <div class="ins warn">
+      <div class="ins-title">&#9888; DIS — Disburse Terendah di Antara Program Aktif</div>
+      <div class="ins-text">Meski AKI DIS sudah dialokasikan Rp 80,6 M dan komitmen mencapai Rp 228,0 M (67,27% dari SKKI), realisasi bayar baru Rp 15,4 M (19,15% dari AKI) — permintaan bayar (Rp 16,4 M) jauh di bawah nilai yang telah terkontrak, mengindikasikan pekerjaan fisik/administrasi penagihan yang tertinggal dari progres kontrak.</div>
+    </div>
+    <div class="ins">
+      <div class="ins-title">SRN — Sudah Terkontrak, Belum Ada Penagihan</div>
+      <div class="ins-text">SRN telah mengontrak 30,05% dari SKKI (Rp 2,18 M dari Rp 5,26 M) namun permintaan bayar maupun realisasi masih nihil. Nilainya kecil secara nominal namun perlu dipantau agar tidak menjadi kontrak "diam" tanpa progres pembayaran.</div>
+    </div>
+    <div class="ins danger">
+      <div class="ins-title">&#128721; Bidang NIAGA Menyumbang Sisa Belum Terbayar Terbesar Antar Bidang</div>
+      <div class="ins-text">Dari total Rp 680,3 M sisa belum terbayar di seluruh bidang Kantor UID, NIAGA menyumbang Rp 422,8 M (62,2%) — %Terkontraknya (64,99%) juga yang terendah di antara bidang dengan SKKI aktif, jauh di bawah rata-rata 70,63%.</div>
+    </div>
+    <div class="ins warn">
+      <div class="ins-title">&#9888; Bidang SARANA — Kontrak Nyaris Tuntas namun Penagihan Tertinggal Jauh</div>
+      <div class="ins-text">SARANA telah mengontrak 98,94% dari SKKI, tetapi realisasi bayar baru 1,63% dari nilai kontrak (Rp 0,49 M dari Rp 30,0 M) — gap komitmen-vs-penagihan terbesar di antara seluruh bidang maupun program, mengindikasikan pekerjaan fisik atau proses administrasi penagihan yang belum berjalan.</div>
+    </div>
+    <div class="ins">
+      <div class="ins-title">UPPK Belum Mencatat Aktivitas AI Apa Pun</div>
+      <div class="ins-text">Bidang UPPK tidak memiliki SKKI terbit, kontrak, maupun realisasi bayar sepanjang tahun berjalan (seluruhnya nihil), serupa dengan kondisi program SPF. Perlu klarifikasi apakah UPPK memang belum memiliki alokasi AI tahun ini.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="ttl"><span class="dot"></span>Rekomendasi Tindak Lanjut</span></div>
+    <div class="rec">
+      <div class="rec-n">1</div>
+      <div><div class="rec-title">Percepat proses kontrak SAR &amp; DIS</div><div class="rec-text">Prioritaskan lelang/kontrak untuk sisa SKKI SAR (Rp 548,8 M) dan DIS (Rp 69,7 M) — keduanya menyumbang 93,4% dari total sisa SKKI belum terkontrak — agar tidak menumpuk menjelang tutup tahun anggaran.</div></div>
+    </div>
+    <div class="rec">
+      <div class="rec-n">2</div>
+      <div><div class="rec-title">Evaluasi status program SPF</div><div class="rec-text">Klarifikasi ke unit pemilik program apakah Sarana Penunjang Fungsi masih akan dilaksanakan tahun ini; jika tidak, ajukan revisi AKI/SKKI agar anggaran dapat direalokasikan ke program yang siap serap.</div></div>
+    </div>
+    <div class="rec">
+      <div class="rec-n">3</div>
+      <div><div class="rec-title">Percepat penagihan (permintaan bayar) EDP &amp; DIS</div><div class="rec-text">Selisih besar antara nilai komitmen dan permintaan bayar pada EDP dan DIS perlu ditelusuri — apakah pekerjaan fisik memang belum selesai, atau proses administrasi penagihan (BAST/invoicing) yang tertahan.</div></div>
+    </div>
+    <div class="rec">
+      <div class="rec-n">4</div>
+      <div><div class="rec-title">Antisipasi lonjakan realisasi Agustus–Oktober</div><div class="rec-text">Rp 313,0 M AKI terjadwal pada Agustus–Oktober belum terealisasi. Susun rencana pencairan bertahap agar tidak terjadi penumpukan pembayaran (year-end rush) yang dapat menurunkan kualitas verifikasi.</div></div>
+    </div>
+    <div class="rec">
+      <div class="rec-n">7</div>
+      <div><div class="rec-title">Dorong percepatan kontrak di UP2D Jateng &amp; DIY</div><div class="rec-text">%Terkontrak UP2D (39,12%) jauh di bawah rata-rata unit lain (72,53%). Perlu identifikasi kendala proses lelang/kontrak agar sisa SKKI Rp 50,8 M dapat segera terikat kontrak.</div></div>
+    </div>
+    <div class="rec">
+      <div class="rec-n">8</div>
+      <div><div class="rec-title">Percepat kontrak &amp; penagihan Bidang NIAGA</div><div class="rec-text">Prioritaskan penuntasan sisa SKKI NIAGA yang belum terkontrak (Rp 502,9 M) sekaligus dorong penagihan atas kontrak yang sudah berjalan — NIAGA menyumbang porsi terbesar (62,2%) dari total sisa belum terbayar antar bidang.</div></div>
+    </div>
+    <div class="rec">
+      <div class="rec-n">9</div>
+      <div><div class="rec-title">Telusuri keterlambatan penagihan Bidang SARANA</div><div class="rec-text">Meski 98,94% SKKI SARANA telah terkontrak, realisasi bayar baru 1,63%. Konfirmasi ke unit terkait apakah pekerjaan fisik belum selesai atau proses BAST/invoicing yang tertahan, agar sisa Rp 29,5 M dapat segera dicairkan.</div></div>
+    </div>
+    <div class="rec">
+      <div class="rec-n">10</div>
+      <div><div class="rec-title">Klarifikasi status Bidang UPPK</div><div class="rec-text">Konfirmasi ke pemilik anggaran apakah UPPK memiliki alokasi AI tahun ini. Jika tidak relevan, evaluasi kebutuhan mencantumkannya dalam daftar bidang yang dipantau.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <span>PLN UID Jawa Tengah — Monitoring Realisasi Anggaran Investasi 2026</span>
+  <span>Sumber: Data AKI/eBudget &amp; Realisasi Bayar Internal</span>
+</div>
+
+</div>
+
+<script>
+/* ---------- THEME HELPERS ---------- */
+const css = getComputedStyle(document.documentElement);
+const C = {
+  pln: css.getPropertyValue('--pln').trim(),
+  pln2: css.getPropertyValue('--pln2').trim(),
+  gold: css.getPropertyValue('--gold').trim(),
+  green: '#3B6D11', greenL:'#639922',
+  amber: '#EF9F27',
+  red: '#E24B4A',
+  blue: '#378ADD',
+  purple: '#7C5CBF',
+  teal: '#1D9E75',
+  text2: css.getPropertyValue('--text2').trim(),
+  border: css.getPropertyValue('--border').trim()
+};
+const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+Chart.defaults.font.family = "'Inter',system-ui,sans-serif";
+Chart.defaults.color = C.text2;
+Chart.defaults.font.size = 11;
+
+function fmtM(v){ return 'Rp ' + v.toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1}) + ' M'; }
+function fmtIDR(v){ return v.toLocaleString('id-ID',{maximumFractionDigits:0}); }
+
+/* ---------- TAB SWITCH ---------- */
+function showTab(name){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.currentTarget.classList.add('active');
+  setTimeout(()=>Object.values(charts).forEach(c=>c && c.resize()),10);
+}
+
+/* ---------- DATA: MONTHLY ---------- */
+const monthly = [
+  {b:'Jan', aki:1633967823, real:1633967823},
+  {b:'Feb', aki:28905777177, real:28905777177},
+  {b:'Mar', aki:84350530439, real:84350530439},
+  {b:'Apr', aki:167694965269, real:167694965269},
+  {b:'Mei', aki:146850783948, real:146850783948},
+  {b:'Jun', aki:197988098521, real:197988098521},
+  {b:'Jul', aki:172814741397, real:206487481766},
+  {b:'Agu', aki:119606152007, real:null},
+  {b:'Sep', aki:85637955321, real:null},
+  {b:'Okt', aki:107651871942, real:null},
+  {b:'Nov', aki:null, real:null},
+  {b:'Des', aki:null, real:null}
+];
+
+/* ---------- DATA: PROGRAM ---------- */
+const programs = [
+  {code:'SAR', name:'Pemasaran', color:C.gold,
+   ai:1415273061107, aki:431862878978, skki:1365810360158, prkTotal:28, prkKontrak:27,
+   nd:3266394631, spk:813723996420, komitmen:816990391051, sisaSkki:548819969107,
+   pb:338714913638, rb:317920671410},
+  {code:'LUN', name:'Luncuran', color:C.pln,
+   ai:496618208646, aki:469200177343, skki:496618208641, prkTotal:41, prkKontrak:41,
+   nd:0, spk:496489100054, komitmen:496489100054, sisaSkki:129108587,
+   pb:442603645502, rb:439003436812},
+  {code:'DIS', name:'Perkuatan Jaringan Distribusi', color:C.blue,
+   ai:326881039888, aki:80571505530, skki:297663389327, prkTotal:22, prkKontrak:22,
+   nd:27773215805, spk:200231278691, komitmen:228004494496, sisaSkki:69658894831,
+   pb:16385975510, rb:15427946366},
+  {code:'LOS', name:'Penurunan Susut', color:C.teal,
+   ai:197606488876, aki:120239973261, skki:185122934283, prkTotal:45, prkKontrak:44,
+   nd:419055958, spk:151753480490, komitmen:152172536448, sisaSkki:32950397835,
+   pb:66545476137, rb:60983806243},
+  {code:'EDP', name:'Evakuasi Daya dan Perluasan JTM', color:C.amber,
+   ai:52352260326, aki:9571069671, skki:47391588102, prkTotal:6, prkKontrak:6,
+   nd:0, spk:41399048941, komitmen:41399048941, sisaSkki:5992539161,
+   pb:640356309, rb:575744112},
+  {code:'SRN', name:'Sarana', color:C.purple,
+   ai:5262961288, aki:1689239061, skki:5262961287, prkTotal:6, prkKontrak:4,
+   nd:594212727, spk:1581527491, komitmen:2175740218, sisaSkki:3087221069,
+   pb:0, rb:0},
+  {code:'SPF', name:'Sarana Penunjang Fungsi', color:C.red,
+   ai:1524079333, aki:0, skki:1524079333, prkTotal:1, prkKontrak:0,
+   nd:0, spk:0, komitmen:0, sisaSkki:1524079333,
+   pb:0, rb:0}
+];
+const TOTAL = {
+  ai:2495518099464, aki:1113134843844, skki:2399393521131, prkTotal:149, prkKontrak:144,
+  nd:32052879121, spk:1705178432087, komitmen:1737231311208, sisaSkki:662162209923,
+  pb:864890367096, rb:833911604943
+};
+
+const M = v => v/1e9;
+
+/* ---------- MONTHLY TABLE ---------- */
+const tbody = document.getElementById('monthlyTableBody');
+monthly.forEach(m=>{
+  const hasAki = m.aki!==null, hasReal = m.real!==null;
+  const selisih = (hasAki && hasReal) ? (m.real-m.aki) : null;
+  const pct = (hasAki && hasReal && m.aki>0) ? (m.real/m.aki*100) : null;
+  let status, badgeClass;
+  if(!hasAki && !hasReal){ status='Belum ada data'; badgeClass='badge'; }
+  else if(hasAki && !hasReal){ status='Belum terealisasi'; badgeClass='badge ba'; }
+  else if(pct>=99.5){ status='Sesuai rencana'; badgeClass='badge bg'; }
+  else if(pct>100){ status='Melebihi AKI'; badgeClass='badge bb'; }
+  else { status='Terealisasi'; badgeClass='badge bg'; }
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${m.b}</td>
+    <td class="r">${hasAki?fmtIDR(m.aki):'—'}</td>
+    <td class="r">${hasReal?fmtIDR(m.real):'—'}</td>
+    <td class="r">${selisih!==null? (selisih>=0?'':'(')+fmtIDR(Math.abs(selisih))+(selisih>=0?'':')') : '—'}</td>
+    <td class="r">${pct!==null? pct.toLocaleString('id-ID',{minimumFractionDigits:2,maximumFractionDigits:2})+'%':'—'}</td>
+    <td><span class="${badgeClass}">${status}</span></td>`;
+  tbody.appendChild(tr);
+});
+
+/* ---------- PROGRAM TABLE ---------- */
+const pTbody = document.querySelector('#programTable tbody');
+function pct(a,b){ return b>0 ? (a/b*100) : null; }
+programs.forEach(p=>{
+  const prkPct = pct(p.prkKontrak,p.prkTotal);
+  const komitPct = pct(p.komitmen,p.skki);
+  const disPct = p.aki>0 ? pct(p.rb,p.aki) : null;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td><span class="badge" style="background:${p.color}22;color:${p.color}">${p.code}</span> ${p.name}</td>
+    <td class="r">${fmtIDR(p.ai)}</td>
+    <td class="r">${fmtIDR(p.aki)}</td>
+    <td class="r">${fmtIDR(p.skki)}</td>
+    <td class="r">${p.prkKontrak}/${p.prkTotal}</td>
+    <td class="r">${prkPct.toFixed(2)}%</td>
+    <td class="r">${fmtIDR(p.nd)}</td>
+    <td class="r">${fmtIDR(p.spk)}</td>
+    <td class="r">${fmtIDR(p.komitmen)}</td>
+    <td class="r">${komitPct.toFixed(2)}%</td>
+    <td class="r">${fmtIDR(p.sisaSkki)}</td>
+    <td class="r">${fmtIDR(p.pb)}</td>
+    <td class="r">${fmtIDR(p.rb)}</td>
+    <td class="r">${disPct!==null? disPct.toFixed(2)+'%':'N/A'}</td>`;
+  pTbody.appendChild(tr);
+});
+const totRow = document.createElement('tr');
+totRow.className='tot';
+totRow.innerHTML = `<td>TOTAL</td>
+  <td class="r">${fmtIDR(TOTAL.ai)}</td>
+  <td class="r">${fmtIDR(TOTAL.aki)}</td>
+  <td class="r">${fmtIDR(TOTAL.skki)}</td>
+  <td class="r">${TOTAL.prkKontrak}/${TOTAL.prkTotal}</td>
+  <td class="r">96,64%</td>
+  <td class="r">${fmtIDR(TOTAL.nd)}</td>
+  <td class="r">${fmtIDR(TOTAL.spk)}</td>
+  <td class="r">${fmtIDR(TOTAL.komitmen)}</td>
+  <td class="r">71,07%</td>
+  <td class="r">${fmtIDR(TOTAL.sisaSkki)}</td>
+  <td class="r">${fmtIDR(TOTAL.pb)}</td>
+  <td class="r">${fmtIDR(TOTAL.rb)}</td>
+  <td class="r">74,92%</td>`;
+pTbody.appendChild(totRow);
+
+/* ---------- PROGRESS LIST (program tab) ---------- */
+const progList = document.getElementById('progList');
+programs.forEach(p=>{
+  const komitPct = pct(p.komitmen,p.skki);
+  const disPct = p.aki>0 ? pct(p.rb,p.aki) : 0;
+  const row = document.createElement('div');
+  row.innerHTML = `
+    <div class="prog-row">
+      <div class="prog-label"><span><strong style="color:${p.color}">${p.code}</strong> — ${p.name}</span><strong>${fmtM(M(p.ai))}</strong></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${komitPct}%;background:${p.color}"></div></div>
+      <div class="prog-label" style="margin-top:2px"><span>Terkontrak thd SKKI</span><span>${komitPct.toFixed(2)}%</span></div>
+      <div class="prog-bar" style="margin-top:2px"><div class="prog-fill" style="width:${disPct}%;background:${p.color};opacity:.55"></div></div>
+      <div class="prog-label" style="margin-top:2px"><span>Realisasi Bayar thd AKI</span><span>${p.aki>0?disPct.toFixed(2)+'%':'N/A'}</span></div>
+    </div>
+    <div class="divider"></div>`;
+  progList.appendChild(row);
+});
+
+/* ---------- CHARTS ---------- */
+const charts = {};
+const gridColor = C.border || 'rgba(0,0,0,0.08)';
+
+/* Funnel (Overview) */
+charts.funnel = new Chart(document.getElementById('funnelChart'), {
+  type:'bar',
+  data:{
+    labels:['Nilai AI','AKI','SKKI','Total Komitmen','Permintaan Bayar','Realisasi Bayar'],
+    datasets:[{
+      data:[M(TOTAL.ai),M(TOTAL.aki),M(TOTAL.skki),M(TOTAL.komitmen),M(TOTAL.pb),M(TOTAL.rb)],
+      backgroundColor:[C.pln,C.blue,C.teal,C.gold,C.amber,C.greenL],
+      borderRadius:5, maxBarThickness:34
+    }]
+  },
+  options:{
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>fmtM(c.raw)}}},
+    scales:{
+      x:{grid:{color:gridColor},ticks:{callback:v=>v.toLocaleString('id-ID')}},
+      y:{grid:{display:false}}
+    }
+  }
+});
+
+/* Donut (Overview) */
+charts.donut = new Chart(document.getElementById('donutChart'), {
+  type:'doughnut',
+  data:{
+    labels:programs.map(p=>p.code),
+    datasets:[{ data:programs.map(p=>M(p.ai)), backgroundColor:programs.map(p=>p.color), borderWidth:2, borderColor: isDark?'#1e1e1c':'#ffffff' }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false, cutout:'62%',
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>c.label+': '+fmtM(c.raw)+' ('+(c.raw/M(TOTAL.ai)*100).toFixed(1)+'%)'}} }
+  }
+});
+const dLegend = document.getElementById('donut-legend');
+programs.forEach(p=>{
+  dLegend.innerHTML += `<span><i style="width:9px;height:9px;border-radius:2px;background:${p.color};display:inline-block"></i>${p.code} ${(M(p.ai)/M(TOTAL.ai)*100).toFixed(1)}%</span>`;
+});
+
+/* Trend (Overview, cumulative-free monthly) */
+charts.trend = new Chart(document.getElementById('trendChart'), {
+  type:'line',
+  data:{
+    labels: monthly.map(m=>m.b),
+    datasets:[
+      {label:'AKI / eBudget', data:monthly.map(m=>m.aki!==null?M(m.aki):null), borderColor:C.pln, backgroundColor:C.pln+'22', fill:true, tension:.35, pointRadius:3, spanGaps:false},
+      {label:'Realisasi Bayar', data:monthly.map(m=>m.real!==null?M(m.real):null), borderColor:C.greenL, backgroundColor:C.greenL+'22', fill:true, tension:.35, pointRadius:3, spanGaps:false}
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{boxWidth:10,boxHeight:10}}, tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtM(c.raw)}}},
+    scales:{ x:{grid:{display:false}}, y:{grid:{color:gridColor},ticks:{callback:v=>v.toLocaleString('id-ID')}} }
+  }
+});
+
+/* Disburse % per program (Overview) */
+charts.disburse = new Chart(document.getElementById('disburseChart'), {
+  type:'bar',
+  data:{
+    labels: programs.map(p=>p.code),
+    datasets:[{
+      data: programs.map(p=> p.aki>0 ? +(p.rb/p.aki*100).toFixed(2) : 0),
+      backgroundColor: programs.map(p=>p.color), borderRadius:6, maxBarThickness:44
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>c.raw+'% disburse'}}},
+    scales:{ x:{grid:{display:false}}, y:{grid:{color:gridColor},ticks:{callback:v=>v+'%'}} }
+  }
+});
+
+/* Monthly bar (tab realisasi bulanan) */
+charts.monthlyBar = new Chart(document.getElementById('monthlyBarChart'), {
+  type:'bar',
+  data:{
+    labels: monthly.map(m=>m.b),
+    datasets:[
+      {label:'AKI / eBudget', data:monthly.map(m=>m.aki!==null?M(m.aki):0), backgroundColor:C.pln, borderRadius:4, maxBarThickness:22},
+      {label:'Realisasi Bayar', data:monthly.map(m=>m.real!==null?M(m.real):0), backgroundColor:C.greenL, borderRadius:4, maxBarThickness:22}
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{boxWidth:10,boxHeight:10}}, tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtM(c.raw)}}},
+    scales:{ x:{grid:{display:false}}, y:{grid:{color:gridColor},ticks:{callback:v=>v.toLocaleString('id-ID')}} }
+  }
+});
+
+/* Program stacked (tab program & komitmen) */
+charts.programStack = new Chart(document.getElementById('programStackChart'), {
+  type:'bar',
+  data:{
+    labels: programs.map(p=>p.code),
+    datasets:[
+      {label:'Nilai AI', data: programs.map(p=>M(p.ai)), backgroundColor:C.pln+'55', borderColor:C.pln, borderWidth:1, borderRadius:4},
+      {label:'AKI', data: programs.map(p=>M(p.aki)), backgroundColor:C.blue, borderRadius:4},
+      {label:'Total Komitmen', data: programs.map(p=>M(p.komitmen)), backgroundColor:C.gold, borderRadius:4},
+      {label:'Realisasi Bayar', data: programs.map(p=>M(p.rb)), backgroundColor:C.greenL, borderRadius:4}
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{boxWidth:10,boxHeight:10}}, tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtM(c.raw)}}},
+    scales:{ x:{grid:{display:false}}, y:{grid:{color:gridColor},ticks:{callback:v=>v.toLocaleString('id-ID')}} }
+  }
+});
+
+/* ---------- DATA: BIDANG ---------- */
+const bidangs = [
+  {name:'UID-USER DIS', skki:383815782764, kontrak:343574192396, real:115556335607, rencana:0},
+  {name:'UID-USER NIAGA', skki:1436449690115, kontrak:933584905227, real:510792742619, rencana:0},
+  {name:'UID-USER K3L', skki:2588340, kontrak:2588340, real:2588340, rencana:0},
+  {name:'UID-USER SARANA', skki:30296347585, kontrak:29976436172, real:489183111, rencana:0},
+  {name:'UPPK', skki:0, kontrak:0, real:0, rencana:0}
+];
+const BIDANG_TOTAL = {
+  skki:1850564408804, kontrak:1307138122135, real:626840849677, rencana:0, totalReal:626840849677, sisa:680297272458
+};
+const bidangColors = [C.pln,C.blue,C.teal,C.gold,C.amber];
+const fmtAmt = v => v>0 ? fmtIDR(v) : '-';
+
+/* Bidang table */
+const bTbody = document.querySelector('#bidangTable tbody');
+bidangs.forEach((u,i)=>{
+  const pctKontrak = pct(u.kontrak,u.skki);
+  const pctReal = pct(u.real,u.kontrak);
+  const totalReal = u.real+u.rencana;
+  const sisa = u.kontrak-totalReal;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td><span class="badge" style="background:${bidangColors[i]}22;color:${bidangColors[i]}">${u.name.replace('UID-USER ','')}</span></td>
+    <td class="r">${fmtAmt(u.skki)}</td>
+    <td class="r">${fmtAmt(u.kontrak)}</td>
+    <td class="r">${pctKontrak!==null?pctKontrak.toFixed(2)+'%':'N/A'}</td>
+    <td class="r">${fmtAmt(u.real)}</td>
+    <td class="r">${pctReal!==null?pctReal.toFixed(2)+'%':'N/A'}</td>
+    <td class="r">${fmtAmt(totalReal)}</td>
+    <td class="r">${fmtAmt(sisa)}</td>`;
+  bTbody.appendChild(tr);
+});
+const bTotRow = document.createElement('tr');
+bTotRow.className='tot';
+bTotRow.innerHTML = `<td>TOTAL</td>
+  <td class="r">${fmtAmt(BIDANG_TOTAL.skki)}</td>
+  <td class="r">${fmtAmt(BIDANG_TOTAL.kontrak)}</td>
+  <td class="r">70,63%</td>
+  <td class="r">${fmtAmt(BIDANG_TOTAL.real)}</td>
+  <td class="r">47,96%</td>
+  <td class="r">${fmtAmt(BIDANG_TOTAL.totalReal)}</td>
+  <td class="r">${fmtAmt(BIDANG_TOTAL.sisa)}</td>`;
+bTbody.appendChild(bTotRow);
+
+/* Bidang bar chart: SKKI vs Kontrak vs Realisasi — diurutkan menurun berdasarkan SKKI Terbit */
+const bidangsBySize = bidangs.slice().sort((a,b)=>b.skki-a.skki);
+charts.bidangBar = new Chart(document.getElementById('bidangBarChart'), {
+  type:'bar',
+  data:{
+    labels: bidangsBySize.map(u=>u.name.replace('UID-USER ','')),
+    datasets:[
+      {label:'SKKI Terbit', data: bidangsBySize.map(u=>M(u.skki)), backgroundColor:C.pln+'55', borderColor:C.pln, borderWidth:1, borderRadius:3},
+      {label:'Total Terkontrak', data: bidangsBySize.map(u=>M(u.kontrak)), backgroundColor:C.gold, borderRadius:3},
+      {label:'Realisasi Bayar', data: bidangsBySize.map(u=>M(u.real)), backgroundColor:C.greenL, borderRadius:3}
+    ]
+  },
+  options:{
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{boxWidth:10,boxHeight:10}}, tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtM(c.raw)}}},
+    scales:{ x:{grid:{color:gridColor},ticks:{callback:v=>v.toLocaleString('id-ID')}}, y:{grid:{display:false}} }
+  }
+});
+
+/* Bidang % chart: %terkontrak vs %realisasi — diurutkan menurun berdasarkan %Terkontrak */
+const bidangsByPct = bidangs.slice().sort((a,b)=>(pct(b.kontrak,b.skki)||0)-(pct(a.kontrak,a.skki)||0));
+charts.bidangPct = new Chart(document.getElementById('bidangPctChart'), {
+  type:'bar',
+  data:{
+    labels: bidangsByPct.map(u=>u.name.replace('UID-USER ','')),
+    datasets:[
+      {label:'% Terkontrak', data: bidangsByPct.map(u=>+((pct(u.kontrak,u.skki)||0).toFixed(2))), backgroundColor:C.pln, borderRadius:3, maxBarThickness:14},
+      {label:'% Realisasi thd Kontrak', data: bidangsByPct.map(u=>+((pct(u.real,u.kontrak)||0).toFixed(2))), backgroundColor:C.greenL, borderRadius:3, maxBarThickness:14}
+    ]
+  },
+  options:{
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{boxWidth:10,boxHeight:10}}, tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw+'%'}}},
+    scales:{ x:{grid:{color:gridColor},ticks:{callback:v=>v+'%'},max:100}, y:{grid:{display:false}} }
+  }
+});
+
+/* Bidang sisa belum terbayar — diurutkan menurun */
+const bidangsBySisa = bidangs.slice()
+  .map(u=>({...u, sisa:u.kontrak-(u.real+u.rencana)}))
+  .sort((a,b)=>b.sisa-a.sisa);
+charts.bidangSisa = new Chart(document.getElementById('bidangSisaChart'), {
+  type:'bar',
+  data:{
+    labels: bidangsBySisa.map(u=>u.name.replace('UID-USER ','')),
+    datasets:[{
+      label:'Sisa Belum Terbayar',
+      data: bidangsBySisa.map(u=>M(u.sisa)),
+      backgroundColor: bidangsBySisa.map(u=>u.sisa>200e9?C.red:(u.sisa>20e9?C.amber:C.greenL)),
+      borderRadius:3, maxBarThickness:22
+    }]
+  },
+  options:{
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>fmtM(c.raw)}}},
+    scales:{ x:{grid:{color:gridColor},ticks:{callback:v=>v.toLocaleString('id-ID')}}, y:{grid:{display:false}} }
+  }
+});
+
+/* ---------- DATA: UNIT ---------- */
+const units = [
+  {name:'UP3 Semarang', skki:95725697395, kontrak:61764025826, real:24519945968, rencana:0},
+  {name:'UP2D Jateng & DIY', skki:83452054870, kontrak:32643995725, real:12709932050, rencana:0},
+  {name:'UP3 Kudus', skki:65579596046, kontrak:53725273461, real:32426263649, rencana:0},
+  {name:'UP3 Magelang', skki:43203021592, kontrak:37265860205, real:12236557601, rencana:0},
+  {name:'UP3 Tegal', skki:41002603113, kontrak:33391832073, real:20431652268, rencana:0},
+  {name:'UP3 Surakarta', skki:39131900328, kontrak:30454388354, real:19951163486, rencana:0},
+  {name:'UP3 Pekalongan', skki:36062070373, kontrak:26247821399, real:15840889248, rencana:0},
+  {name:'UP3 Purwokerto', skki:26747241747, kontrak:23816359873, real:13766728904, rencana:0},
+  {name:'UP3 Cilacap', skki:24475227940, kontrak:23034446610, real:10666430352, rencana:0},
+  {name:'UP3 Klaten', skki:23933540931, kontrak:19819361622, real:12896507522, rencana:0},
+  {name:'UP3 Grobogan', skki:22051135705, kontrak:15320457861, real:8803205111, rencana:0},
+  {name:'UP3 Sukoharjo', skki:21425080200, kontrak:19996408642, real:6925426561, rencana:0},
+  {name:'UP3 Salatiga', skki:16697609002, kontrak:11217915845, real:6553890090, rencana:0},
+  {name:'UP3 Yogyakarta', skki:9342333085, kontrak:9342162456, real:9342162456, rencana:0}
+];
+const UNIT_TOTAL = {
+  skki:548829112327, kontrak:398040309952, real:207070755266, rencana:0, totalReal:207070755266, sisa:190969554686
+};
+const unitColors = [C.pln,C.blue,C.teal,C.gold,C.amber,C.greenL,C.purple,C.red,'#8B5E34','#4B7BA8','#B8860B','#6B8F3C','#A0526D','#5B7C99'];
+
+/* Unit table */
+const uTbody = document.querySelector('#unitTable tbody');
+units.forEach((u,i)=>{
+  const pctKontrak = pct(u.kontrak,u.skki);
+  const pctReal = pct(u.real,u.kontrak);
+  const totalReal = u.real+u.rencana;
+  const sisa = u.kontrak-totalReal;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td><span class="badge" style="background:${unitColors[i]}22;color:${unitColors[i]}">${u.name}</span></td>
+    <td class="r">${fmtIDR(u.skki)}</td>
+    <td class="r">${fmtIDR(u.kontrak)}</td>
+    <td class="r">${pctKontrak.toFixed(2)}%</td>
+    <td class="r">${fmtIDR(u.real)}</td>
+    <td class="r">${pctReal.toFixed(2)}%</td>
+    <td class="r">${u.rencana>0?fmtIDR(u.rencana):'-'}</td>
+    <td class="r">${fmtIDR(totalReal)}</td>
+    <td class="r">${fmtIDR(sisa)}</td>`;
+  uTbody.appendChild(tr);
+});
+const uTotRow = document.createElement('tr');
+uTotRow.className='tot';
+uTotRow.innerHTML = `<td>TOTAL</td>
+  <td class="r">${fmtIDR(UNIT_TOTAL.skki)}</td>
+  <td class="r">${fmtIDR(UNIT_TOTAL.kontrak)}</td>
+  <td class="r">72,53%</td>
+  <td class="r">${fmtIDR(UNIT_TOTAL.real)}</td>
+  <td class="r">52,02%</td>
+  <td class="r">-</td>
+  <td class="r">${fmtIDR(UNIT_TOTAL.totalReal)}</td>
+  <td class="r">${fmtIDR(UNIT_TOTAL.sisa)}</td>`;
+uTbody.appendChild(uTotRow);
+
+/* Unit bar chart: SKKI vs Kontrak vs Realisasi */
+charts.unitBar = new Chart(document.getElementById('unitBarChart'), {
+  type:'bar',
+  data:{
+    labels: units.map(u=>u.name.replace('UP3 ','').replace('UP2D ','')),
+    datasets:[
+      {label:'SKKI Terbit', data: units.map(u=>M(u.skki)), backgroundColor:C.pln+'55', borderColor:C.pln, borderWidth:1, borderRadius:3},
+      {label:'Total Terkontrak', data: units.map(u=>M(u.kontrak)), backgroundColor:C.gold, borderRadius:3},
+      {label:'Realisasi Bayar', data: units.map(u=>M(u.real)), backgroundColor:C.greenL, borderRadius:3}
+    ]
+  },
+  options:{
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{boxWidth:10,boxHeight:10}}, tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtM(c.raw)}}},
+    scales:{ x:{grid:{color:gridColor},ticks:{callback:v=>v.toLocaleString('id-ID')}}, y:{grid:{display:false}} }
+  }
+});
+
+/* Unit % chart: %terkontrak vs %realisasi — diurutkan menurun berdasarkan %Terkontrak */
+const unitsByPct = units.slice().sort((a,b)=>pct(b.kontrak,b.skki)-pct(a.kontrak,a.skki));
+charts.unitPct = new Chart(document.getElementById('unitPctChart'), {
+  type:'bar',
+  data:{
+    labels: unitsByPct.map(u=>u.name.replace('UP3 ','').replace('UP2D ','')),
+    datasets:[
+      {label:'% Terkontrak', data: unitsByPct.map(u=>+pct(u.kontrak,u.skki).toFixed(2)), backgroundColor:C.pln, borderRadius:3, maxBarThickness:14},
+      {label:'% Realisasi thd Kontrak', data: unitsByPct.map(u=>+pct(u.real,u.kontrak).toFixed(2)), backgroundColor:C.greenL, borderRadius:3, maxBarThickness:14}
+    ]
+  },
+  options:{
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{boxWidth:10,boxHeight:10}}, tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw+'%'}}},
+    scales:{ x:{grid:{color:gridColor},ticks:{callback:v=>v+'%'},max:100}, y:{grid:{display:false}} }
+  }
+});
+
+/* Unit sisa belum terbayar — diurutkan menurun */
+const unitsBySisa = units.slice()
+  .map(u=>({...u, sisa:u.kontrak-(u.real+u.rencana)}))
+  .sort((a,b)=>b.sisa-a.sisa);
+charts.unitSisa = new Chart(document.getElementById('unitSisaChart'), {
+  type:'bar',
+  data:{
+    labels: unitsBySisa.map(u=>u.name.replace('UP3 ','').replace('UP2D ','')),
+    datasets:[{
+      label:'Sisa Belum Terbayar',
+      data: unitsBySisa.map(u=>M(u.sisa)),
+      backgroundColor: unitsBySisa.map(u=>u.sisa>15e9?C.red:(u.sisa>5e9?C.amber:C.greenL)),
+      borderRadius:3, maxBarThickness:22
+    }]
+  },
+  options:{
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>fmtM(c.raw)}}},
+    scales:{ x:{grid:{color:gridColor},ticks:{callback:v=>v.toLocaleString('id-ID')}}, y:{grid:{display:false}} }
+  }
+});
+</script>
+</body>
+</html>
