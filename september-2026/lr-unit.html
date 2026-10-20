@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Infografis Laporan Keuangan Per Unit UID Jawa Tengah — 31 Agustus 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+<style>
+:root{
+  --navy:#0B2E4F;--navy-d:#081E36;--navy-soft:#12406B;
+  --gold:#C9A227;--teal:#0E7C7B;--teal2:#159A98;
+  --grey:#6B7280;--lgrey:#E7E9EC;--bg:#FBFBFA;--card:#FFF;
+  --red:#B23A2E;--green:#1E7A4C;--line:#D7DBE1;--blue:#2877A8;--purple:#7656A6;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;color:#20304A;background:var(--bg);line-height:1.5;font-size:14px}
+button,select,input{font-family:inherit}
+.wrap{max-width:1380px;margin:auto;padding:0 28px 70px}
+
+/* HEADER */
+.hero{background:radial-gradient(circle at 80% 20%,rgba(21,154,152,.18),transparent 32%),linear-gradient(135deg,var(--navy-d),var(--navy) 60%,var(--navy-soft));color:#fff;padding:40px 0 34px}
+.hero-inner{max-width:1380px;margin:auto;padding:0 28px}
+.eyebrow{text-transform:uppercase;letter-spacing:3px;font-size:11px;color:var(--gold);font-weight:700;margin-bottom:13px}
+.hero h1{font-family:Georgia,serif;font-size:36px;margin:0 0 10px;line-height:1.2}
+.sub{font-size:14px;color:#CBD6E4;max-width:1000px;margin:0 0 20px}
+.metabar{display:flex;gap:30px;flex-wrap:wrap;border-top:1px solid #ffffff2e;padding-top:14px}
+.metabar div{font-size:11.5px;color:#B9C6D6}
+.metabar strong{display:block;color:#fff;font-size:13px;margin-top:2px}
+
+/* TABS */
+.tabs{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 8px #0000000b}
+.tabbar{max-width:1380px;margin:auto;padding:0 28px;display:flex;gap:3px;overflow-x:auto}
+.tab{border:0;background:transparent;padding:15px 18px;font-weight:700;color:#607086;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+.tab:hover{color:var(--navy-d);background:#F8FAFC}
+.tab.active{color:var(--navy-d);border-bottom-color:var(--gold)}
+
+/* PANELS & SECTIONS */
+.panel{display:none}
+.panel.active{display:block}
+.section{padding:34px 0 5px}
+.section-title{font-family:Georgia,serif;font-size:23px;color:var(--navy-d);margin:0 0 5px;display:flex;align-items:baseline;gap:11px}
+.num{color:var(--gold);font-size:14px}
+.rule{height:3px;width:55px;background:var(--gold);margin:12px 0 20px}
+.intro{color:#41526B;margin-bottom:20px;max-width:1100px}
+
+/* KPI */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--navy);border-radius:4px;padding:16px;min-height:132px;box-shadow:0 1px 4px rgba(11,46,79,.03)}
+.card.teal{border-top-color:var(--teal)}
+.card.gold{border-top-color:var(--gold)}
+.card.green{border-top-color:var(--green)}
+.label{text-transform:uppercase;letter-spacing:.8px;font-size:10.5px;color:var(--grey);font-weight:700}
+.value{font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--navy-d);margin:7px 0}
+.delta{font-size:12px;font-weight:700}
+.pos{color:var(--green)}
+.neg{color:var(--red)}
+.neutral{color:var(--grey)}
+.small{font-size:11px;color:var(--grey)}
+
+/* FILTER */
+.filter-box{background:#fff;border:1px solid var(--line);border-radius:4px;padding:16px;margin:18px 0}
+.filter-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:12px;align-items:end}
+.field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--grey);font-weight:700;margin-bottom:6px}
+select,input[type="search"]{width:100%;border:1px solid #CCD3DB;background:#fff;border-radius:4px;padding:10px 11px;color:var(--navy-d);outline:none}
+select:focus,input[type="search"]:focus{border-color:var(--teal);box-shadow:0 0 0 2px rgba(14,124,123,.10)}
+.btn{border:0;background:var(--navy-d);color:#fff;padding:10px 16px;border-radius:4px;cursor:pointer;font-weight:700}
+.btn:hover{background:var(--teal)}
+
+/* GRID / BOX */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-wide{display:grid;grid-template-columns:1.35fr .65fr;gap:16px}
+.box{background:#fff;border:1px solid var(--line);border-radius:4px;padding:17px;margin:16px 0;box-shadow:0 1px 4px rgba(11,46,79,.025);min-width:0}
+.box h3{margin:0 0 12px;font-family:Georgia,serif;color:var(--navy-d);font-size:17px}
+.chart{height:360px;position:relative}
+.chart.small-chart{height:320px}
+.chart.tall{height:460px}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:4px}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:0;min-width:760px}
+th{background:var(--navy-d);color:#fff;text-align:right;padding:10px;white-space:nowrap;cursor:pointer;position:sticky;top:0;z-index:2}
+th:first-child,td:first-child{text-align:left}
+th:hover{background:var(--navy-soft)}
+td{padding:8px 9px;border-bottom:1px solid var(--lgrey);text-align:right;white-space:nowrap}
+tbody tr:nth-child(even){background:#F6F8FA}
+tbody tr:hover{background:#EEF6F6}
+tr.total td{font-weight:700;background:#EEF2F6;border-top:1.5px solid var(--navy)}
+.unit-name{font-weight:700;color:var(--navy-d)}
+
+/* RANKING LIST */
+.rank-list{display:flex;flex-direction:column;gap:9px}
+.rank-row{display:grid;grid-template-columns:32px 1fr 110px;align-items:center;gap:9px}
+.rank-no{width:28px;height:28px;border-radius:50%;background:var(--navy-d);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px}
+.rank-info{min-width:0}
+.rank-label{font-size:12px;font-weight:700;color:var(--navy-d);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-bg{height:8px;background:#E8EDF1;border-radius:10px;overflow:hidden;margin-top:5px}
+.bar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--navy),var(--teal))}
+.rank-value{text-align:right;font-size:11.5px;font-weight:700;color:var(--navy-d)}
+
+/* INFOGRAFIS: KPI STRIP PER UNIT */
+.strip{display:grid;grid-template-columns:repeat(5,1fr);gap:0;background:#fff;border:1px solid var(--line);border-radius:4px;margin:16px 0;overflow:hidden}
+.strip > div{padding:14px 16px;border-right:1px solid var(--lgrey)}
+.strip > div:last-child{border-right:0}
+.strip .big{font-family:Georgia,serif;font-size:19px;font-weight:700;color:var(--navy-d);margin-top:4px}
+.bar-h{height:6px;background:#E8EDF1;border-radius:6px;overflow:hidden;margin-top:8px}
+.bar-h span{display:block;height:100%;background:linear-gradient(90deg,var(--navy),var(--teal))}
+
+/* FLOW (infografis alur) */
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:stretch;margin:10px 0}
+.flow-step{background:var(--navy-d);color:#fff;border-radius:4px;padding:14px;position:relative;min-width:0}
+.flow-step .k{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);font-weight:700}
+.flow-step .v{font-family:Georgia,serif;font-size:17px;font-weight:700;margin-top:6px}
+.flow-step .p{font-size:11px;color:#B9C6D6;margin-top:4px}
+.flow-step.teal{background:var(--teal)}
+.flow-step.red{background:var(--red)}
+.flow-step.green{background:var(--green)}
+
+/* INSIGHTS */
+.callout{padding:15px 18px;background:#F4F0DF;border-left:4px solid var(--gold);border-radius:2px;margin:18px 0;color:#4A3E14}
+.callout.blue{background:#EAF1F8;border-left-color:var(--navy);color:#1E3350}
+.callout.teal{background:#E8F5F4;border-left-color:var(--teal);color:#164B4A}
+.callout.red{background:#FBEEEC;border-left-color:var(--red);color:#5C2119}
+.insights{list-style:none;padding:0;margin:12px 0}
+.insights li{display:flex;gap:13px;padding:13px 0;border-bottom:1px solid var(--lgrey)}
+.insight-num{font-family:Georgia,serif;font-weight:700;font-size:19px;color:var(--gold);min-width:28px}
+.insight-body b{color:var(--navy-d)}
+.reco{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+.reco-card{background:var(--navy-d);color:#fff;border-radius:4px;padding:18px}
+.reco-card .k{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);font-weight:700}
+.reco-card p{font-size:12.5px;color:#DCE4EE;margin:8px 0 0}
+
+/* LEGEND */
+.legend-row{font-size:11.5px;color:var(--grey);margin-top:10px}
+.legend-row .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+
+/* FOOTER */
+.footer{background:var(--navy-d);color:#B9C6D6;padding:25px 0;font-size:11px}
+.footer .wrap{padding-bottom:0;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+/* RESPONSIVE */
+@media(max-width:1050px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .filter-grid{grid-template-columns:1fr 1fr}
+  .grid-wide{grid-template-columns:1fr}
+  .strip{grid-template-columns:repeat(2,1fr)}
+  .strip > div:nth-child(2n){border-right:0}
+  .flow{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:850px){
+  .grid,.reco{grid-template-columns:1fr}
+  .hero h1{font-size:28px}
+  .chart{height:300px}
+  .chart.tall{height:380px}
+  .rank-row{grid-template-columns:30px 1fr 110px}
+}
+@media(max-width:600px){
+  .wrap,.hero-inner,.tabbar{padding-left:15px;padding-right:15px}
+  .cards{grid-template-columns:1fr}
+  .filter-grid{grid-template-columns:1fr}
+  .hero{padding-top:32px}
+  .hero h1{font-size:25px}
+  .section{padding-top:26px}
+  .rank-row{grid-template-columns:28px 1fr 96px}
+  .rank-value{font-size:10px}
+  .flow{grid-template-columns:1fr 1fr}
+  .strip{grid-template-columns:1fr}
+  .strip > div{border-right:0;border-bottom:1px solid var(--lgrey)}
+  .strip > div:last-child{border-bottom:0}
+}
+@media print{
+  .tabs,.filter-box{display:none}
+  .panel{display:block!important}
+  .hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Infografis Kinerja Keuangan · Strictly Private &amp; Confidential</div>
+    <h1>Laporan Keuangan Per Unit<br>UID Jawa Tengah</h1>
+    <p class="sub">
+      Infografis interaktif Laporan Laba Rugi per unit kerja dengan periode realisasi sampai dengan 31 Agustus 2026.
+      Dilengkapi Rasio Operasi, Net Profit Margin, dan kontribusi laba per unit. Nilai ditampilkan dalam Rupiah ringkas (T/M/Jt).
+    </p>
+    <div class="metabar">
+      <div>Periode Analisis<strong>s.d. 31 Agustus 2026</strong></div>
+      <div>Entitas<strong>UID Jawa Tengah</strong></div>
+      <div>Cakupan<strong>UID · 13 UP3 · UP2D</strong></div>
+      <div>Basis<strong>Realisasi Kumulatif</strong></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabbar">
+    <button class="tab active" data-tab="infografis">Infografis Ringkas</button>
+    <button class="tab" data-tab="unit">Ranking &amp; Tabel Per Unit</button>
+    <button class="tab" data-tab="detail">Detail Laba Rugi</button>
+    <button class="tab" data-tab="analisis">Analisis &amp; Insight</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ======================================================
+     TAB 1 — INFOGRAFIS RINGKAS
+====================================================== -->
+<section id="infografis" class="panel active">
+  <div class="section">
+    <h2 class="section-title"><span class="num">01</span>Infografis Ringkas Kinerja</h2>
+    <div class="rule"></div>
+    <p class="intro">
+      Alur dari pendapatan hingga laba bersih untuk unit yang dipilih, disertai peta posisi 13 UP3
+      berdasarkan efisiensi biaya dan margin, serta kontribusi laba tiap UP3 terhadap total.
+    </p>
+
+    <div class="filter-box">
+      <div class="filter-grid" style="grid-template-columns:1.2fr auto">
+        <div class="field">
+          <label>Unit Fokus</label>
+          <select id="infoUnit"></select>
+        </div>
+        <button class="btn" id="infoReset">Reset ke GABUNGAN</button>
+      </div>
+    </div>
+
+    <!-- Alur laba: pendapatan → beban → laba -->
+    <div class="box">
+      <h3>Alur Pendapatan Hingga Laba Bersih — <span id="flowUnitName">GABUNGAN</span></h3>
+      <div class="flow" id="flowRow"></div>
+      <div class="small">Persentase dihitung terhadap Pendapatan Usaha unit terpilih.</div>
+    </div>
+
+    <!-- Strip KPI -->
+    <div class="strip" id="kpiStrip"></div>
+
+    <div class="grid">
+      <div class="box">
+        <h3>Peta Posisi UP3: Rasio Operasi vs Net Profit Margin</h3>
+        <div class="chart tall"><canvas id="bubbleChart"></canvas></div>
+        <div class="legend-row">
+          <span class="sw" style="background:#0E7C7B"></span>Efisien (&lt; 90%)&nbsp;&nbsp;
+          <span class="sw" style="background:#C9A227"></span>Waspada (90–100%)&nbsp;&nbsp;
+          <span class="sw" style="background:#B23A2E"></span>Rugi bersih&nbsp;&nbsp;
+          · Ukuran lingkaran = Pendapatan Usaha
+        </div>
+      </div>
+      <div class="box">
+        <h3>Kontribusi Laba Bersih per UP3</h3>
+        <div class="chart tall"><canvas id="shareChart"></canvas></div>
+        <div class="small" id="shareNote" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3>Komposisi Pendapatan Usaha per UP3 (Rp)</h3>
+      <div class="chart tall"><canvas id="stackChart"></canvas></div>
+      <div class="small" style="margin-top:8px">
+        Pembelian Tenaga Listrik menyerap sebagian besar beban. Selisih antara penjualan listrik dan pembelian
+        ditutup oleh subsidi dan pendapatan kompensasi.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     TAB 2 — RANKING & TABEL
+====================================================== -->
+<section id="unit" class="panel">
+  <div class="section">
+    <h2 class="section-title"><span class="num">02</span>Ranking &amp; Tabel Perbandingan Per Unit</h2>
+    <div class="rule"></div>
+    <p class="intro">
+      Ranking 15 unit (UID, 13 UP3, dan UP2D; GABUNGAN sebagai total) disusun dari nilai terbesar ke terkecil.
+    </p>
+
+    <div class="filter-box">
+      <div class="filter-grid" style="grid-template-columns:1.2fr 1fr 1fr">
+        <div class="field">
+          <label>Indikator Ranking</label>
+          <select id="metricSelect">
+            <option value="revenue">Pendapatan Usaha</option>
+            <option value="expense">Beban Usaha</option>
+            <option value="operatingProfit">Laba (Rugi) Usaha</option>
+            <option value="other">Pendapatan (Beban) Lain-lain</option>
+            <option value="netProfit">Laba (Rugi) Bersih</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Pencarian Tabel</label>
+          <input type="search" id="tableSearch" placeholder="Cari unit...">
+        </div>
+        <div class="field">
+          <label>&nbsp;</label>
+          <button class="btn" id="resetBtn" style="width:100%">Reset Filter</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-wide">
+      <div class="box">
+        <h3 id="rankingTitle">Ranking Pendapatan Usaha Per Unit</h3>
+        <div class="chart"><canvas id="rankingChart"></canvas></div>
+      </div>
+      <div class="box">
+        <h3>Ranking Unit</h3>
+        <div class="rank-list" id="rankList"></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <h3>Rasio Operasi Per Unit (Beban Usaha ÷ Pendapatan Usaha)</h3>
+        <div class="chart"><canvas id="ratioChart"></canvas></div>
+        <div class="small" style="margin-top:10px">
+          <span class="pos">■</span> &lt; 90% efisien &nbsp;
+          <span style="color:#C9A227">■</span> 90–100% waspada &nbsp;
+          <span class="neg">■</span> &gt; 100% beban melebihi pendapatan. UID dan UP2D tidak ditampilkan karena tidak menjual tenaga listrik langsung.
+        </div>
+      </div>
+      <div class="box">
+        <h3>Net Profit Margin Per Unit (Laba Bersih ÷ Pendapatan Usaha)</h3>
+        <div class="chart"><canvas id="npmChart"></canvas></div>
+        <div class="small" style="margin-top:10px">
+          <span class="pos">■</span> ≥ 10% &nbsp;
+          <span style="color:#C9A227">■</span> 0–10% &nbsp;
+          <span class="neg">■</span> negatif (rugi). UID dan UP2D tidak ditampilkan.
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3>Perbandingan Kinerja Keuangan Per Unit</h3>
+      <div class="small" style="margin-bottom:10px">Klik header kolom untuk mengurutkan. Nilai negatif ditampilkan dalam warna merah.</div>
+      <div class="table-wrap">
+        <table id="unitTable">
+          <thead>
+            <tr>
+              <th data-sort="unit">Unit</th>
+              <th data-sort="revenue">Pendapatan Usaha</th>
+              <th data-sort="expense">Beban Usaha</th>
+              <th data-sort="operatingProfit">Laba (Rugi) Usaha</th>
+              <th data-sort="other">Pendapatan (Beban) Lain-lain</th>
+              <th data-sort="netProfit">Laba (Rugi) Bersih</th>
+              <th data-sort="margin">Margin Usaha</th>
+              <th data-sort="ratio">Rasio Operasi</th>
+              <th data-sort="npm">Net Margin</th>
+            </tr>
+          </thead>
+          <tbody id="unitTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     TAB 3 — DETAIL LABA RUGI
+====================================================== -->
+<section id="detail" class="panel">
+  <div class="section">
+    <h2 class="section-title"><span class="num">03</span>Detail Laporan Laba Rugi Per Unit</h2>
+    <div class="rule"></div>
+    <p class="intro">
+      Komponen Pendapatan Usaha, Beban Usaha, dan Pendapatan (Beban) Lain-lain untuk unit yang dipilih.
+    </p>
+    <div class="filter-box">
+      <div class="filter-grid" style="grid-template-columns:1fr">
+        <div class="field">
+          <label>Unit</label>
+          <select id="detailUnitSelect"></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <h3>Komposisi Pendapatan Usaha</h3>
+        <div class="chart small-chart"><canvas id="detailRevenueChart"></canvas></div>
+      </div>
+      <div class="box">
+        <h3>Komposisi Beban Usaha</h3>
+        <div class="chart small-chart"><canvas id="detailExpenseChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3>Detail Pendapatan Usaha</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Uraian</th><th>Nilai</th><th>Kontribusi</th></tr></thead>
+        <tbody id="detailRevenueBody"></tbody>
+      </table></div>
+    </div>
+
+    <div class="box">
+      <h3>Detail Beban Usaha</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Uraian</th><th>Nilai</th><th>Kontribusi</th></tr></thead>
+        <tbody id="detailExpenseBody"></tbody>
+      </table></div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <h3>Pendapatan (Beban) Lain-lain</h3>
+        <div class="chart small-chart"><canvas id="detailOtherChart"></canvas></div>
+      </div>
+      <div class="box">
+        <h3>Detail Pendapatan (Beban) Lain-lain</h3>
+        <div class="table-wrap"><table style="min-width:0">
+          <thead><tr><th>Uraian</th><th>Nilai</th></tr></thead>
+          <tbody id="detailOtherBody"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <b>Catatan metodologi:</b> Pemakaian Material dan Jasa Borongan merupakan rincian dari Pemeliharaan.
+      Keduanya tidak dijumlahkan kembali ke dalam total Beban Usaha agar tidak terjadi double-counting.
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     TAB 4 — ANALISIS
+====================================================== -->
+<section id="analisis" class="panel">
+  <div class="section">
+    <h2 class="section-title"><span class="num">04</span>Analisis &amp; Insight Manajemen</h2>
+    <div class="rule"></div>
+
+    <div class="callout">
+      <b>Gambaran umum:</b> GABUNGAN mencatat Pendapatan Usaha <b>Rp 43.265,23 miliar</b> dengan Beban Usaha
+      <b>Rp 38.587,72 miliar</b>, menghasilkan Laba Usaha <b>Rp 4.677,51 miliar</b> dan Laba Bersih
+      <b>Rp 3.976,99 miliar</b>. Rasio Operasi 89,19% dan Net Profit Margin 9,19%.
+    </div>
+
+    <div class="cards">
+      <div class="card"><div class="label">Pendapatan Usaha</div><div class="value">Rp 43,27 T</div><div class="delta pos">5 sumber pendapatan</div><div class="small">Penjualan, subsidi, kompensasi, penyambungan dan lain-lain</div></div>
+      <div class="card teal"><div class="label">Pembelian Tenaga Listrik</div><div class="value">Rp 36,30 T</div><div class="delta neg">94,08% dari Beban Usaha</div><div class="small">Driver utama Beban Usaha</div></div>
+      <div class="card gold"><div class="label">Rasio Operasi</div><div class="value">89,19%</div><div class="delta pos">Laba Usaha Rp 4,68 T</div><div class="small">Beban Usaha ÷ Pendapatan Usaha</div></div>
+      <div class="card green"><div class="label">Laba Bersih</div><div class="value">Rp 3,98 T</div><div class="delta pos">NPM 9,19%</div><div class="small">Setelah Pendapatan/Beban Lain-lain</div></div>
+    </div>
+
+    <ul class="insights">
+      <li><div class="insight-num">01</div><div class="insight-body"><b>Sepertiga laba bersih berasal dari satu unit.</b> UP3 Semarang menyumbang Pendapatan Usaha Rp7,13 triliun (16,5% dari total) dan Laba Bersih Rp1,32 triliun atau <b>33,2%</b> dari Laba Bersih GABUNGAN. Bersama UP3 Pekalongan dan UP3 Surakarta, tiga unit ini menghasilkan 63,5% laba bersih.</div></li>
+      <li><div class="insight-num">02</div><div class="insight-body"><b>Efisiensi tertinggi ada di Pekalongan, bukan Semarang.</b> UP3 Pekalongan memiliki Rasio Operasi terendah (77,55%) dan Net Profit Margin tertinggi (22,67%), diikuti Semarang (81,35% / 18,52%). Keduanya jauh di atas rata-rata GABUNGAN (89,19% / 9,19%).</div></li>
+      <li><div class="insight-num">03</div><div class="insight-body"><b>Pembelian Tenaga Listrik menyerap 94,1% Beban Usaha.</b> Nilainya Rp36,30 triliun, atau 147% dari Penjualan Tenaga Listrik netto (Rp24,62 triliun). Selisih ini ditutup oleh Subsidi Pemerintah (Rp9,97 triliun) dan Pendapatan Kompensasi (Rp8,48 triliun), yang bersama-sama menyumbang 42,6% Pendapatan Usaha. Ketergantungan tertinggi di Purwokerto (47,8%) dan Kudus (47,3%).</div></li>
+      <li><div class="insight-num">04</div><div class="insight-body"><b>Enam UP3 berada di zona waspada (Rasio Operasi 90–100%).</b> Kudus (93,02%), Demak (92,86%), Tegal (92,33%), Magelang (91,28%), Cilacap (90,61%) dan Purwokerto (90,03%). Margin Usaha keenamnya hanya 7–10%, sehingga kenaikan biaya pembelian energi yang kecil sudah cukup menekan laba.</div></li>
+      <li><div class="insight-num">05</div><div class="insight-body"><b>Rugi bersih terkonsentrasi di UID.</b> UID mencatat Rugi Bersih Rp817,50 miliar. Sekitar 91,4% Beban Lain-lain GABUNGAN (Rp640,46 miliar dari Rp700,52 miliar) berasal dari UID. Beban Pinjaman (Rp337,23 miliar) dan Selisih Kurs (Rp253,29 miliar) menjelaskan 92,2% pos lain-lain UID. Tanpa UID dan UP2D, 13 UP3 membukukan Laba Bersih Rp4,94 triliun, lebih tinggi dari GABUNGAN Rp3,98 triliun.</div></li>
+      <li><div class="insight-num">06</div><div class="insight-body"><b>UP3 Yogyakarta satu-satunya UP3 rugi, dengan catatan periode.</b> Rasio Operasi 108,47% dan Rugi Bersih Rp135,92 miliar. Pembelian Tenaga Listrik saja setara 102,9% pendapatannya, sementara subsidi dan kompensasi hanya 20,4% (rata-rata unit lain 39–48%). Karena pembukuan hanya Januari s.d. Maret 2026, angka ini belum sebanding dengan unit lain.</div></li>
+    </ul>
+
+    <div class="reco">
+      <div class="reco-card"><div class="k">Fokus 01 · Efisiensi Energi</div><p>Pembelian Tenaga Listrik adalah 94% beban. Prioritaskan unit dengan Rasio Operasi di atas 90% (Kudus, Demak, Tegal) untuk menekan susut dan bauran biaya energi.</p></div>
+      <div class="reco-card"><div class="k">Fokus 02 · Pos Lain-lain UID</div><p>Beban Pinjaman dan Selisih Kurs (Rp590,52 miliar) adalah beban terbesar di luar operasi. Evaluasi lindung nilai dan struktur pendanaan agar tidak menggerus laba UP3.</p></div>
+      <div class="reco-card"><div class="k">Fokus 03 · Benchmark Unit</div><p>Jadikan Pekalongan dan Semarang sebagai acuan struktur biaya (beban di luar energi hanya 3,3–5,0% dari pendapatan) bagi unit dengan margin di bawah 8%.</p></div>
+    </div>
+
+    <div class="box">
+      <h3>Top Unit Berdasarkan Laba (Rugi) Usaha</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Ranking</th><th>Unit</th><th>Laba (Rugi) Usaha</th><th>Pendapatan Usaha</th><th>Margin</th></tr></thead>
+        <tbody id="profitRankingBody"></tbody>
+      </table></div>
+    </div>
+
+    <div class="callout red">
+      <b>Catatan:</b> UP3 Yogyakarta hanya menghitung pembukuan Januari s.d Maret 2026. UID dan UP2D menunjukkan Laba (Rugi) Usaha negatif
+      karena tidak menjual tenaga listrik langsung kepada pelanggan, sementara beberapa beban pekerjaan di UP dibukukan di UID.
+      Rasio Operasi dan Net Margin UID/UP2D ditampilkan n/a.
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div>Sumber: Data Laporan Keuangan Perbandingan Antar Unit · UID Jawa Tengah</div>
+    <div>Per 31 Agustus 2026 · Strictly Private &amp; Confidential</div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   DATA MASTER (urutan mengikuti kolom Excel)
+============================================================ */
+const units = ["GABUNGAN","UID","UP3 KUDUS","UP3 SURAKARTA","UP3 YOGYAKARTA","UP3 MAGELANG","UP3 PURWOKERTO","UP3 TEGAL","UP3 SEMARANG","UP3 SALATIGA","UP3 KLATEN","UP3 PEKALONGAN","UP3 CILACAP","UP3 DEMAK","UP3 SUKOHARJO","UP2D"];
+
+const financial = {
+  revenue:[43265226681311,686992149,5821237767945,4758638039344,1479935551498,2117713781521,3069299948197,4141600591307,7131140464408,1962438491681,2189593176879,2336069882744,2903975553456,2888816609561,2464079830621,0],
+  expense:[38587719131185,177725457900,5414634442043,4071723183734,1605280488967,1933074088907,2763191923654,3823740529106,5801523196027,1678951443937,1911690691798,1811696154836,2631424341660,2682423482351,2146360623617,134279082648],
+  operatingProfit:[4677507550126,-177038465751,406603325902,686914855610,-125344937469,184639692614,306108024543,317860062201,1329617268381,283487047744,277902485081,524373727908,272551211796,206393127210,317719207004,-134279082648],
+  other:[-700515643304,-640462345762,-4593933887,-12962590526,-10572751578,52374626,-7557071235,-3351071860,-8635963985,-5126316969,-820377915,5116866497,2689427613,-208461019,-1279799314,-12803627990],
+  netProfit:[3976991906822,-817500811513,402009392015,673952265084,-135917689047,184692067240,298550953308,314508990341,1320981304396,278360730775,277082107166,529490594405,275240639409,206184666191,316439407690,-147082710638]
+};
+
+const revenueDetail = {
+  "Penjualan Tenaga Listrik":[24619727523735,0,3044347213953,2832297004814,1167914458633,1128572846408,1589764280151,2278560830216,4311638393489,1182737423916,1196613185396,1343710410018,1561935142512,1575837680064,1405798654165,0],
+  "Subsidi Listrik Pemerintah":[9969920871464,0,1689307442339,788812948648,184869447051,619146748860,982832977357,1045410453255,1393129763563,271422034163,554925207975,471977284598,772402970428,676711162083,518972431144,0],
+  "Pendapatan Kompensasi":[8477172188341,0,1064601462064,1118280832379,117548128198,358926147003,483182063747,796556582977,1393688096950,498725682709,427566372254,507122770008,557277648958,624879112823,528817288271,0],
+  "Penyambungan Pelanggan":[187076726043,0,21425278983,18794033822,9321900096,10807187563,13048916708,18416317843,31096072724,7639065240,9989781540,12779394533,12246170214,11167172086,10345434691,0],
+  "Lain-lain":[11329371728,686992149,1556370606,453219681,281617520,260851687,471710234,2656407016,1588137682,1914285653,498629714,480023587,113621344,221482505,146022350,0]
+};
+
+const expenseDetail = {
+  "Pembelian Tenaga Listrik":[36301626406426,0,5198524515393,3900379141483,1523136727726,1770124954064,2588794124857,3620670799725,5566249457772,1584798548303,1789395413092,1694608909656,2471347483919,2572735061172,2020861269264,0],
+  "Sewa AHG":[14396715734,7632255336,537240000,591186000,225898875,588189000,609605060,723054000,636141000,504273000,498279000,306471000,447330000,360068504,353108959,383616000],
+  "Bahan Bakar dan Minyak Pelumas":[3291050832,0,3291050832,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  "Pemeliharaan":[570711405631,42661476220,47581080520,39309782876,11900684472,38857498177,37597661556,42503716302,63344838708,23793087818,28545157010,27948351132,39322972733,26347068370,32247132638,68750897099],
+  "Pemakaian Material":[25414791038,0,989234391,2150684633,806036810,1169830778,556730678,3195968616,6387728115,1557840993,2687155221,1515037519,548140950,1170636345,1969143989,710622000],
+  "Jasa Borongan":[545296614593,42661476220,46591846129,37159098243,11094647662,37687667399,37040930878,39307747686,56957110593,22235246825,25858001789,26433313613,38774831783,25176432025,30277988649,68040275099],
+  "Kepegawaian":[591753624734,89287194253,41120550763,44850811259,25293362864,39890289965,38671416140,50308476594,47057380387,26340695035,39080516357,29250353878,34945982982,25944984664,34474055732,25237553861],
+  "Penyusutan Aset Tetap":[808075957063,6865537360,90842248392,68960334994,37812843911,58163630414,75295242818,82223732005,93075853746,32022007320,38738818641,44304236756,62011382558,38159874571,41629946583,37970266994],
+  "Penyusutan Aset Tetap Sewa":[10664042092,10664042092,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  "Lain-Lain":[287199928673,20614952639,32737756143,17631927122,6910971119,25449527287,22223873223,27310750480,31159524414,11492832461,15432507698,15277832414,23349189468,18876425070,16795110441,1936748694]
+};
+
+const otherDetail = {
+  "Pendapatan":[88700777212,843317387,6266378541,7655172559,2248625603,8684094080,5540342712,12394900395,16084220016,1145523344,5202840856,7448064207,8316936111,4543644673,2271372267,55344461],
+  "Beban Pinjaman":[-337226331531,-337226331531,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  "Beban Pensiun":[-102716522177,-35195794039,-3694902056,-14849903865,-6214954810,-4419727813,-6716514653,-5447630827,-17526573386,-3017984469,-1948527948,-1276690063,-954198062,-414978755,-372750218,-665391213],
+  "Beban Lain-Lain":[-95978848395,-15588819166,-7165410372,-5767859220,-6606422371,-4211991641,-6380899294,-10298341428,-7193610615,-3253855844,-4074690823,-1054507647,-4673310436,-4337126937,-3178421363,-12193581238],
+  "Beban Selisih Kurs":[-253294718413,-253294718413,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+};
+
+/* ============================================================
+   HELPER
+============================================================ */
+const metricLabels = {revenue:"Pendapatan Usaha",expense:"Beban Usaha",operatingProfit:"Laba (Rugi) Usaha",other:"Pendapatan (Beban) Lain-lain",netProfit:"Laba (Rugi) Bersih"};
+const chartColors = ["#0B2E4F","#0E7C7B","#159A98","#C9A227","#2877A8","#7656A6","#B23A2E","#6B7280","#3C8D7C","#9A7B22"];
+const UP3_IDX = [2,3,4,5,6,7,8,9,10,11,12,13,14];
+
+function formatRupiah(v){
+  const sign = v < 0 ? "-" : "";
+  return sign + "Rp " + new Intl.NumberFormat("id-ID").format(Math.round(Math.abs(v)));
+}
+function formatCompact(v){
+  const sign = v < 0 ? "-" : "";
+  const a = Math.abs(v);
+  const f = (x)=>x.toLocaleString("id-ID",{minimumFractionDigits:2,maximumFractionDigits:2});
+  if(a >= 1e12) return sign + "Rp " + f(a/1e12) + " T";
+  if(a >= 1e9)  return sign + "Rp " + f(a/1e9) + " M";
+  if(a >= 1e6)  return sign + "Rp " + f(a/1e6) + " Jt";
+  return formatRupiah(v);
+}
+function percent(v){
+  return v.toLocaleString("id-ID",{minimumFractionDigits:2,maximumFractionDigits:2}) + "%";
+}
+function ratioOf(i){ const r = financial.revenue[i]; return r ? financial.expense[i]/r*100 : null; }
+function npmOf(i){ const r = financial.revenue[i]; return r ? financial.netProfit[i]/r*100 : null; }
+function marginOf(i){ const r = financial.revenue[i]; return r ? financial.operatingProfit[i]/r*100 : null; }
+
+const charts = {};
+function setChart(key, canvasId, config){
+  if(charts[key]) charts[key].destroy();
+  charts[key] = new Chart(document.getElementById(canvasId), config);
+  return charts[key];
+}
+const chartBase = {
+  responsive:true,
+  maintainAspectRatio:false,
+  plugins:{
+    legend:{position:"bottom",labels:{boxWidth:12,padding:12,font:{size:11}}},
+    tooltip:{callbacks:{label:(c)=> (c.dataset.label ? c.dataset.label + ": " : (c.label ? c.label + ": " : "")) + formatCompact(c.raw)}}
+  }
+};
+function fillSelect(id, selected){
+  const sel = document.getElementById(id);
+  sel.innerHTML = units.map(u=>`<option value="${u}">${u}</option>`).join("");
+  if(selected) sel.value = selected;
+}
+
+/* ============================================================
+   INIT SELECTS
+============================================================ */
+fillSelect("infoUnit","GABUNGAN");
+fillSelect("detailUnitSelect","GABUNGAN");
+
+/* ============================================================
+   TAB 1 — INFOGRAFIS
+============================================================ */
+function renderFlow(){
+  const u = document.getElementById("infoUnit").value;
+  const i = units.indexOf(u);
+  const rev = financial.revenue[i];
+  const exp = financial.expense[i];
+  const op  = financial.operatingProfit[i];
+  const oth = financial.other[i];
+  const net = financial.netProfit[i];
+  const p = (v)=> rev ? percent(v/rev*100) : "n/a";
+  document.getElementById("flowUnitName").textContent = u;
+  document.getElementById("flowRow").innerHTML = `
+    <div class="flow-step teal">
+      <div class="k">1 · Pendapatan Usaha</div>
+      <div class="v">${formatCompact(rev)}</div>
+      <div class="p">100% dasar perhitungan</div>
+    </div>
+    <div class="flow-step">
+      <div class="k">2 · Beban Usaha</div>
+      <div class="v">${formatCompact(exp)}</div>
+      <div class="p">${p(exp)} dari pendapatan</div>
+    </div>
+    <div class="flow-step ${op<0?'red':'green'}">
+      <div class="k">3 · Laba (Rugi) Usaha</div>
+      <div class="v">${formatCompact(op)}</div>
+      <div class="p">Margin ${rev?percent(op/rev*100):"n/a"}</div>
+    </div>
+    <div class="flow-step ${oth<0?'red':'teal'}">
+      <div class="k">4 · Lain-lain (Bersih)</div>
+      <div class="v">${formatCompact(oth)}</div>
+      <div class="p">${p(oth)} dari pendapatan</div>
+    </div>
+    <div class="flow-step ${net<0?'red':'green'}">
+      <div class="k">5 · Laba (Rugi) Bersih</div>
+      <div class="v">${formatCompact(net)}</div>
+      <div class="p">NPM ${rev?percent(net/rev*100):"n/a"}</div>
+    </div>`;
+}
+function renderStrip(){
+  const u = document.getElementById("infoUnit").value;
+  const i = units.indexOf(u);
+  const rev = financial.revenue[i];
+  const ratio = ratioOf(i);
+  const npm = npmOf(i);
+  const share = financial.netProfit[i] / financial.netProfit[0] * 100;
+  const barW = (v)=> Math.min(100, Math.max(0, Math.abs(v)));
+  document.getElementById("kpiStrip").innerHTML = `
+    <div><div class="label">Pendapatan Usaha</div><div class="big">${formatCompact(rev)}</div>
+      <div class="bar-h"><span style="width:${barW(rev/financial.revenue[0]*100)}%"></span></div>
+      <div class="small">${percent(rev/financial.revenue[0]*100)} dari GABUNGAN</div></div>
+    <div><div class="label">Rasio Operasi</div><div class="big ${ratio===null?'':(ratio>100?'neg':(ratio>=90?'':'pos'))}">${ratio===null?'n/a':percent(ratio)}</div>
+      <div class="bar-h"><span style="width:${ratio===null?0:barW(ratio)}%;background:${ratio>100?'#B23A2E':(ratio>=90?'#C9A227':'#0E7C7B')}"></span></div>
+      <div class="small">Target &lt; 90%</div></div>
+    <div><div class="label">Net Profit Margin</div><div class="big ${npm!==null&&npm<0?'neg':''}">${npm===null?'n/a':percent(npm)}</div>
+      <div class="bar-h"><span style="width:${npm===null?0:barW(npm*2)}%"></span></div>
+      <div class="small">Laba bersih ÷ pendapatan</div></div>
+    <div><div class="label">Kontribusi Laba Bersih</div><div class="big ${share<0?'neg':''}">${percent(share)}</div>
+      <div class="bar-h"><span style="width:${barW(share)}%"></span></div>
+      <div class="small">Terhadap laba bersih GABUNGAN</div></div>
+    <div><div class="label">Laba (Rugi) Bersih</div><div class="big ${financial.netProfit[i]<0?'neg':'pos'}">${formatCompact(financial.netProfit[i])}</div>
+      <div class="small">${financial.netProfit[i]<0?'Posisi rugi':'Posisi laba'}</div></div>`;
+}
+function renderBubble(){
+  const data = UP3_IDX.map(i=>({
+    x: ratioOf(i),
+    y: npmOf(i),
+    r: 6 + Math.sqrt(financial.revenue[i]/1e12)*4.5,
+    name: units[i],
+    rev: financial.revenue[i]
+  }));
+  const colorOf = (d)=> d.y < 0 ? "rgba(178,58,46,.75)" : (d.x >= 90 ? "rgba(201,162,39,.8)" : "rgba(14,124,123,.75)");
+  setChart("bubble","bubbleChart",{
+    type:"bubble",
+    data:{datasets:[{
+      label:"UP3",
+      data:data,
+      backgroundColor:data.map(colorOf),
+      borderColor:"#fff",
+      borderWidth:1
+    }]},
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{
+          title:(items)=>items[0].raw.name,
+          label:(c)=>[
+            "Rasio Operasi: " + percent(c.raw.x),
+            "Net Margin: " + percent(c.raw.y),
+            "Pendapatan: " + formatCompact(c.raw.rev)
+          ]
+        }}
+      },
+      scales:{
+        x:{title:{display:true,text:"Rasio Operasi (%) — makin kecil makin efisien"},min:74,max:112,ticks:{callback:v=>v+"%"},grid:{color:"#E7E9EC"}},
+        y:{title:{display:true,text:"Net Profit Margin (%)"},min:-15,max:26,ticks:{callback:v=>v+"%"},grid:{color:"#E7E9EC"}}
+      }
+    }
+  });
+}
+function renderShare(){
+  const rows = UP3_IDX.map(i=>({unit:units[i], v:financial.netProfit[i]})).sort((a,b)=>b.v-a.v);
+  const total = rows.reduce((a,b)=>a+b.v,0);
+  setChart("share","shareChart",{
+    type:"bar",
+    data:{labels:rows.map(r=>r.unit),datasets:[{
+      label:"Laba Bersih",
+      data:rows.map(r=>r.v),
+      backgroundColor:rows.map(r=>r.v<0?"#B23A2E":"#0E7C7B"),
+      borderRadius:3
+    }]},
+    options:{
+      ...chartBase,
+      indexAxis:"y",
+      plugins:{legend:{display:false},tooltip:{callbacks:{
+        label:(c)=> formatCompact(c.raw) + " (" + percent(c.raw/total*100) + " dari total UP3)"
+      }}},
+      scales:{x:{ticks:{callback:v=>formatCompact(v)},grid:{color:"#E7E9EC"}},y:{grid:{display:false},ticks:{font:{size:10}}}}
+    }
+  });
+  const top3 = rows.slice(0,3).reduce((a,b)=>a+b.v,0);
+  document.getElementById("shareNote").innerHTML =
+    `Total laba bersih 13 UP3: <b>${formatCompact(total)}</b>. Tiga unit teratas (${rows.slice(0,3).map(r=>r.unit.replace("UP3 ","")).join(", ")}) menyumbang <b>${percent(top3/total*100)}</b>.`;
+}
+function renderStack(){
+  const order = [...UP3_IDX].sort((a,b)=>financial.revenue[b]-financial.revenue[a]);
+  const labels = order.map(i=>units[i]);
+  const keys = Object.keys(revenueDetail);
+  const palette = ["#0B2E4F","#0E7C7B","#C9A227","#2877A8","#B9C6D6"];
+  setChart("stack","stackChart",{
+    type:"bar",
+    data:{labels:labels,datasets:keys.map((k,j)=>({
+      label:k,
+      data:order.map(i=>revenueDetail[k][i]),
+      backgroundColor:palette[j],
+      borderRadius:2
+    }))},
+    options:{
+      ...chartBase,
+      indexAxis:"y",
+      scales:{
+        x:{stacked:true,ticks:{callback:v=>formatCompact(v)},grid:{color:"#E7E9EC"}},
+        y:{stacked:true,grid:{display:false},ticks:{font:{size:10}}}
+      }
+    }
+  });
+}
+
+/* ============================================================
+   TAB 2 — RANKING & TABEL
+============================================================ */
+function getRanking(metric){
+  return units.map((unit,index)=>({unit,value:financial[metric][index],index}))
+    .filter(x=>x.index>0).sort((a,b)=>b.value-a.value);
+}
+function renderRanking(){
+  const metric = document.getElementById("metricSelect").value;
+  const ranking = getRanking(metric);
+  document.getElementById("rankingTitle").textContent = "Ranking " + metricLabels[metric] + " Per Unit";
+  setChart("ranking","rankingChart",{
+    type:"bar",
+    data:{labels:ranking.map(x=>x.unit),datasets:[{
+      label:metricLabels[metric],
+      data:ranking.map(x=>x.value),
+      backgroundColor:ranking.map(x=>x.value<0?"#B23A2E":"#0E7C7B"),
+      borderRadius:3
+    }]},
+    options:{
+      ...chartBase,
+      indexAxis:"y",
+      plugins:{legend:{display:false}},
+      scales:{x:{ticks:{callback:v=>formatCompact(v)},grid:{color:"#E7E9EC"}},y:{grid:{display:false},ticks:{font:{size:10}}}}
+    }
+  });
+  const max = Math.max(...ranking.map(x=>Math.abs(x.value)));
+  document.getElementById("rankList").innerHTML = ranking.map((x,i)=>{
+    const w = max ? Math.abs(x.value)/max*100 : 0;
+    const grad = x.value<0 ? "linear-gradient(90deg,#B23A2E,#D06A5F)" : "linear-gradient(90deg,#0B2E4F,#0E7C7B)";
+    return `
+      <div class="rank-row">
+        <div class="rank-no">${i+1}</div>
+        <div class="rank-info">
+          <div class="rank-label">${x.unit}</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:${w}%;background:${grad}"></div></div>
+        </div>
+        <div class="rank-value ${x.value<0?'neg':''}">${formatCompact(x.value)}</div>
+      </div>`;
+  }).join("");
+}
+function renderRatio(){
+  const rows = UP3_IDX.map(i=>({unit:units[i],ratio:ratioOf(i)})).sort((a,b)=>b.ratio-a.ratio);
+  rows.push({unit:"GABUNGAN",ratio:ratioOf(0)});
+  const refLine = {
+    id:"refLine",
+    afterDraw(chart){
+      const x = chart.scales.x, y = chart.chartArea, ctx = chart.ctx;
+      const px = x.getPixelForValue(100);
+      if(px<y.left||px>y.right) return;
+      ctx.save();ctx.strokeStyle="#B23A2E";ctx.setLineDash([5,4]);ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(px,y.top);ctx.lineTo(px,y.bottom);ctx.stroke();
+      ctx.fillStyle="#B23A2E";ctx.font="10px Arial";ctx.fillText("100%",px+4,y.top+10);ctx.restore();
+    }
+  };
+  setChart("ratio","ratioChart",{
+    type:"bar",
+    data:{labels:rows.map(r=>r.unit),datasets:[{
+      label:"Rasio Operasi",
+      data:rows.map(r=>r.ratio),
+      backgroundColor:rows.map(r=>r.unit==="GABUNGAN"?"#0B2E4F":(r.ratio>100?"#B23A2E":(r.ratio>=90?"#C9A227":"#0E7C7B"))),
+      borderRadius:3
+    }]},
+    options:{
+      ...chartBase,
+      indexAxis:"y",
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>"Rasio Operasi: "+percent(c.raw)}}},
+      scales:{x:{min:60,ticks:{callback:v=>v+"%"},grid:{color:"#E7E9EC"}},y:{grid:{display:false},ticks:{font:{size:10}}}}
+    },
+    plugins:[refLine]
+  });
+}
+function renderNPM(){
+  const rows = UP3_IDX.map(i=>({unit:units[i],npm:npmOf(i)})).sort((a,b)=>b.npm-a.npm);
+  rows.push({unit:"GABUNGAN",npm:npmOf(0)});
+  setChart("npm","npmChart",{
+    type:"bar",
+    data:{labels:rows.map(r=>r.unit),datasets:[{
+      label:"Net Profit Margin",
+      data:rows.map(r=>r.npm),
+      backgroundColor:rows.map(r=>r.unit==="GABUNGAN"?"#0B2E4F":(r.npm<0?"#B23A2E":(r.npm<10?"#C9A227":"#0E7C7B"))),
+      borderRadius:3
+    }]},
+    options:{
+      ...chartBase,
+      indexAxis:"y",
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>"Net Profit Margin: "+percent(c.raw)}}},
+      scales:{x:{ticks:{callback:v=>v+"%"},grid:{color:"#E7E9EC"}},y:{grid:{display:false},ticks:{font:{size:10}}}}
+    }
+  });
+}
+
+let tableSort = {key:"revenue",direction:"desc"};
+function unitRow(unit,index){
+  const r = financial.revenue[index];
+  const hasSales = revenueDetail["Penjualan Tenaga Listrik"][index] > 0;
+  return {
+    unit, revenue:r,
+    expense:financial.expense[index],
+    operatingProfit:financial.operatingProfit[index],
+    other:financial.other[index],
+    netProfit:financial.netProfit[index],
+    margin: hasSales ? marginOf(index) : null,
+    ratio:  hasSales ? ratioOf(index) : null,
+    npm:    hasSales ? npmOf(index) : null
+  };
+}
+function pctCell(v,cls){
+  return v===null ? '<td class="neutral">n/a</td>' : `<td class="${cls}">${percent(v)}</td>`;
+}
+function tableRowHtml(row,total){
+  return `<tr class="${total?'total':''}">
+    <td class="unit-name">${row.unit}</td>
+    <td>${formatCompact(row.revenue)}</td>
+    <td>${formatCompact(row.expense)}</td>
+    <td class="${row.operatingProfit<0?'neg':'pos'}">${formatCompact(row.operatingProfit)}</td>
+    <td class="${row.other<0?'neg':'pos'}">${formatCompact(row.other)}</td>
+    <td class="${row.netProfit<0?'neg':'pos'}">${formatCompact(row.netProfit)}</td>
+    ${pctCell(row.margin, row.margin!==null && row.margin<0?'neg':'pos')}
+    ${pctCell(row.ratio, row.ratio!==null && row.ratio>100?'neg':(row.ratio!==null && row.ratio>=90?'neutral':'pos'))}
+    ${pctCell(row.npm, row.npm!==null && row.npm<0?'neg':'pos')}
+  </tr>`;
+}
+function renderUnitTable(){
+  const search = document.getElementById("tableSearch").value.toLowerCase().trim();
+  let rows = units.map((u,i)=>unitRow(u,i)).filter(r=>r.unit!=="GABUNGAN");
+  if(search) rows = rows.filter(r=>r.unit.toLowerCase().includes(search));
+  rows.sort((a,b)=>{
+    let A = a[tableSort.key], B = b[tableSort.key];
+    if(typeof A==="string") return tableSort.direction==="asc" ? A.localeCompare(B) : B.localeCompare(A);
+    A = A===null ? -Infinity : A; B = B===null ? -Infinity : B;
+    return tableSort.direction==="asc" ? A-B : B-A;
+  });
+  const totalHtml = (!search || "gabungan".includes(search)) ? tableRowHtml(unitRow("GABUNGAN",0),true) : "";
+  document.getElementById("unitTableBody").innerHTML = totalHtml + rows.map(r=>tableRowHtml(r,false)).join("");
+}
+
+/* ============================================================
+   TAB 3 — DETAIL
+============================================================ */
+function sortDesc(labels,values){
+  const pairs = labels.map((l,i)=>({l,v:values[i]})).sort((a,b)=>b.v-a.v);
+  return {labels:pairs.map(p=>p.l), values:pairs.map(p=>p.v)};
+}
+function renderDetailRows(bodyId, labels, values, subItems){
+  const base = values.reduce((a,b,i)=> (subItems && subItems.includes(labels[i])) ? a : a+b, 0);
+  document.getElementById(bodyId).innerHTML = labels.map((label,i)=>{
+    const isSub = subItems && subItems.includes(label);
+    const pct = base ? values[i]/base*100 : 0;
+    return `<tr>
+      <td>${isSub?"↳ ":""}${label}${isSub?" (rincian Pemeliharaan)":""}</td>
+      <td class="${values[i]<0?'neg':''}">${formatCompact(values[i])}</td>
+      <td>${percent(pct)}</td>
+    </tr>`;
+  }).join("");
+}
+function renderDetail(){
+  const u = document.getElementById("detailUnitSelect").value;
+  const i = units.indexOf(u);
+
+  const rev = sortDesc(Object.keys(revenueDetail), Object.keys(revenueDetail).map(k=>revenueDetail[k][i]));
+  setChart("detailRev","detailRevenueChart",{
+    type:"doughnut",
+    data:{labels:rev.labels,datasets:[{data:rev.values,backgroundColor:chartColors,borderWidth:2,borderColor:"#fff"}]},
+    options:{...chartBase,cutout:"58%"}
+  });
+  renderDetailRows("detailRevenueBody", rev.labels, rev.values, null);
+
+  const subItems = ["Pemakaian Material","Jasa Borongan"];
+  const exp = sortDesc(Object.keys(expenseDetail), Object.keys(expenseDetail).map(k=>expenseDetail[k][i]));
+  setChart("detailExp","detailExpenseChart",{
+    type:"doughnut",
+    data:{labels:exp.labels,datasets:[{data:exp.values,backgroundColor:chartColors,borderWidth:2,borderColor:"#fff"}]},
+    options:{...chartBase,cutout:"58%"}
+  });
+  renderDetailRows("detailExpenseBody", exp.labels, exp.values, subItems);
+
+  const oth = sortDesc(Object.keys(otherDetail), Object.keys(otherDetail).map(k=>otherDetail[k][i]));
+  setChart("detailOther","detailOtherChart",{
+    type:"bar",
+    data:{labels:oth.labels,datasets:[{label:"Nilai",data:oth.values,backgroundColor:oth.values.map(v=>v<0?"#B23A2E":"#0E7C7B"),borderRadius:3}]},
+    options:{...chartBase,indexAxis:"y",plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>formatCompact(v)}},y:{ticks:{font:{size:10}}}}}
+  });
+  const total = financial.other[i];
+  document.getElementById("detailOtherBody").innerHTML =
+    oth.labels.map((l,k)=>`<tr><td>${l}</td><td class="${oth.values[k]<0?'neg':'pos'}">${formatCompact(oth.values[k])}</td></tr>`).join("") +
+    `<tr class="total"><td>Total</td><td class="${total<0?'neg':'pos'}">${formatCompact(total)}</td></tr>`;
+}
+
+/* ============================================================
+   TAB 4 — INSIGHT TABLE
+============================================================ */
+function renderProfitRanking(){
+  const rows = units.map((unit,index)=>({unit,index,profit:financial.operatingProfit[index],revenue:financial.revenue[index],margin:marginOf(index)??0}))
+    .filter(r=>r.index>0).sort((a,b)=>b.profit-a.profit);
+  document.getElementById("profitRankingBody").innerHTML = rows.map((r,i)=>`
+    <tr>
+      <td>${i+1}</td>
+      <td class="unit-name">${r.unit}</td>
+      <td class="${r.profit<0?'neg':'pos'}">${formatCompact(r.profit)}</td>
+      <td>${formatCompact(r.revenue)}</td>
+      <td class="${r.margin<0?'neg':'pos'}">${percent(r.margin)}</td>
+    </tr>`).join("");
+}
+
+/* ============================================================
+   EVENTS
+============================================================ */
+document.getElementById("infoUnit").addEventListener("change",()=>{ renderFlow(); renderStrip(); });
+document.getElementById("infoReset").addEventListener("click",()=>{
+  document.getElementById("infoUnit").value = "GABUNGAN";
+  renderFlow(); renderStrip();
+});
+document.getElementById("metricSelect").addEventListener("change",renderRanking);
+document.getElementById("tableSearch").addEventListener("input",renderUnitTable);
+document.getElementById("detailUnitSelect").addEventListener("change",renderDetail);
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  document.getElementById("metricSelect").value = "revenue";
+  document.getElementById("tableSearch").value = "";
+  tableSort = {key:"revenue",direction:"desc"};
+  renderRanking(); renderUnitTable();
+});
+document.querySelectorAll("#unitTable th").forEach(th=>{
+  th.addEventListener("click",function(){
+    const key = this.dataset.sort;
+    if(tableSort.key===key) tableSort.direction = tableSort.direction==="asc" ? "desc" : "asc";
+    else { tableSort.key = key; tableSort.direction = "desc"; }
+    renderUnitTable();
+  });
+});
+document.querySelectorAll(".tab").forEach(btn=>{
+  btn.addEventListener("click",function(){
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
+    this.classList.add("active");
+    document.getElementById(this.dataset.tab).classList.add("active");
+    setTimeout(()=>{ Object.values(charts).forEach(c=>c.resize()); },100);
+  });
+});
+
+/* ============================================================
+   INITIALIZE
+============================================================ */
+renderFlow();
+renderStrip();
+renderBubble();
+renderShare();
+renderStack();
+renderRanking();
+renderRatio();
+renderNPM();
+renderUnitTable();
+renderDetail();
+renderProfitRanking();
+</script>
+</body>
+</html>
