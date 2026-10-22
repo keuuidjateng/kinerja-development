@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Pajak PPN & PPh — UID Jawa Tengah 2026</title>
+  <!-- Kode Favicon -->
+  <link rel="icon" type="image/png" href="Logo PLN Favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --navy-950:#0B1B33;
+  --navy-900:#0F2547;
+  --navy-800:#16335F;
+  --navy-700:#1E4275;
+  --blue-600:#2F6FB0;
+  --blue-400:#6FA3D8;
+  --blue-100:#E7EFF7;
+  --gold-600:#B8872F;
+  --gold-500:#C99A3F;
+  --gold-100:#F7EFDC;
+  --red-600:#A93B41;
+  --red-100:#F6E5E4;
+  --green-700:#286651;
+  --green-100:#E3F0EA;
+  --gray-900:#171A21;
+  --gray-700:#454B57;
+  --gray-500:#6E7686;
+  --gray-300:#C9CED8;
+  --gray-150:#E7EAF0;
+  --gray-100:#F2F3F6;
+  --paper:#F7F7F5;
+  --white:#fff;
+  --serif:Georgia,'Times New Roman',serif;
+  --sans:Arial,Helvetica,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--paper);color:var(--gray-900);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+body{padding-bottom:50px}
+.wrap{max-width:1180px;margin:auto;padding:0 40px}
+
+/* TOP BAR */
+.topbar{background:var(--navy-950);color:var(--gray-300);font-size:11.5px;letter-spacing:.06em}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:11px;padding-bottom:11px}
+.org{color:#fff;font-weight:700;text-transform:uppercase}
+.period{color:var(--gold-500);font-weight:700;text-transform:uppercase;border:1px solid rgba(201,154,63,.55);border-radius:3px;padding:3px 10px}
+
+/* HERO */
+.hero{background:linear-gradient(180deg,var(--navy-900),var(--navy-800));color:#fff;padding:34px 0 0}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-400);font-weight:700;margin-bottom:13px}
+.hero h1{font-family:var(--serif);font-size:34px;line-height:1.18;max-width:900px}
+.hero .sub{margin-top:13px;font-size:14px;line-height:1.65;color:#C7D3E3;max-width:900px}
+
+/* TABS */
+.tabbar{margin-top:28px;display:flex;gap:2px;border-top:1px solid rgba(255,255,255,.14);overflow-x:auto}
+.tab{border:0;background:transparent;color:#A9B8CE;padding:16px 20px;cursor:pointer;font-weight:700;font-size:11px;letter-spacing:.04em;text-transform:uppercase;border-bottom:3px solid transparent;white-space:nowrap;font-family:var(--sans)}
+.tab:hover{color:#fff}
+.tab.active{color:#fff;border-bottom-color:var(--gold-500);background:rgba(255,255,255,.05)}
+
+/* KPI */
+.kpi-band{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.14)}
+.kpi{padding:22px 22px 26px 0;border-right:1px solid rgba(255,255,255,.14)}
+.kpi:not(:first-child){padding-left:22px}
+.kpi:last-child{border-right:none}
+.kpi-label{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#9FB2CC;font-weight:700}
+.kpi-value{font-family:var(--serif);font-size:29px;font-weight:700;color:#fff;margin-top:8px;line-height:1.1}
+.kpi-value small{font-size:14px;color:#B9C6DA;margin-left:3px;font-weight:400}
+.kpi-sub{font-size:11.5px;color:#A9B8CE;margin-top:7px;line-height:1.5}
+
+/* SECTIONS */
+section{padding:48px 0}
+section.tinted{background:var(--gray-100)}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--navy-900);padding-bottom:13px;margin-bottom:27px;gap:20px}
+.section-tag{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-600);font-weight:700;margin-bottom:5px}
+.section-head h2{font-family:var(--serif);font-size:24px;color:var(--navy-950)}
+.section-note{font-size:12px;color:var(--gray-500);max-width:400px;text-align:right;line-height:1.5}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* EXEC CARDS */
+.exec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 24px}
+.exec-card{background:#fff;border:1px solid var(--gray-150);border-left:4px solid var(--navy-800);padding:20px 22px}
+.exec-card.flag-red{border-left-color:var(--red-600)}
+.exec-card.flag-green{border-left-color:var(--green-700)}
+.exec-card.flag-gold{border-left-color:var(--gold-600)}
+.exec-num{font-size:10.5px;font-weight:700;color:var(--gray-500);letter-spacing:.08em;text-transform:uppercase}
+.exec-title{font-size:15px;font-weight:700;color:var(--gray-900);margin-top:7px;line-height:1.4}
+.exec-body{font-size:13px;color:var(--gray-700);line-height:1.65;margin-top:7px}
+.exec-body b{color:var(--navy-900)}
+
+/* CHART */
+.chart-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
+.chart-card{background:#fff;border:1px solid var(--gray-150);padding:22px}
+.chart-card h3{font-family:var(--serif);font-size:17px;color:var(--navy-950);margin-bottom:4px}
+.chart-caption{color:var(--gray-500);font-size:11.5px;line-height:1.5;margin-bottom:14px}
+.chart-canvas{position:relative;height:330px;width:100%}
+
+/* BAR */
+.bar-list{margin-top:4px}
+.bar-row{display:grid;grid-template-columns:155px 1fr 170px;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--gray-150)}
+.bar-label{font-size:11.5px;font-weight:700;color:var(--navy-950);line-height:1.3}
+.bar-track{height:21px;background:var(--gray-150);border-radius:2px;overflow:hidden}
+.bar-fill{height:100%;border-radius:2px}
+.bar-value{text-align:right;font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* STAT */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+.stat-card{background:var(--navy-950);color:#fff;padding:21px 22px}
+.st-tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-500);font-weight:700;margin-bottom:9px}
+.st-num{font-family:var(--serif);font-size:29px;font-weight:700}
+.st-num small{font-size:13px;color:#B9C6DA;margin-left:3px}
+.stat-card p{font-size:11.8px;color:#C7D3E3;line-height:1.6;margin-top:9px}
+
+/* TABLE */
+.table-scroll{width:100%;overflow-x:auto}
+table.data-table{width:100%;border-collapse:collapse;font-size:12px;background:#fff;min-width:760px}
+table.data-table th{background:var(--navy-950);color:#fff;text-align:right;font-weight:700;font-size:10px;letter-spacing:.03em;text-transform:uppercase;padding:11px 10px;white-space:nowrap}
+table.data-table th:first-child{text-align:left}
+table.data-table th.txt{text-align:left}
+table.data-table td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--gray-150);font-variant-numeric:tabular-nums;vertical-align:top}
+table.data-table td:first-child{text-align:left;font-weight:700;color:var(--navy-950)}
+table.data-table td.txt{text-align:left;font-weight:400;color:var(--gray-700);line-height:1.5;min-width:200px}
+table.data-table tr:nth-child(even) td{background:var(--gray-100)}
+table.data-table tr.highlight td{background:var(--gold-100)}
+table.data-table tr.alert td{background:var(--red-100)}
+table.data-table tr.total-row td{background:var(--navy-900);color:#fff;font-weight:700}
+table.data-table tr.total-row td:first-child{color:#fff}
+.tbl-note{font-size:11px;color:var(--gray-500);margin-top:10px;line-height:1.5}
+
+/* DONUT */
+.donut-layout{display:grid;grid-template-columns:220px 1fr;align-items:center;gap:22px}
+.donut{width:190px;height:190px;margin:auto;border-radius:50%;position:relative}
+.donut:after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;background:#fff;left:50%;top:50%;transform:translate(-50%,-50%)}
+.donut-center{position:absolute;z-index:2;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}
+.donut-center strong{font-family:var(--serif);font-size:17px;color:var(--navy-950)}
+.donut-center span{font-size:10px;color:var(--gray-500)}
+.legend{display:grid;gap:9px}
+.legend-item{display:grid;grid-template-columns:12px 1fr auto;gap:8px;align-items:center;font-size:11.5px;border-bottom:1px solid var(--gray-150);padding-bottom:7px}
+.legend-color{width:11px;height:11px;border-radius:2px}
+
+/* ISSUE */
+.issue-box{margin-top:18px;padding:17px 19px;background:var(--gold-100);border-left:4px solid var(--gold-600)}
+.issue-box.red{background:var(--red-100);border-left-color:var(--red-600)}
+.issue-box h4{font-size:12px;color:var(--navy-950);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
+.issue-box p{font-size:12.5px;color:var(--gray-700);line-height:1.65}
+
+/* INSIGHT */
+.insight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.insight{background:#fff;border:1px solid var(--gray-150);padding:20px}
+.insight-num{font-family:var(--serif);font-size:28px;color:var(--blue-400);font-weight:700}
+.insight h3{font-size:14px;color:var(--navy-950);margin-top:8px;line-height:1.4}
+.insight p{color:var(--gray-700);font-size:12.5px;line-height:1.6;margin-top:7px}
+
+/* RECOMMENDATION */
+.rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.rec-card{background:#fff;border:1px solid var(--gray-150);padding:21px}
+.rec-step{font-family:var(--serif);font-size:29px;color:var(--blue-400);font-weight:700}
+.rec-title{font-size:14.5px;font-weight:700;color:var(--navy-950);margin-top:9px}
+.rec-body{font-size:12.5px;color:var(--gray-700);line-height:1.65;margin-top:7px}
+
+/* PRIORITY */
+.priority-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.priority{padding:18px;background:#fff;border:1px solid var(--gray-150);border-top:4px solid var(--navy-800)}
+.priority.red{border-top-color:var(--red-600)}
+.priority.gold{border-top-color:var(--gold-600)}
+.priority.green{border-top-color:var(--green-700)}
+.priority .level{font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--gray-500)}
+.priority h3{font-size:14px;margin-top:7px;color:var(--navy-950)}
+.priority p{margin-top:7px;font-size:12px;color:var(--gray-700);line-height:1.55}
+
+/* FOOTER */
+footer{border-top:1px solid var(--gray-300);padding:25px 0;font-size:10.5px;color:var(--gray-500);line-height:1.6}
+.footer-flex{display:flex;justify-content:space-between;gap:30px}
+.footer-flex div{max-width:550px}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+  .priority-grid{grid-template-columns:repeat(2,1fr)}
+  .bar-row{grid-template-columns:130px 1fr 150px}
+}
+@media(max-width:900px){
+  .wrap{padding:0 20px}
+  .hero h1{font-size:27px}
+  .kpi-band{grid-template-columns:1fr 1fr}
+  .kpi{border-right:none;border-bottom:1px solid rgba(255,255,255,.14);padding:18px 0!important}
+  .kpi:not(:first-child){padding-left:0!important}
+  .chart-grid,.exec-grid,.insight-grid,.rec-grid,.stat-grid,.donut-layout{grid-template-columns:1fr}
+  .section-head{display:block}
+  .section-note{text-align:left;margin-top:8px}
+  .chart-canvas{height:280px}
+}
+@media(max-width:600px){
+  .topbar .wrap{display:block}
+  .period{display:inline-block;margin-top:7px}
+  .hero h1{font-size:24px}
+  .kpi-band{grid-template-columns:1fr}
+  .bar-row{grid-template-columns:95px 1fr}
+  .bar-value{grid-column:2;text-align:left;margin-top:-5px;white-space:normal}
+  .priority-grid{grid-template-columns:1fr}
+  .footer-flex{display:block}
+  .footer-flex div+div{margin-top:12px;text-align:left!important}
+  .tab{padding:14px 14px;font-size:10.5px}
+  .donut-layout{grid-template-columns:1fr}
+  .wrap{padding:0 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="wrap">
+    <span class="org">UID Jawa Tengah — Dashboard Pajak PPN &amp; PPh</span>
+    <span class="period">Tahun 2026 · Data Jan–Sep</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Executive Tax Dashboard</div>
+    <h1>Analisis Rekap Pembayaran Pajak PPN &amp; PPh Tahun 2026</h1>
+    <p class="sub">
+      Dashboard mengintegrasikan realisasi pembayaran PPN dan PPh bulanan, distribusi pembayaran pajak per unit
+      (BA 5201–5223 dan 5256), serta komposisi PPN operasi/investasi dan pasal PPh untuk periode Januari
+      s.d. September 2026.
+    </p>
+
+    <div class="tabbar">
+      <button class="tab active" onclick="openTab('monthly',this)">Pembayaran Bulanan</button>
+      <button class="tab" onclick="openTab('unit',this)">Per Unit</button>
+      <button class="tab" onclick="openTab('jenis',this)">Jenis Pajak &amp; Pasal</button>
+      <button class="tab" onclick="openTab('analysis',this)">Analisis &amp; Rekomendasi</button>
+    </div>
+
+    <div class="kpi-band">
+      <div class="kpi">
+        <div class="kpi-label">Total Pembayaran Pajak</div>
+        <div class="kpi-value">Rp 216,68<small>Miliar</small></div>
+        <div class="kpi-sub">Total PPN + PPh Januari s.d. September 2026.</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Total PPN</div>
+        <div class="kpi-value">Rp 182,01<small>Miliar</small></div>
+        <div class="kpi-sub">Porsi 84,00% dari total pembayaran pajak.</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Total PPh</div>
+        <div class="kpi-value">Rp 34,66<small>Miliar</small></div>
+        <div class="kpi-sub">Porsi 16,00% dari total pembayaran pajak.</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Rata-rata Bulanan</div>
+        <div class="kpi-value">Rp 24,08<small>Miliar</small></div>
+        <div class="kpi-sub">Dihitung dari 9 bulan berjalan. Puncak April Rp 35,26 miliar.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TAB 1 — BULANAN ============ -->
+<div id="monthly" class="tab-content active">
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Ringkasan Pembayaran</div>
+          <h2>Realisasi Pembayaran PPN &amp; PPh per Bulan</h2>
+        </div>
+        <div class="section-note">Nilai dalam miliar rupiah. Oktober s.d. Desember belum memiliki data pembayaran.</div>
+      </div>
+
+      <div class="exec-grid">
+        <div class="exec-card flag-red">
+          <div class="exec-num">Temuan 01 — Puncak Bulanan</div>
+          <div class="exec-title">April menjadi bulan pembayaran tertinggi sebesar Rp 35,26 miliar</div>
+          <div class="exec-body">
+            Kontribusi April mencapai <b>16,27%</b> dari total Jan–Sep, didominasi PPN sebesar <b>Rp 29,66 miliar</b>.
+            Juli (Rp 34,18 miliar) dan Juni (Rp 32,67 miliar) menyusul sebagai bulan dengan nilai tinggi.
+          </div>
+        </div>
+        <div class="exec-card flag-gold">
+          <div class="exec-num">Temuan 02 — Lonjakan Maret</div>
+          <div class="exec-title">PPN melonjak lebih dari dua kali lipat dari Februari ke Maret</div>
+          <div class="exec-body">
+            PPN naik dari <b>Rp 10,38 miliar</b> menjadi <b>Rp 21,74 miliar</b> (+109%). Kenaikan ini menandai
+            awal tren pembayaran PPN yang tinggi pada kuartal II dan III.
+          </div>
+        </div>
+        <div class="exec-card flag-red">
+          <div class="exec-num">Temuan 03 — Penurunan Mei</div>
+          <div class="exec-title">Pembayaran Mei turun tajam setelah puncak April</div>
+          <div class="exec-body">
+            Total pembayaran turun dari Rp 35,26 miliar (April) menjadi <b>Rp 21,03 miliar</b> (Mei), dengan PPN
+            turun <b>43,9%</b> dalam satu bulan.
+          </div>
+        </div>
+        <div class="exec-card flag-green">
+          <div class="exec-num">Temuan 04 — Rekonsiliasi</div>
+          <div class="exec-title">Total bulanan dan total per unit konsisten</div>
+          <div class="exec-body">
+            Total pembayaran Jan–Sep sebesar <b>Rp 216.677.486.717</b> sama dengan total seluruh unit pada rekap
+            per unit, sehingga data sumber sudah saling mencocokkan.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tinted">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Grafik Bulanan</div>
+          <h2>Tren PPN dan PPh Januari–September 2026</h2>
+        </div>
+        <div class="section-note">Grafik batang bertumpuk. Arahkan kursor untuk melihat nilai tiap komponen.</div>
+      </div>
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>Pembayaran PPN &amp; PPh per Bulan</h3>
+          <div class="chart-caption">Satuan miliar rupiah. Komponen PPN di bagian bawah, PPh di bagian atas.</div>
+          <div class="chart-canvas"><canvas id="monthlyChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>Komposisi Total Pembayaran</h3>
+          <div class="donut-layout">
+            <div id="jenisDonutMonthly" class="donut"><div class="donut-center"><strong>Rp 216,68</strong><span>Miliar</span></div></div>
+            <div id="jenisLegendMonthly" class="legend"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="st-tag">Bulan Tertinggi</div>
+          <div class="st-num">35,26<small>M</small></div>
+          <p>April 2026, didominasi PPN Rp 29,66 miliar.</p>
+        </div>
+        <div class="stat-card">
+          <div class="st-tag">Bulan Terendah</div>
+          <div class="st-num">5,02<small>M</small></div>
+          <p>Januari 2026, dengan PPN Rp 3,13 miliar dan PPh Rp 1,89 miliar.</p>
+        </div>
+        <div class="stat-card">
+          <div class="st-tag">Rata-rata Bulanan</div>
+          <div class="st-num">24,08<small>M</small></div>
+          <p>Rata-rata pembayaran pajak per bulan dari Januari s.d. September.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Detail Bulanan</div>
+          <h2>Tabel Rekap Pembayaran PPN &amp; PPh</h2>
+        </div>
+        <div class="section-note">Kolom kumulatif menunjukkan akumulasi pembayaran sampai bulan tersebut.</div>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th class="txt">Masa</th>
+              <th>PPN</th>
+              <th>PPh</th>
+              <th>Total</th>
+              <th>Kontribusi</th>
+              <th>Kumulatif</th>
+            </tr>
+          </thead>
+          <tbody id="monthlyTable"></tbody>
+        </table>
+      </div>
+      <div class="issue-box">
+        <h4>Catatan Data</h4>
+        <p>
+          Nilai pembayaran per bulan mengikuti rekap sumber. Bulan Oktober s.d. Desember ditampilkan dengan nilai nol karena
+          belum ada pembayaran yang tercatat. Persentase kontribusi dihitung terhadap total Jan–Sep sebesar Rp 216.677.486.717.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ TAB 2 — PER UNIT ============ -->
+<div id="unit" class="tab-content">
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Distribusi Unit</div>
+          <h2>Kontribusi Pembayaran Pajak per Unit</h2>
+        </div>
+        <div class="section-note">Unit UID (BA 5201) menjadi kontributor utama dengan porsi lebih dari empat perlima total.</div>
+      </div>
+
+      <div class="exec-grid">
+        <div class="exec-card flag-red">
+          <div class="exec-num">Konsentrasi 01</div>
+          <div class="exec-title">UID Jawa Tengah (BA 5201) memegang 80,23% pembayaran</div>
+          <div class="exec-body">
+            Nilai <b>Rp 173,84 miliar</b> dari total Rp 216,68 miliar. Porsi unit lainnya hanya <b>19,77%</b>
+            atau Rp 42,84 miliar.
+          </div>
+        </div>
+        <div class="exec-card flag-gold">
+          <div class="exec-num">Konsentrasi 02</div>
+          <div class="exec-title">UP3 Kudus menjadi unit terbesar setelah UID</div>
+          <div class="exec-body">
+            Pembayaran <b>Rp 5,69 miliar</b> (2,63%), disusul UP2D <b>Rp 4,98 miliar</b> (2,30%) dan
+            UP3 Semarang <b>Rp 4,31 miliar</b> (1,99%).
+          </div>
+        </div>
+        <div class="exec-card flag-gold">
+          <div class="exec-num">Sebaran</div>
+          <div class="exec-title">14 unit lainnya memiliki kontribusi di bawah 3% masing-masing</div>
+          <div class="exec-body">
+            Nilai terkecil tercatat di UP3 Yogyakarta sebesar <b>Rp 1,34 miliar</b> (0,62%).
+            Sebaran ini menunjukkan beban pajak relatif merata di antara unit operasional.
+          </div>
+        </div>
+        <div class="exec-card flag-green">
+          <div class="exec-num">Cakupan</div>
+          <div class="exec-title">Pembayaran tercatat pada 15 entitas</div>
+          <div class="exec-body">
+            Terdiri dari UID Jawa Tengah (BA 5201), 12 UP3, 1 UP2D, dan 1 entitas tambahan dengan total pembayaran sesuai rekap.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tinted">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Ranking Unit</div>
+          <h2>Total Pembayaran PPN &amp; PPh per Unit</h2>
+        </div>
+      </div>
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>Pembayaran per Unit (Terbesar ke Terkecil)</h3>
+          <div class="chart-caption">Nilai dalam miliar rupiah dan persentase kontribusi terhadap total pajak.</div>
+          <div id="unitBars" class="bar-list"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Komposisi Unit</h3>
+          <div class="donut-layout">
+            <div id="unitDonut" class="donut"><div class="donut-center"><strong>80,23%</strong><span>UID Jateng</span></div></div>
+            <div id="unitLegend" class="legend"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="st-tag">Total Seluruh Unit</div>
+          <div class="st-num">216,68<small>M</small></div>
+          <p>Jumlah pembayaran pajak seluruh unit UID Jawa Tengah tahun 2026.</p>
+        </div>
+        <div class="stat-card">
+          <div class="st-tag">UID Jawa Tengah</div>
+          <div class="st-num">173,84<small>M</small></div>
+          <p>Kontributor terbesar dengan porsi 80,23% dari total pembayaran.</p>
+        </div>
+        <div class="stat-card">
+          <div class="st-tag">Tiga Unit Terbesar Setelah UID</div>
+          <div class="st-num">11,99<small>M</small></div>
+          <p>UP3 Kudus, UP2D, dan UP3 Semarang secara kumulatif (6,92% dari total).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Detail Unit</div>
+          <h2>Tabel Pembayaran Pajak per Unit</h2>
+        </div>
+        <div class="section-note">Diurutkan dari nilai terbesar. Baris kuning menandai tiga kontributor teratas setelah UID.</div>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr><th>Unit</th><th>Total Pembayaran</th><th>Kontribusi</th></tr>
+          </thead>
+          <tbody id="unitTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ TAB 3 — JENIS PAJAK ============ -->
+<div id="jenis" class="tab-content">
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Jenis Pajak</div>
+          <h2>Komposisi PPN, PPh, dan Pasal PPh</h2>
+        </div>
+        <div class="section-note">PPN mendominasi total pembayaran. Pasal 23 dan Pasal 22 menjadi porsi PPh terbesar.</div>
+      </div>
+
+      <div class="exec-grid">
+        <div class="exec-card flag-gold">
+          <div class="exec-num">Temuan 01 — PPN</div>
+          <div class="exec-title">PPN sebesar Rp 182,01 miliar atau 84,00% dari total</div>
+          <div class="exec-body">
+            PPN lebih besar dari PPh hampir enam kali lipat. Pembayaran PPh hanya <b>16,00%</b> dari total Jan–Sep.
+          </div>
+        </div>
+        <div class="exec-card flag-gold">
+          <div class="exec-num">Temuan 02 — Operasi vs Investasi</div>
+          <div class="exec-title">PPN investasi lebih besar daripada PPN operasi</div>
+          <div class="exec-body">
+            PPN Investasi <b>Rp 100,61 miliar</b> (55,27%) sedangkan PPN Operasi <b>Rp 81,40 miliar</b> (44,73%).
+            Komposisi ini perlu dicermati seiring kenaikan aliran material ke PDP konstruksi.
+          </div>
+        </div>
+        <div class="exec-card flag-red">
+          <div class="exec-num">Temuan 03 — PPh Pasal 23</div>
+          <div class="exec-title">Pasal 23 menjadi pasal PPh terbesar sebesar Rp 15,48 miliar</div>
+          <div class="exec-body">
+            Porsi <b>44,67%</b> dari total PPh, diikuti Pasal 22 sebesar <b>Rp 12,00 miliar</b> (34,62%) dan Pasal 42 sebesar
+            <b>Rp 7,17 miliar</b> (20,69%).
+          </div>
+        </div>
+        <div class="exec-card flag-green">
+          <div class="exec-num">Temuan 04 — PPh Pasal 15</div>
+          <div class="exec-title">Pasal 15 sangat kecil, hanya Rp 7,67 juta</div>
+          <div class="exec-body">
+            Pasal 15 tercatat hanya pada komponen operasi dengan porsi <b>0,02%</b> dari total PPh.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tinted">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Visualisasi</div>
+          <h2>Proporsi Jenis Pajak dan Pasal</h2>
+        </div>
+      </div>
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>Pembayaran PPN Operasi vs Investasi</h3>
+          <div class="chart-caption">Total PPN Jan–Sep sebesar Rp 182,01 miliar.</div>
+          <div id="ppnBars" class="bar-list"></div>
+          <div class="issue-box" style="margin-top:20px">
+            <h4>Pembagian PPh per Pasal</h4>
+            <div id="pphBars" class="bar-list" style="margin-top:8px"></div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Komposisi PPh per Pasal</h3>
+          <div class="donut-layout">
+            <div id="pphDonut" class="donut"><div class="donut-center"><strong>Rp 34,66</strong><span>Miliar PPh</span></div></div>
+            <div id="pphLegend" class="legend"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Detail Jenis Pajak</div>
+          <h2>Tabel Ringkasan PPN dan PPh</h2>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Uraian</th>
+              <th>Operasi</th>
+              <th>Investasi</th>
+              <th>Total</th>
+              <th>Kontribusi</th>
+            </tr>
+          </thead>
+          <tbody id="jenisTable"></tbody>
+        </table>
+      </div>
+      <p class="tbl-note">Nilai PPN dan PPh dibagi berdasarkan kolom Operasi dan Investasi pada rekap sumber. Pasal 15 hanya tercatat di kolom Operasi.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ TAB 4 — ANALISIS ============ -->
+<div id="analysis" class="tab-content">
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Integrated Tax Analysis</div>
+          <h2>Analisis Lintas Data Pajak</h2>
+        </div>
+        <div class="section-note">Sintesis dari rekap bulanan, rekap per unit, dan rincian jenis pajak Jan–Sep 2026.</div>
+      </div>
+
+      <div class="priority-grid">
+        <div class="priority red">
+          <div class="level">Prioritas 01</div>
+          <h3>Antisipasi Puncak Pembayaran</h3>
+          <p>April (Rp 35,26 miliar) dan Juli (Rp 34,18 miliar) menjadi bulan puncak. Pastikan kas dan jadwal pembayaran tersedia.</p>
+        </div>
+        <div class="priority red">
+          <div class="level">Prioritas 02</div>
+          <h3>Konsentrasi di UID</h3>
+          <p>UID Jawa Tengah mencatat 80,23% pembayaran. Pemantauan rinci perlu difokuskan pada entitas dengan porsi besar ini.</p>
+        </div>
+        <div class="priority gold">
+          <div class="level">Prioritas 03</div>
+          <h3>Komposisi PPN Investasi</h3>
+          <p>PPN investasi Rp 100,61 miliar lebih besar dari PPN operasi. Hubungkan dengan realisasi proyek dan aliran material konstruksi.</p>
+        </div>
+        <div class="priority green">
+          <div class="level">Prioritas 04</div>
+          <h3>Lengkapi Data Kuartal IV</h3>
+          <p>Data Oktober s.d. Desember belum tercatat. Pastikan rekap diperbarui agar proyeksi akhir tahun akurat.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tinted">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Executive Insight</div>
+          <h2>Empat Insight Utama</h2>
+        </div>
+      </div>
+      <div class="exec-grid">
+        <div class="exec-card flag-red">
+          <div class="exec-num">01 — Dominasi PPN</div>
+          <div class="exec-title">PPN menyumbang 84,00% dari total pembayaran pajak</div>
+          <div class="exec-body">
+            Rata-rata PPN bulanan Jan–Sep sebesar <b>Rp 20,22 miliar</b>. Porsi PPh yang kecil membuat fluktuasi total
+            lebih banyak dipengaruhi oleh arus PPN.
+          </div>
+        </div>
+        <div class="exec-card flag-gold">
+          <div class="exec-num">02 — Tren Bulanan</div>
+          <div class="exec-title">Pembayaran naik tajam sejak Maret dan mencapai puncak di April</div>
+          <div class="exec-body">
+            Dari <b>Rp 5,02 miliar</b> di Januari, total pembayaran meningkat hingga <b>Rp 35,26 miliar</b> di April.
+            Setelah itu, pembayaran cenderung berfluktuasi di kisaran Rp 21 sampai Rp 34 miliar.
+          </div>
+        </div>
+        <div class="exec-card flag-red">
+          <div class="exec-num">03 — Konsentrasi Unit</div>
+          <div class="exec-title">UID Jawa Tengah menanggung hampir seluruh pembayaran</div>
+          <div class="exec-body">
+            Porsi <b>80,23%</b> pada BA 5201 menunjukkan pembayaran pajak sangat terpusat. Tiga unit terbesar lainnya hanya
+            menyumbang <b>6,92%</b> secara gabungan.
+          </div>
+        </div>
+        <div class="exec-card flag-green">
+          <div class="exec-num">04 — Integritas Data</div>
+          <div class="exec-title">Rekap bulanan, rekap unit, dan rincian pasal saling cocok</div>
+          <div class="exec-body">
+            Total PPN dan PPh Rp 216.677.486.717 konsisten di seluruh tabel, dan komposisi operasi/investasi juga
+            menghasilkan total PPN Rp 182.013.390.635.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Rekomendasi Tindak Lanjut</div>
+          <h2>Rencana Aksi Manajemen</h2>
+        </div>
+      </div>
+      <div class="rec-grid">
+        <div class="rec-card">
+          <div class="rec-step">01</div>
+          <div class="rec-title">Perencanaan Kas Bulan Puncak</div>
+          <div class="rec-body">Susun proyeksi kas untuk bulan dengan pembayaran tinggi seperti April dan Juli, serta pastikan dana tersedia sebelum batas setor.</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-step">02</div>
+          <div class="rec-title">Review Pembayaran UID</div>
+          <div class="rec-body">Lakukan review periodik terhadap pembayaran pada BA 5201 yang menyumbang 80,23% total untuk memastikan kesesuaian dokumen.</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-step">03</div>
+          <div class="rec-title">Pemantauan PPN Investasi</div>
+          <div class="rec-body">Hubungkan PPN investasi (Rp 100,61 miliar) dengan realisasi proyek konstruksi untuk memastikan pencatatan pajak sejalan dengan progres.</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-step">04</div>
+          <div class="rec-title">Verifikasi PPh Pasal 23 &amp; 22</div>
+          <div class="rec-body">Pasal 23 dan 22 menyumbang 79,29% PPh. Tinjau kepatuhan pemotongan dan penyetoran di unit-unit dengan volume transaksi tinggi.</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-step">05</div>
+          <div class="rec-title">Pelengkapan Data Q4</div>
+          <div class="rec-body">Perbarui rekap untuk Oktober s.d. Desember agar proyeksi akhir tahun dan perbandingan dengan periode 2026 dapat disajikan secara lengkap.</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-step">06</div>
+          <div class="rec-title">Validasi Pasal 15</div>
+          <div class="rec-body">Pastikan pencatatan PPh Pasal 15 yang hanya Rp 7,67 juta sudah lengkap, karena pasal ini tidak tercatat pada kolom investasi.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tinted">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">Management Monitoring</div>
+          <h2>Indikator yang Perlu Dipantau</h2>
+        </div>
+      </div>
+      <div class="stat-grid" style="margin-top:0">
+        <div class="stat-card">
+          <div class="st-tag">Total Pajak</div>
+          <div class="st-num">216,68<small>M</small></div>
+          <p>Pantau kenaikan realisasi bulanan dibanding rata-rata Rp 24,08 miliar per bulan.</p>
+        </div>
+        <div class="stat-card">
+          <div class="st-tag">Rasio PPN</div>
+          <div class="st-num">84,00<small>%</small></div>
+          <p>Pantau perubahan porsi PPN terhadap total, terutama saat aktivitas investasi meningkat.</p>
+        </div>
+        <div class="stat-card">
+          <div class="st-tag">Konsentrasi UID</div>
+          <div class="st-num">80,23<small>%</small></div>
+          <p>Pantau porsi UID Jawa Tengah dan perubahan kontribusi unit UP3 dan UP2D.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap footer-flex">
+    <div>
+      Sumber data: rekap pembayaran PPN dan PPh tahun 2026 PT PLN (Persero) UID Jawa Tengah, periode Januari s.d. September 2026.
+      Dashboard merupakan alat analisis internal dan tidak menggantikan laporan resmi.
+    </div>
+    <div style="text-align:right">
+      UID Jawa Tengah<br>
+      Data Jan–Sep 2026
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ===== HELPERS ===== */
+function fmt(n,dec=0){
+  return Number(n).toLocaleString('id-ID',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+}
+function rp(n){ return 'Rp '+fmt(n,0); }
+function miliar(n,dec=2){ return 'Rp '+fmt(n/1e9,dec)+' Miliar'; }
+function pct(n,dec=2){ return fmt(n,dec)+'%'; }
+
+function renderBars(id, rows, max){
+  const el=document.getElementById(id);
+  el.innerHTML='';
+  rows.forEach(r=>{
+    const w=Math.max(r.value/max*100,0.6);
+    const d=document.createElement('div');
+    d.className='bar-row';
+    d.innerHTML=`
+      <div class="bar-label">${r.label}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${r.color}"></div></div>
+      <div class="bar-value">${r.text}</div>`;
+    el.appendChild(d);
+  });
+}
+
+function renderDonut(donutId, legendId, parts, total, fmtText){
+  let cur=0; const stops=[];
+  parts.forEach(p=>{
+    const s=cur/total*100; cur+=p.value; const e=cur/total*100;
+    stops.push(`${p.color} ${s}% ${e}%`);
+  });
+  document.getElementById(donutId).style.background=`conic-gradient(${stops.join(',')})`;
+  const lg=document.getElementById(legendId);
+  lg.innerHTML='';
+  parts.forEach(p=>{
+    const d=document.createElement('div');
+    d.className='legend-item';
+    d.innerHTML=`<span class="legend-color" style="background:${p.color}"></span><span>${p.name}</span><b>${fmtText(p.value)}</b>`;
+    lg.appendChild(d);
+  });
+}
+
+/* ===== TAB ===== */
+function openTab(id,button){
+  document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  button.classList.add('active');
+  window.scrollTo({top:document.querySelector('.hero').offsetTop,behavior:'smooth'});
+}
+
+/* ===== DATA ===== */
+const GRAND_TOTAL=216677486717;
+const PPN_TOTAL=182013390635;
+const PPH_TOTAL=34664096082;
+
+const MONTHS=[
+  {m:'Januari',  ppn:3128224061,  pph:1889506542},
+  {m:'Februari', ppn:10381659602, pph:1826210842},
+  {m:'Maret',    ppn:21737916689, pph:2694588193},
+  {m:'April',    ppn:29656509884, pph:5602860037},
+  {m:'Mei',      ppn:16646878298, pph:4384145097},
+  {m:'Juni',     ppn:27798792646, pph:4868392096},
+  {m:'Juli',     ppn:28815968914, pph:5366096531},
+  {m:'Agustus',  ppn:23281061972, pph:3206949898},
+  {m:'September',ppn:20566378569, pph:4825346846},
+  {m:'Oktober',  ppn:0, pph:0},
+  {m:'November', ppn:0, pph:0},
+  {m:'Desember', ppn:0, pph:0}
+];
+
+const UNITS=[
+  ['UID Jawa Tengah (BA 5201)',173835121412],
+  ['UP3 Kudus',5690116163],
+  ['UP2D',4982092105],
+  ['UP3 Semarang',4314140209],
+  ['UP3 Surakarta',4046201045],
+  ['UP3 Tegal',3465499358],
+  ['UP3 Pekalongan',3435980227],
+  ['UP3 Purwokerto',2768390130],
+  ['UP3 Cilacap',2668319732],
+  ['UP3 Magelang',2620500107],
+  ['UP3 Klaten',2472599992],
+  ['UP3 Demak',1909828199],
+  ['UP3 Sukoharjo',1723455211],
+  ['UP3 Salatiga',1400665994],
+  ['UP3 Yogyakarta',1344576833]
+].sort((a,b)=>b[1]-a[1]);
+
+const PPN_SPLIT=[
+  {name:'PPN Operasi', value:81403463653, color:'#2F6FB0'},
+  {name:'PPN Investasi', value:100609926982, color:'#0F2547'}
+];
+
+const PPH_PASAL=[
+  {name:'PPh Pasal 22', value:12001031143, color:'#0F2547'},
+  {name:'PPh Pasal 23', value:15484444362, color:'#C99A3F'},
+  {name:'PPh Pasal 15', value:7666002, color:'#6FA3D8'},
+  {name:'PPh Pasal 42', value:7170954575, color:'#A93B41'}
+];
+
+const JENIS=[
+  {name:'PPN', value:PPN_TOTAL, color:'#0F2547'},
+  {name:'PPh', value:PPH_TOTAL, color:'#C99A3F'}
+];
+
+/* ===== TAB 1 — MONTHLY ===== */
+(function(){
+  const tbody=document.getElementById('monthlyTable');
+  let cum=0;
+  MONTHS.forEach((x,i)=>{
+    const total=x.ppn+x.pph;
+    cum+=total;
+    const tr=document.createElement('tr');
+    if(total===0) tr.className='';
+    if(i===3) tr.className='highlight';
+    const kontrib= total? pct(total/GRAND_TOTAL*100) : '0,00%';
+    tr.innerHTML=`<td>${i+1}</td><td class="txt">${x.m}</td><td>${x.ppn?rp(x.ppn):'—'}</td><td>${x.pph?rp(x.pph):'—'}</td><td>${total?rp(total):'—'}</td><td>${kontrib}</td><td>${cum?rp(cum):'—'}</td>`;
+    tbody.appendChild(tr);
+  });
+  const t=document.createElement('tr');
+  t.className='total-row';
+  t.innerHTML=`<td colspan="2">TOTAL 2026</td><td>${rp(PPN_TOTAL)}</td><td>${rp(PPH_TOTAL)}</td><td>${rp(GRAND_TOTAL)}</td><td>100,00%</td><td>${rp(GRAND_TOTAL)}</td>`;
+  tbody.appendChild(t);
+
+  const jd=document.getElementById('jenisDonutMonthly');
+  renderDonut('jenisDonutMonthly','jenisLegendMonthly',JENIS,GRAND_TOTAL,v=>pct(v/GRAND_TOTAL*100));
+
+  const ctx=document.getElementById('monthlyChart');
+  Chart.defaults.font.family='Arial, Helvetica, sans-serif';
+  Chart.defaults.color='#454B57';
+  const labels=MONTHS.slice(0,9).map(x=>x.m);
+  new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        {label:'PPN',data:MONTHS.slice(0,9).map(x=>x.ppn/1e9),backgroundColor:'#0F2547',borderRadius:2},
+        {label:'PPh',data:MONTHS.slice(0,9).map(x=>x.pph/1e9),backgroundColor:'#C99A3F',borderRadius:2}
+      ]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      scales:{
+        x:{stacked:true,grid:{display:false}},
+        y:{stacked:true,ticks:{callback:v=>'Rp '+v+' M'},grid:{color:'#E7EAF0'}}
+      },
+      plugins:{
+        legend:{position:'bottom'},
+        tooltip:{callbacks:{label:c=>c.dataset.label+': Rp '+fmt(c.raw,2)+' Miliar'}}
+      }
+    }
+  });
+})();
+
+/* ===== TAB 2 — UNIT ===== */
+(function(){
+  const rows=UNITS.map((x,i)=>({
+    label:x[0],
+    value:x[1],
+    color:i===0?'#A93B41':(i<4?'#0F2547':'#2F6FB0'),
+    text:`${miliar(x[1])} (${pct(x[1]/GRAND_TOTAL*100)})`
+  }));
+  renderBars('unitBars',rows,UNITS[0][1]);
+
+  const top=UNITS[0][1];
+  const top3Rest=UNITS[1][1]+UNITS[2][1]+UNITS[3][1];
+  const rest=GRAND_TOTAL-top-top3Rest;
+  const parts=[
+    {name:'UID Jawa Tengah',value:top,color:'#A93B41'},
+    {name:'UP3 Kudus, UP2D, Semarang',value:top3Rest,color:'#0F2547'},
+    {name:'Unit lainnya',value:rest,color:'#C9CED8'}
+  ];
+  renderDonut('unitDonut','unitLegend',parts,GRAND_TOTAL,v=>pct(v/GRAND_TOTAL*100));
+
+  const tbody=document.getElementById('unitTable');
+  UNITS.forEach((x,i)=>{
+    const tr=document.createElement('tr');
+    if(i>=1&&i<=3) tr.className='highlight';
+    if(i===0) tr.className='alert';
+    tr.innerHTML=`<td>${x[0]}</td><td>${rp(x[1])}</td><td>${pct(x[1]/GRAND_TOTAL*100)}</td>`;
+    tbody.appendChild(tr);
+  });
+  const tot=document.createElement('tr');
+  tot.className='total-row';
+  tot.innerHTML=`<td>GRAND TOTAL</td><td>${rp(GRAND_TOTAL)}</td><td>100,00%</td>`;
+  tbody.appendChild(tot);
+})();
+
+/* ===== TAB 3 — JENIS PAJAK & PASAL ===== */
+(function(){
+  const ppnRows=PPN_SPLIT.map(x=>({
+    label:x.name,value:x.value,color:x.color,
+    text:`${miliar(x.value)} (${pct(x.value/PPN_TOTAL*100)})`
+  }));
+  renderBars('ppnBars',ppnRows,PPN_SPLIT[1].value);
+
+  const pphRows=PPH_PASAL.slice().sort((a,b)=>b.value-a.value).map(x=>({
+    label:x.name.replace('PPh ',''),value:x.value,color:x.color,
+    text:`${miliar(x.value)} (${pct(x.value/PPH_TOTAL*100)})`
+  }));
+  renderBars('pphBars',pphRows,pphRows[0].value);
+
+  renderDonut('pphDonut','pphLegend',PPH_PASAL,PPH_TOTAL,v=>pct(v/PPH_TOTAL*100));
+
+  const tbody=document.getElementById('jenisTable');
+  const rowsData=[
+    {n:'PPN Operasi',o:81403463653,i:0},
+    {n:'PPN Investasi',o:0,i:100609926982},
+    {n:'PPh Pasal 22',o:1875919076,i:10125112067},
+    {n:'PPh Pasal 23',o:14311913179,i:1172531183},
+    {n:'PPh Pasal 15',o:7666002,i:0},
+    {n:'PPh Pasal 42',o:1509896710,i:5661057865}
+  ];
+  rowsData.forEach(x=>{
+    const t=x.o+x.i;
+    const tr=document.createElement('tr');
+    const base=x.n.startsWith('PPN')?PPN_TOTAL:PPH_TOTAL;
+    tr.innerHTML=`<td>${x.n}</td><td>${x.o?rp(x.o):'—'}</td><td>${x.i?rp(x.i):'—'}</td><td>${rp(t)}</td><td>${pct(t/GRAND_TOTAL*100)}</td>`;
+    tbody.appendChild(tr);
+  });
+  const t1=document.createElement('tr');
+  t1.className='total-row';
+  t1.innerHTML=`<td>JUMLAH PPN</td><td>${rp(81403463653)}</td><td>${rp(100609926982)}</td><td>${rp(PPN_TOTAL)}</td><td>${pct(PPN_TOTAL/GRAND_TOTAL*100)}</td>`;
+  tbody.appendChild(t1);
+  const t2=document.createElement('tr');
+  t2.className='total-row';
+  t2.innerHTML=`<td>JUMLAH PPh</td><td>${rp(17705394967)}</td><td>${rp(16958701115)}</td><td>${rp(PPH_TOTAL)}</td><td>${pct(PPH_TOTAL/GRAND_TOTAL*100)}</td>`;
+  tbody.appendChild(t2);
+  const t3=document.createElement('tr');
+  t3.className='total-row';
+  t3.innerHTML=`<td>TOTAL PEMBAYARAN</td><td>${rp(81403463653+17705394967)}</td><td>${rp(100609926982+16958701115)}</td><td>${rp(GRAND_TOTAL)}</td><td>100,00%</td>`;
+  tbody.appendChild(t3);
+})();
+
+/* DOM READY — pastikan tab pertama aktif */
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.tab-content').forEach((el,i)=>{
+    if(i===0) el.classList.add('active'); else el.classList.remove('active');
+  });
+});
+</script>
+</body>
+</html>

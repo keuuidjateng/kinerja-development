@@ -4,530 +4,273 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Non Allowable Cost — UID Jawa Tengah | September 2026</title>
+<!-- Kode Favicon -->
+<link rel="icon" type="image/png" href="Logo PLN Favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-  :root {
-    --ink: #0E2A3F;
-    --ink-soft: #45596B;
-    --paper: #F6F5F1;
-    --paper-card: #FFFFFF;
-    --line: #DDDACF;
-    --green: #1F5C4E;
-    --green-soft: #E4EEE9;
-    --amber: #B2790E;
-    --amber-soft: #F5EAD6;
-    --red: #B24A2E;
-    --red-soft: #F5E4DD;
-    --grey: #8B8577;
-    --grey-soft: #EDEBE3;
-    --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
-    --sans: 'Segoe UI', Helvetica, Arial, sans-serif;
-    --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+  :root{
+    --bg:#F7F7F5; --bg-card:#FFFFFF; --bg-sec:#F2F3F6; --bg-ter:#E7EAF0;
+    --text:#171A21; --text2:#454B57; --text3:#6E7686;
+    --border:#E7EAF0; --border2:#C9CED8;
+    --pln:#0F2547; --pln2:#16335F; --gold:#C99A3F;
+    --green:#286651; --green-bg:#E3F0EA;
+    --amber:#B8872F; --amber-bg:#F7EFDC;
+    --red:#A93B41;   --red-bg:#F6E5E4;
+    --blue:#2F6FB0;  --blue-bg:#E7EFF7;
+    --grey:#8A8F9B;  --grey-bg:#EEF0F4;
+    --serif: Georgia,'Times New Roman',serif;
+    --font: Arial,Helvetica,'Segoe UI',sans-serif;
+    --mono: 'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
   }
+  html,body{ background:var(--bg); color:var(--text); font-family:var(--font); font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  body{ padding-bottom:60px; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 40px; }
 
-  * { box-sizing: border-box; }
-  html, body { margin:0; padding:0; }
+  /* HEADER */
+  .header{
+    background:linear-gradient(180deg,var(--pln) 0%,var(--pln2) 100%);
+    margin:0 -40px; padding:36px 40px 30px; position:relative; overflow:hidden; color:#fff;
+  }
+  .header::after{ content:''; position:absolute; right:-70px; top:-100px; width:300px; height:300px; border-radius:50%; background:rgba(111,163,216,.08); box-shadow:-100px 100px 0 rgba(201,154,63,.035); }
+  .eyebrow{ font-size:12.5px; font-weight:700; color:#6FA3D8; text-transform:uppercase; letter-spacing:.14em; margin-bottom:14px; position:relative; z-index:1; }
+  h1.title{ font-family:var(--serif); font-weight:700; font-size:34px; line-height:1.18; color:#fff; max-width:820px; position:relative; z-index:1; }
+  .subtitle{ color:#C7D3E3; font-size:14.5px; line-height:1.65; margin-top:14px; max-width:780px; position:relative; z-index:1; }
+  .period{ display:inline-flex; align-items:center; gap:6px; border:1px solid rgba(201,154,63,.55); color:var(--gold); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:4px 10px; border-radius:3px; margin-top:16px; position:relative; z-index:1; }
 
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: 15px;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
+  /* HERO KPI BAND */
+  .hero-meta{ display:grid; grid-template-columns:repeat(4,1fr); background:var(--pln); color:#fff; margin:0 -40px 30px; }
+  .hero-meta .hm{ padding:22px 22px 24px; border-right:1px solid rgba(255,255,255,.14); min-height:116px; }
+  .hero-meta .hm:last-child{ border-right:none; }
+  .hm-label{ font-size:11px; font-weight:700; color:#9FB2CC; text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
+  .hm-val{ font-family:var(--serif); font-size:26px; font-weight:700; color:#fff; line-height:1.05; }
+  .hm-sub{ font-size:12px; color:#A9B8CE; margin-top:8px; line-height:1.5; }
 
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px 80px; }
+  /* TABS */
+  .tabbar{ background:#fff; border-bottom:1px solid var(--border2); margin:0 -40px 40px; padding:0 40px; position:sticky; top:0; z-index:10; }
+  .tabbar .wrap{ padding:0; display:flex; gap:0; flex-wrap:wrap; }
+  .tab{ font-family:var(--font); font-size:11.5px; font-weight:700; color:var(--text3); background:transparent; border:none; border-bottom:3px solid transparent; padding:14px 16px; cursor:pointer; text-transform:uppercase; letter-spacing:.03em; margin-bottom:-1px; }
+  .tab:hover:not(.active){ background:var(--bg-sec); color:var(--pln); }
+  .tab.active{ color:var(--pln); border-bottom-color:var(--gold); }
+  .tab:focus-visible{ outline:2px solid var(--gold); outline-offset:-2px; }
+  .panel{ display:none; }
+  .panel.active{ display:block; }
 
-  header.hero {
-    background: var(--ink);
-    color: #F6F5F1;
-    padding: 56px 0 46px;
-    margin-bottom: 0;
-    border-bottom: 6px solid var(--green);
-  }
-  header.hero .wrap { padding-top:0; padding-bottom:0; }
+  section{ margin-bottom:40px; }
+  .section-head{ margin-bottom:18px; padding-bottom:14px; border-bottom:2px solid var(--pln); display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .section-head h2{ font-family:var(--serif); font-weight:700; font-size:18px; color:var(--pln); }
+  .section-note{ font-size:11px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:.1em; }
 
-  .eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    font-size: 11.5px;
-    color: #9FB8AE;
-    font-weight: 600;
-    margin-bottom: 14px;
-  }
+  /* KPI BAND (navy) */
+  .kpi-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; background:var(--pln); color:#fff; margin-bottom:0; }
+  .kpi-card{ background:var(--pln); border-right:1px solid rgba(255,255,255,.14); padding:22px 22px 24px; min-height:128px; }
+  .kpi-card:last-child{ border-right:none; }
+  .kpi-label{ font-size:11px; font-weight:700; color:#9FB2CC; text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
+  .kpi-val{ font-family:var(--serif); font-size:26px; font-weight:700; color:#fff; line-height:1.05; }
+  .kpi-sub{ font-size:12px; color:#A9B8CE; margin-top:8px; line-height:1.5; }
 
-  h1.title {
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: 42px;
-    line-height: 1.15;
-    margin: 0 0 10px;
-    color: #FFFFFF;
-    letter-spacing: 0.2px;
-  }
+  /* GAUGES */
+  .gauge-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .gauge-card{ background:#fff; border:1px solid var(--border); padding:22px 22px 24px; text-align:center; }
+  .gauge-eyebrow{ font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--pln); margin-bottom:6px; }
+  .gauge-svg{ width:200px; height:110px; }
+  .gauge-bg{ fill:none; stroke:var(--bg-ter); stroke-width:14; }
+  .gauge-fg{ fill:none; stroke-width:14; stroke-linecap:butt; }
+  .gauge-value{ font-family:var(--serif); font-size:36px; font-weight:700; margin-top:-22px; }
+  .gauge-caption{ font-size:12px; color:var(--text3); margin-bottom:8px; }
+  .gap{ display:inline-block; font-size:10.5px; font-weight:700; padding:3px 10px; border-radius:11px; margin-bottom:14px; text-transform:uppercase; letter-spacing:.03em; }
+  .gap-over{ background:var(--amber-bg); color:var(--amber); }
+  .gap-even{ background:var(--green-bg); color:var(--green); }
+  .gap-risk{ background:var(--red-bg); color:var(--red); }
+  .gauge-figs{ display:flex; justify-content:space-between; border-top:1px solid var(--border); padding-top:12px; margin-top:4px; gap:12px; }
+  .gauge-figs div{ display:flex; flex-direction:column; text-align:left; min-width:0; }
+  .gauge-figs span{ font-size:10.5px; color:var(--text3); text-transform:uppercase; letter-spacing:.05em; font-weight:700; }
+  .gauge-figs b{ font-family:var(--mono); font-size:13px; margin-top:3px; color:var(--pln); }
 
-  .subtitle {
-    font-size: 16px;
-    color: #C7D2CD;
-    max-width: 740px;
-    margin-bottom: 30px;
-  }
+  /* CARDS & CHARTS */
+  .chart-grid{ display:grid; grid-template-columns:340px 1fr; gap:24px; }
+  .chart-card{ background:#fff; border:1px solid var(--border); padding:22px 24px; min-width:0; margin-bottom:20px; }
+  .chart-card h3{ font-family:var(--serif); font-weight:700; font-size:16px; color:var(--pln); margin-bottom:4px; }
+  .chart-card .chart-sub{ font-size:12px; color:var(--text3); margin-bottom:16px; line-height:1.6; }
+  .donut-center-label{ text-align:center; margin-top:-4px; }
+  .dcl-val{ font-family:var(--mono); font-size:19px; font-weight:700; color:var(--pln); }
+  .dcl-sub{ font-size:11px; color:var(--text3); }
 
-  .hero-meta {
-    display: flex;
-    gap: 36px;
-    flex-wrap: wrap;
-    border-top: 1px solid rgba(255,255,255,0.15);
-    padding-top: 24px;
-  }
-  .hero-meta .hm { min-width: 160px; }
-  .hero-meta .hm-label {
-    font-size: 10.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #9FB8AE;
-    margin-bottom: 6px;
-  }
-  .hero-meta .hm-val {
-    font-family: var(--mono);
-    font-size: 21px;
-    color: #FFFFFF;
-  }
-  .hero-meta .hm-sub { font-size: 12px; color: #9FB8AE; margin-top: 3px; }
+  .sort-bar{ display:flex; align-items:center; gap:10px; margin-bottom:14px; font-size:12px; color:var(--text2); flex-wrap:wrap; }
+  .sort-bar select{ font-family:var(--font); font-size:12.5px; color:var(--text); background:#fff; border:1px solid var(--border2); border-radius:3px; padding:6px 10px; cursor:pointer; }
+  .sort-bar select:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
 
-  /* Tab bar */
-  .tabbar {
-    background: var(--paper-card);
-    border-bottom: 1px solid var(--line);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    margin-bottom: 44px;
-  }
-  .tabbar .wrap { padding-top:0; padding-bottom:0; display:flex; gap:4px; flex-wrap:wrap; }
-  .tab {
-    font-family: var(--sans);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink-soft);
-    background: none;
-    border: none;
-    padding: 16px 18px;
-    cursor: pointer;
-    border-bottom: 3px solid transparent;
-    margin-bottom: -1px;
-  }
-  .tab.active { color: var(--ink); border-bottom-color: var(--green); }
-  .tab:focus-visible { outline: 2px solid var(--green); outline-offset: -2px; }
-  .panel { display: none; }
-  .panel.active { display: block; }
+  /* ACCOUNTING NOTE */
+  .acct-note{ background:#fff; border:1px solid var(--border); border-left:4px solid var(--gold); padding:18px 22px 10px; margin-bottom:22px; }
+  .acct-head{ font-size:11px; text-transform:uppercase; letter-spacing:.12em; font-weight:700; color:var(--gold); margin-bottom:12px; }
+  .acct-list{ margin:0; padding-left:20px; font-size:13px; color:var(--text); line-height:1.65; }
+  .acct-list li{ margin-bottom:6px; }
+  .acct-list b{ color:var(--pln); }
 
-  section { margin-bottom: 54px; }
+  /* INSIGHTS */
+  .insight-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+  .insight-card{ background:#fff; border:1px solid var(--border); border-left:4px solid var(--pln); padding:14px 16px; }
+  .insight-card.warn{ border-left-color:var(--gold); }
+  .insight-card.risk{ border-left-color:var(--red); }
+  .insight-card.ok{ border-left-color:var(--green); }
+  .insight-label{ font-size:13px; font-weight:700; color:var(--pln); margin-bottom:4px; }
+  .insight-card.warn .insight-label{ color:var(--amber); }
+  .insight-card.risk .insight-label{ color:var(--red); }
+  .insight-text{ font-size:12.5px; color:var(--text2); line-height:1.65; }
+  .insight-text b{ color:var(--text); }
 
-  .section-head {
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    margin-bottom: 22px;
-    border-bottom: 2px solid var(--ink);
-    padding-bottom: 10px;
-    gap:16px;
-    flex-wrap:wrap;
-  }
-  .section-head h2 {
-    font-family: var(--serif);
-    font-weight:400;
-    font-size: 24px;
-    margin:0;
-    color: var(--ink);
-  }
-  .section-head .section-note { font-size: 12.5px; color: var(--ink-soft); }
+  /* TOP LIST */
+  .top-wrap{ background:#fff; border:1px solid var(--border); padding:8px 22px; }
+  .top-row{ display:grid; grid-template-columns:40px 1fr 150px; align-items:center; gap:16px; padding:14px 0; border-bottom:1px solid var(--border); }
+  .top-row:last-child{ border-bottom:none; }
+  .top-rank{ font-family:var(--serif); font-size:18px; font-weight:700; color:var(--gold); }
+  .top-name{ font-size:13.5px; color:var(--pln); font-weight:700; margin-bottom:3px; }
+  .top-meta{ font-size:11.5px; color:var(--text3); margin-bottom:7px; }
+  .top-track{ height:7px; background:var(--bg-ter); border-radius:2px; overflow:hidden; }
+  .top-fill{ height:100%; background:var(--pln); border-radius:2px; }
+  .top-val{ font-family:var(--mono); font-size:14px; text-align:right; color:var(--pln); font-weight:700; }
 
-  .kpi-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  .kpi-card {
-    background: var(--paper-card);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 20px 20px 18px;
-  }
-  .kpi-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--ink-soft);
-    margin-bottom: 10px;
-  }
-  .kpi-val {
-    font-family: var(--mono);
-    font-size: 25px;
-    color: var(--ink);
-    font-weight:600;
-  }
-  .kpi-sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 6px; }
+  /* CATEGORY */
+  .kat-summary{ display:flex; gap:24px; margin-bottom:18px; flex-wrap:wrap; background:var(--pln); color:#fff; padding:18px 22px; }
+  .kat-summary .ks{ min-width:145px; }
+  .kat-summary .ks-label{ font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:#9FB2CC; font-weight:700; }
+  .kat-summary .ks-val{ font-family:var(--mono); font-size:16px; margin-top:4px; color:#fff; }
+  .item-row{ background:#fff; border:1px solid var(--border); padding:16px 20px; margin-bottom:10px; }
+  .item-main{ display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+  .item-no{ font-family:var(--mono); font-size:11.5px; color:var(--text3); background:var(--bg-sec); padding:2px 7px; border-radius:2px; }
+  .item-name{ font-size:14px; font-weight:700; color:var(--pln); flex:1; min-width:200px; }
+  .item-tag{ font-size:10px; text-transform:uppercase; letter-spacing:.05em; font-weight:700; padding:3px 9px; border-radius:11px; white-space:nowrap; }
+  .tag-high{ background:var(--green-bg); color:var(--green); }
+  .tag-mid{ background:var(--amber-bg); color:var(--amber); }
+  .tag-minor{ background:var(--bg-sec); color:var(--text2); }
+  .tag-contra{ background:var(--bg-sec); color:var(--text2); }
+  .tag-risk{ background:var(--red-bg); color:var(--red); }
+  .item-figures{ display:flex; gap:28px; margin-bottom:12px; flex-wrap:wrap; }
+  .fig{ display:flex; flex-direction:column; min-width:130px; }
+  .fig-label{ font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--text3); font-weight:700; margin-bottom:3px; }
+  .fig-val{ font-family:var(--mono); font-size:12.5px; color:var(--text); }
+  .item-bar-wrap{ display:flex; align-items:center; gap:12px; }
+  .item-bar-track{ position:relative; flex:1; height:8px; background:var(--bg-ter); border-radius:2px; overflow:hidden; }
+  .item-bar-fill{ position:absolute; left:0; top:0; height:100%; border-radius:2px; }
+  .status-fill-high{ background:var(--green); }
+  .status-fill-mid{ background:var(--amber); }
+  .status-fill-minor{ background:var(--grey); }
+  .status-fill-contra{ background:var(--grey); }
+  .status-fill-risk{ background:var(--red); }
+  .item-bar-pct{ font-family:var(--mono); font-size:11.5px; color:var(--text2); white-space:nowrap; min-width:150px; text-align:right; }
 
-  .gauge-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .gauge-card {
-    background: var(--paper-card);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 22px 22px 24px;
-    text-align:center;
-  }
-  .gauge-eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    margin-bottom: 6px;
-  }
-  .gauge-svg { width: 200px; height: 110px; }
-  .gauge-bg { fill:none; stroke: var(--grey-soft); stroke-width: 14; }
-  .gauge-fg { fill:none; stroke-width: 14; stroke-linecap: round; }
-  .gauge-value { font-family: var(--serif); font-size: 38px; margin-top: -22px; }
-  .gauge-caption { font-size: 12px; color: var(--ink-soft); margin-bottom: 8px; }
+  /* TABLES */
+  .unit-table-wrap{ background:#fff; border:1px solid var(--border); overflow-x:auto; }
+  table.unit-table{ width:100%; border-collapse:collapse; font-size:12.5px; font-family:var(--font); }
+  table.unit-table th{ text-align:left; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#fff; background:var(--pln); padding:10px 12px; white-space:nowrap; }
+  table.unit-table td{ padding:9px 12px; border-bottom:1px solid var(--border); color:var(--text); vertical-align:middle; }
+  table.unit-table tr:last-child td{ border-bottom:none; }
+  table.unit-table tr:hover:not(.total) td{ background:var(--bg-sec); }
+  table.unit-table tr.total td{ font-weight:700; background:var(--pln); color:#fff; }
+  table.unit-table td.num{ font-family:var(--mono); text-align:right; white-space:nowrap; }
+  table.unit-table th.num{ text-align:right; }
+  table.unit-table td.rank{ color:var(--gold); font-family:var(--serif); font-weight:700; }
+  .unit-sub{ font-size:11px; color:var(--text3); font-weight:400; margin-left:6px; }
+  .mini-track{ width:100%; height:6px; background:var(--bg-ter); border-radius:2px; overflow:hidden; min-width:80px; }
+  .mini-fill{ height:100%; background:var(--pln); border-radius:2px; }
 
-  .gap {
-    display:inline-block;
-    font-size: 11.5px;
-    font-weight:600;
-    padding: 3px 10px;
-    border-radius: 20px;
-    margin-bottom: 14px;
-  }
-  .gap-over { background: var(--amber-soft); color: var(--amber); }
-  .gap-even { background: var(--green-soft); color: var(--green); }
-  .gap-risk { background: var(--red-soft); color: var(--red); }
+  .callout{ background:var(--pln); color:#fff; padding:20px 22px; border-left:4px solid var(--gold); }
+  .callout-label{ font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:#9FB2CC; margin-bottom:8px; font-weight:700; }
+  .callout-value{ font-family:var(--serif); font-size:26px; font-weight:700; line-height:1.15; margin-bottom:6px; }
+  .callout-text{ font-size:12.5px; color:#C7D3E3; line-height:1.6; }
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
 
-  .gauge-figs {
-    display:flex;
-    justify-content:space-between;
-    border-top: 1px solid var(--line);
-    padding-top: 12px;
-    margin-top: 4px;
-    gap: 12px;
-  }
-  .gauge-figs div { display:flex; flex-direction:column; text-align:left; min-width:0; }
-  .gauge-figs span {
-    font-size: 10.5px;
-    color: var(--ink-soft);
-    text-transform:uppercase;
-    letter-spacing:.05em;
-  }
-  .gauge-figs b { font-family: var(--mono); font-size: 13.5px; margin-top:3px; }
+  footer{ margin-top:40px; padding:26px 0; border-top:1px solid var(--border2); font-size:11.5px; color:var(--text3); }
+  footer .fnote{ margin-bottom:6px; line-height:1.6; }
+  .legend{ display:flex; gap:18px; flex-wrap:wrap; margin-top:12px; }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; font-size:11.5px; color:var(--text2); }
+  .legend i{ width:9px; height:9px; border-radius:2px; display:inline-block; }
 
-  .chart-grid { display:grid; grid-template-columns: 340px 1fr; gap: 20px; }
-  .chart-card {
-    background: var(--paper-card);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 22px 24px;
-    min-width: 0;
+  @media (max-width:860px){
+    .wrap{ padding:0 20px; }
+    .header{ margin:0 -20px; padding:28px 20px 24px; }
+    h1.title{ font-size:26px; }
+    .hero-meta{ grid-template-columns:1fr 1fr; margin:0 -20px 24px; }
+    .hero-meta .hm{ border-bottom:1px solid rgba(255,255,255,.14); }
+    .tabbar{ margin:0 -20px 32px; padding:0 20px; overflow-x:auto; }
+    .tabbar .wrap{ flex-wrap:nowrap; }
+    .kpi-grid{ grid-template-columns:1fr 1fr; }
+    .kpi-card{ border-bottom:1px solid rgba(255,255,255,.14); }
+    .gauge-grid{ grid-template-columns:1fr; }
+    .chart-grid{ grid-template-columns:1fr; }
+    .two-col{ grid-template-columns:1fr; }
+    .insight-grid{ grid-template-columns:1fr; }
+    .top-row{ grid-template-columns:30px 1fr; }
+    .top-val{ grid-column:2; text-align:left; margin-top:4px; }
+    table.unit-table{ font-size:11px; }
+    .opt{ display:none; }
+    .item-bar-pct{ min-width:0; }
   }
-  .chart-card h3 {
-    font-family: var(--serif);
-    font-weight:400;
-    font-size: 17px;
-    margin: 0 0 4px;
-    color: var(--ink);
+  @media (max-width:560px){
+    .wrap{ padding:0 16px; }
+    .header{ margin:0 -16px; padding:22px 16px 20px; }
+    .hero-meta{ grid-template-columns:1fr; margin:0 -16px 24px; }
+    .tabbar{ margin:0 -16px 28px; padding:0 16px; }
+    .kpi-grid{ grid-template-columns:1fr; }
+    .kpi-card{ border-right:none; }
+    .hero-meta .hm{ border-right:none; }
+    .kpi-val,.hm-val{ font-size:23px; }
+    .gauge-svg{ width:190px; }
+    .item-figures{ gap:16px; }
+    .fig{ min-width:120px; }
+    .tab{ padding:12px 12px; font-size:11px; }
   }
-  .chart-card .chart-sub { font-size: 12px; color: var(--ink-soft); margin-bottom: 16px; }
-  .donut-center-label { text-align:center; margin-top: -4px; }
-  .donut-center-label .dcl-val { font-family: var(--mono); font-size: 20px; font-weight:700; color: var(--ink); }
-  .donut-center-label .dcl-sub { font-size: 11px; color: var(--ink-soft); }
-
-  .two-col { display:grid; grid-template-columns: 1fr 1fr; gap:20px; }
-
-  .insight-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-  .insight-card {
-    background: var(--paper-card);
-    border: 1px solid var(--line);
-    border-left: 4px solid var(--green);
-    border-radius: 2px;
-    padding: 18px 20px;
-  }
-  .insight-card.warn { border-left-color: var(--amber); }
-  .insight-card.risk { border-left-color: var(--red); }
-  .insight-label {
-    font-size: 10.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight:700;
-    color: var(--green);
-    margin-bottom: 8px;
-  }
-  .insight-card.warn .insight-label { color: var(--amber); }
-  .insight-card.risk .insight-label { color: var(--red); }
-  .insight-text { font-size: 14px; color: var(--ink); line-height:1.55; }
-  .insight-text b { color: var(--ink); }
-
-  .top-row {
-    display: grid;
-    grid-template-columns: 40px 1fr 150px;
-    align-items:center;
-    gap: 16px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .top-row:last-child { border-bottom:none; }
-  .top-rank { font-family: var(--serif); font-size: 20px; color: var(--grey); }
-  .top-name { font-size: 14px; color: var(--ink); font-weight:600; margin-bottom: 3px; }
-  .top-meta { font-size: 11.5px; color: var(--ink-soft); margin-bottom: 7px; }
-  .top-track { height: 6px; background: var(--grey-soft); border-radius: 4px; overflow:hidden; }
-  .top-fill { height:100%; background: var(--green); border-radius: 4px; }
-  .top-val { font-family: var(--mono); font-size: 15px; text-align:right; color: var(--ink); font-weight:600; }
-  .top-wrap {
-    background: var(--paper-card);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 8px 22px;
-  }
-
-  .kat-summary {
-    display:flex;
-    gap: 24px;
-    margin-bottom: 20px;
-    flex-wrap:wrap;
-    background: var(--paper-card);
-    border:1px solid var(--line);
-    border-radius:4px;
-    padding: 18px 22px;
-  }
-  .kat-summary .ks { min-width: 145px; }
-  .kat-summary .ks-label {
-    font-size: 10.5px;
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    color: var(--ink-soft);
-  }
-  .kat-summary .ks-val { font-family: var(--mono); font-size: 17px; margin-top: 4px; }
-
-  .item-row {
-    background: var(--paper-card);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 16px 20px;
-    margin-bottom: 10px;
-  }
-  .item-main {
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-bottom: 10px;
-    flex-wrap:wrap;
-  }
-  .item-no {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--grey);
-    background: var(--grey-soft);
-    padding: 1px 7px;
-    border-radius: 3px;
-  }
-  .item-name { font-size: 14.5px; font-weight:600; color: var(--ink); flex:1; min-width:200px; }
-  .item-tag {
-    font-size: 10.5px;
-    text-transform:uppercase;
-    letter-spacing:.04em;
-    font-weight:700;
-    padding: 3px 9px;
-    border-radius: 20px;
-    white-space:nowrap;
-  }
-  .tag-high { background: var(--green-soft); color: var(--green); }
-  .tag-mid { background: var(--amber-soft); color: var(--amber); }
-  .tag-minor { background: var(--grey-soft); color: var(--ink-soft); }
-  .tag-contra { background: var(--grey-soft); color: var(--ink-soft); }
-  .tag-risk { background: var(--red-soft); color: var(--red); }
-
-  .item-figures { display:flex; gap: 28px; margin-bottom: 12px; flex-wrap:wrap; }
-  .fig { display:flex; flex-direction:column; min-width:130px; }
-  .fig-label {
-    font-size: 10.5px;
-    text-transform:uppercase;
-    letter-spacing:.05em;
-    color: var(--ink-soft);
-    margin-bottom:3px;
-  }
-  .fig-val { font-family: var(--mono); font-size: 13.5px; color: var(--ink); }
-
-  .item-bar-wrap { display:flex; align-items:center; gap:12px; }
-  .item-bar-track {
-    position:relative;
-    flex:1;
-    height:8px;
-    background:var(--grey-soft);
-    border-radius:5px;
-    overflow:hidden;
-  }
-  .item-bar-fill { position:absolute; left:0; top:0; height:100%; border-radius:5px; }
-  .status-fill-high { background:var(--green); }
-  .status-fill-mid { background:var(--amber); }
-  .status-fill-minor { background:var(--grey); }
-  .status-fill-contra { background:var(--grey); }
-  .status-fill-risk { background:var(--red); }
-  .item-bar-pct {
-    font-family:var(--mono);
-    font-size:12px;
-    color:var(--ink-soft);
-    white-space:nowrap;
-    min-width:150px;
-    text-align:right;
-  }
-
-  .unit-table-wrap {
-    background:var(--paper-card);
-    border:1px solid var(--line);
-    border-radius:4px;
-    overflow:hidden;
-  }
-  table.unit-table { width:100%; border-collapse:collapse; font-size:13.5px; }
-  table.unit-table th {
-    text-align:left;
-    font-size:10.5px;
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    color:var(--ink-soft);
-    padding:12px 16px;
-    border-bottom:2px solid var(--ink);
-    background:var(--grey-soft);
-  }
-  table.unit-table td {
-    padding:11px 16px;
-    border-bottom:1px solid var(--line);
-    color:var(--ink);
-    vertical-align:middle;
-  }
-  table.unit-table tr:last-child td { border-bottom:none; }
-  table.unit-table tr.total td { font-weight:700; background:var(--grey-soft); }
-  table.unit-table td.num { font-family:var(--mono); text-align:right; white-space:nowrap; }
-  table.unit-table th.num { text-align:right; }
-  table.unit-table td.rank { color:var(--grey); font-family:var(--serif); }
-  .unit-sub { font-size:11.5px; color:var(--ink-soft); font-weight:400; margin-left:6px; }
-
-  .mini-track {
-    width:100%;
-    height:6px;
-    background:var(--grey-soft);
-    border-radius:4px;
-    overflow:hidden;
-    min-width:80px;
-  }
-  .mini-fill { height:100%; background:var(--green); border-radius:4px; }
-
-  .callout {
-    background: var(--ink);
-    color:#F6F5F1;
-    border-radius:4px;
-    padding:18px 20px;
-  }
-  .callout-label {
-    font-size:10.5px;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    color:#9FB8AE;
-    margin-bottom:7px;
-    font-weight:700;
-  }
-  .callout-value { font-family:var(--serif); font-size:28px; line-height:1.15; margin-bottom:5px; }
-  .callout-text { font-size:12.5px; color:#C7D2CD; }
-
-  footer {
-    border-top:1px solid var(--line);
-    padding-top:24px;
-    font-size:12px;
-    color:var(--ink-soft);
-  }
-  footer .fnote { margin-bottom:6px; }
-
-  .legend { display:flex; gap:18px; flex-wrap:wrap; margin-top:10px; }
-  .legend span {
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    font-size:11.5px;
-    color:var(--ink-soft);
-  }
-  .legend i { width:10px; height:10px; border-radius:50%; display:inline-block; }
-
-  @media (max-width: 860px) {
-    .kpi-grid { grid-template-columns:repeat(2,1fr); }
-    .gauge-grid { grid-template-columns:1fr; }
-    .chart-grid { grid-template-columns:1fr; }
-    .two-col { grid-template-columns:1fr; }
-    .insight-grid { grid-template-columns:1fr; }
-    .top-row { grid-template-columns:30px 1fr; }
-    .top-val { grid-column:2; text-align:left; margin-top:4px; }
-    h1.title { font-size:30px; }
-    table.unit-table { font-size:12.5px; }
-    .opt { display:none; }
-    .item-bar-pct { min-width:0; }
-  }
-
-  @media (max-width: 560px) {
-    .wrap { padding-left:16px; padding-right:16px; }
-    header.hero { padding:42px 0 34px; }
-    .hero-meta { gap:20px; }
-    .hero-meta .hm { min-width:135px; }
-    .kpi-grid { grid-template-columns:1fr; }
-    .kpi-val { font-size:23px; }
-    .gauge-svg { width:190px; }
-    .item-figures { gap:16px; }
-    .fig { min-width:120px; }
-    .tab { padding:14px 12px; font-size:13px; }
-  }
-
-  @media print {
-    body { background:#fff; }
-    header.hero, .tabbar { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    .panel { display:block !important; }
-    .tabbar { display:none; }
+  @media print{
+    body{ background:#fff; }
+    .panel{ display:block !important; }
+    .tabbar{ display:none; }
   }
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="wrap">
-    <div class="eyebrow">Laporan Internal &middot; Analisis Non Allowable Cost</div>
-    <h1 class="title">Non Allowable Cost — UID Jawa Tengah</h1>
-    <div class="subtitle">
-      Analisis realisasi NAC s.d. September 2026 berdasarkan 2 kategori biaya,
-      14 unit pelaksana, serta pencapaian KPI terhadap target revisi Tahun 2026.
-    </div>
+<div class="wrap">
 
-    <div class="hero-meta">
-      <div class="hm">
-        <div class="hm-label">Total Realisasi s.d Sept</div>
-        <div class="hm-val">Rp 238,33 M</div>
-        <div class="hm-sub">realisasi 2026</div>
-      </div>
-      <div class="hm">
-        <div class="hm-label">Target Revisi 2026</div>
-        <div class="hm-val">Rp 292,39 M</div>
-        <div class="hm-sub">realisasi 81,51% dari target revisi</div>
-      </div>
-      <div class="hm">
-        <div class="hm-label">Realisasi Tahun 2025</div>
-        <div class="hm-val">Rp 303,63 M</div>
-        <div class="hm-sub">referensi tahun sebelumnya</div>
-      </div>
-      <div class="hm">
-        <div class="hm-label">Sisa thd Target Revisi</div>
-        <div class="hm-val">Rp 54,07 M</div>
-        <div class="hm-sub">selisih target revisi dan realisasi s.d Sept</div>
-      </div>
-    </div>
+<header class="header">
+  <div class="eyebrow">PLN UID Jawa Tengah &middot; Analisis Non Allowable Cost</div>
+  <h1 class="title">Non Allowable Cost — UID Jawa Tengah</h1>
+  <div class="subtitle">
+    Analisis realisasi NAC s.d. September 2026 berdasarkan 2 kategori biaya,
+    14 unit pelaksana, serta pencapaian KPI terhadap target revisi Tahun 2026.
   </div>
+  <div class="period">&#128197; Realisasi s.d. September 2026</div>
 </header>
+
+<div class="hero-meta">
+  <div class="hm">
+    <div class="hm-label">Total Realisasi s.d Sept</div>
+    <div class="hm-val">Rp 238,33 M</div>
+    <div class="hm-sub">realisasi 2026</div>
+  </div>
+  <div class="hm">
+    <div class="hm-label">Target Revisi 2026</div>
+    <div class="hm-val">Rp 292,39 M</div>
+    <div class="hm-sub">realisasi 81,51% dari target revisi</div>
+  </div>
+  <div class="hm">
+    <div class="hm-label">Realisasi Tahun 2025</div>
+    <div class="hm-val">Rp 303,63 M</div>
+    <div class="hm-sub">referensi tahun sebelumnya</div>
+  </div>
+  <div class="hm">
+    <div class="hm-label">Sisa thd Target Revisi</div>
+    <div class="hm-val">Rp 54,07 M</div>
+    <div class="hm-sub">selisih target revisi dan realisasi s.d Sept</div>
+  </div>
+</div>
 
 <nav class="tabbar">
   <div class="wrap">
-    <button class="tab active" data-tab="rincian">Rincian NAC</button>
+    <button class="tab active" data-tab="rincian">&#9632; Rincian NAC</button>
     <button class="tab" data-tab="kpi">KPI NAC</button>
   </div>
 </nav>
-
-<div class="wrap">
 
   <!-- ===================== TAB 1: RINCIAN NAC ===================== -->
   <div id="tab-rincian" class="panel active">
@@ -537,6 +280,19 @@
         <h2>Ringkasan Kinerja</h2>
         <div class="section-note">Posisi s.d. September 2026 &middot; seluruh nominal dalam Rupiah</div>
       </div>
+
+      <div class="acct-note">
+        <div class="acct-head">Catatan Akuntansi</div>
+        <ol class="acct-list">
+          <li>Per Agustus 2026 terdapat revisi target NAC tahun 2026 dari <b>Rp378,108 Miliar</b> menjadi <b>Rp292,394 Miliar</b>, turun <b>22,67%</b>.</li>
+          <li>Realisasi NAC s.d. September 2026 tercapai <b>103,45%</b>, yaitu sebesar <b>Rp238,328 Miliar</b> dari target NAC revisi s.d. September 2026.</li>
+          <li>Realisasi NAC yang masuk dalam <i>uncontrollable unit</i> adalah atas Beban Kepegawaian, yaitu <b>83,53%</b> atau sebesar <b>Rp199 Miliar</b> dari total realisasi NAC s.d. September 2026.</li>
+          <li>Realisasi NAC s.d. September 2026 yang masuk dalam <i>controllable unit</i> sebesar <b>Rp39,241 Miliar</b>.</li>
+          <li>Realisasi NAC terbesar yang masuk dalam <i>controllable unit</i> adalah Penyisihan Piutang sebesar <b>Rp15,882 Miliar</b> (<b>40,47%</b> dari realisasi <i>controllable unit</i> atau <b>6,66%</b> dari total realisasi NAC s.d. September 2026).</li>
+          <li>UP3 Semarang merupakan unit dengan realisasi Penyisihan Piutang terbesar, yaitu <b>53%</b> dari total realisasi Penyisihan Piutang (<b>Rp8,473 Miliar</b>).</li>
+        </ol>
+      </div>
+
       <div class="kpi-grid">
         <div class="kpi-card">
           <div class="kpi-label">Total Realisasi NAC</div>
@@ -544,7 +300,7 @@
           <div class="kpi-sub">Rp 238.328.557.418</div>
         </div>
         <div class="kpi-card">
-          <div class="kpi-label">Pencapaian thd Target s/d Sept</div>
+          <div class="kpi-label">Realisasi thd Target s/d Sept</div>
           <div class="kpi-val">103,45%</div>
           <div class="kpi-sub">target Rp 230,38 M</div>
         </div>
@@ -563,7 +319,7 @@
 
     <section>
       <div class="section-head">
-        <h2>Pencapaian terhadap Target</h2>
+        <h2>Realisasi (Polarisasi Negatif)</h2>
         <div class="section-note">Realisasi s.d. September terhadap target s.d. September</div>
       </div>
       <div class="gauge-grid" id="gaugeGrid"></div>
@@ -572,7 +328,7 @@
     <section>
       <div class="section-head">
         <h2>Komposisi &amp; Distribusi</h2>
-        <div class="section-note">Grafik interaktif &mdash; arahkan kursor untuk melihat nilai detail</div>
+        <div class="section-note">Grafik interaktif &mdash; arahkan kursor untuk detail</div>
       </div>
       <div class="chart-grid">
         <div class="chart-card">
@@ -595,7 +351,7 @@
     <section>
       <div class="section-head">
         <h2>Struktur Realisasi per Jenis Biaya</h2>
-        <div class="section-note">Top 8 kontributor berdasarkan realisasi s.d. September</div>
+        <div class="section-note">Top 8 kontributor s.d. September</div>
       </div>
       <div class="chart-card">
         <h3>Top Jenis Biaya</h3>
@@ -673,7 +429,7 @@
     <section>
       <div class="section-head">
         <h2>Kontributor Jenis Biaya</h2>
-        <div class="section-note">Seluruh jenis biaya bernilai realisasi, diurutkan dari terbesar</div>
+        <div class="section-note">Seluruh jenis biaya bernilai realisasi, terbesar ke terkecil</div>
       </div>
       <div class="top-wrap" id="topItemsWrap"></div>
     </section>
@@ -702,7 +458,7 @@
     <section>
       <div class="section-head">
         <h2>Rincian Kategori A</h2>
-        <div class="section-note">Beban usaha &middot; diurutkan dari realisasi terbesar</div>
+        <div class="section-note">Beban usaha &middot; terbesar ke terkecil</div>
       </div>
       <div class="kat-summary" id="katSummaryA"></div>
       <div id="katItemsA"></div>
@@ -711,7 +467,7 @@
     <section>
       <div class="section-head">
         <h2>Rincian Kategori B</h2>
-        <div class="section-note">Diurutkan dari realisasi terbesar</div>
+        <div class="section-note">Terbesar ke terkecil</div>
       </div>
       <div class="kat-summary" id="katSummaryB"></div>
       <div id="katItemsB"></div>
@@ -745,7 +501,7 @@
     <section>
       <div class="section-head">
         <h2>Ringkasan KPI</h2>
-        <div class="section-note">Target revisi dan realisasi s.d. September 2026</div>
+        <div class="section-note">Target revisi dan realisasi s.d. September 2026 &middot; pencapaian polarisasi negatif (target &divide; realisasi)</div>
       </div>
       <div class="kpi-grid">
         <div class="kpi-card">
@@ -761,12 +517,12 @@
         <div class="kpi-card">
           <div class="kpi-label">Realisasi s/d September</div>
           <div class="kpi-val">Rp 238,33 M</div>
-          <div class="kpi-sub">238.328,56 juta &middot; 103,45%</div>
+          <div class="kpi-sub">238.328,56 juta &middot; pencapaian (polarisasi negatif) 96,67%</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-label">Unit Mencapai Target</div>
-          <div class="kpi-val">12 / 14</div>
-          <div class="kpi-sub">Kantor Induk dan UP2D belum mencapai 100%</div>
+          <div class="kpi-val">2 / 14</div>
+          <div class="kpi-sub">Kantor Induk dan UP2D (target &divide; realisasi &ge; 100%)</div>
         </div>
       </div>
     </section>
@@ -774,11 +530,23 @@
     <section>
       <div class="section-head">
         <h2>Realisasi vs Target per Unit</h2>
-        <div class="section-note">Target s/d September vs realisasi s/d September &middot; diurutkan realisasi terbesar</div>
+        <div class="section-note">Target s/d September vs realisasi s/d September</div>
       </div>
       <div class="chart-card">
         <h3>Perbandingan Target dan Realisasi</h3>
-        <div class="chart-sub">Satuan Miliar (Rp)</div>
+        <div class="chart-sub">
+          Satuan Miliar (Rp) &middot; Abu-abu = target &middot; Warna realisasi:
+          <span style="color:#286651">&#9632; realisasi &le; target</span>&nbsp;
+          <span style="color:#B8872F">&#9632; realisasi 90&ndash;100% target</span>&nbsp;
+          <span style="color:#A93B41">&#9632; realisasi &gt; 100% target</span>
+        </div>
+        <div class="sort-bar">
+          <label for="kpiSort">Urutkan berdasarkan</label>
+          <select id="kpiSort">
+            <option value="real" selected>Realisasi terbesar</option>
+            <option value="tsept">Target terbesar</option>
+          </select>
+        </div>
         <canvas id="kpiChart" height="300"></canvas>
       </div>
     </section>
@@ -786,11 +554,11 @@
     <section>
       <div class="section-head">
         <h2>Pencapaian per Unit</h2>
-        <div class="section-note">Diurutkan dari pencapaian tertinggi &middot; hijau &ge; 100%, kuning 90&ndash;100%, merah &lt; 90%</div>
+        <div class="section-note">Target &divide; realisasi &middot; terbesar ke terkecil &middot; hijau &ge; 100%, kuning 90&ndash;100%, merah &lt; 90%</div>
       </div>
       <div class="chart-card">
-        <h3>Persentase Pencapaian Target s/d September</h3>
-        <div class="chart-sub">Realisasi dibagi target s/d September</div>
+        <h3>Persentase Pencapaian Target s/d September (Polarisasi Negatif)</h3>
+        <div class="chart-sub">Rumus: target s/d September &divide; realisasi s/d September &times; 100%</div>
         <canvas id="kpiPctChart" height="300"></canvas>
       </div>
     </section>
@@ -798,49 +566,55 @@
     <section>
       <div class="section-head">
         <h2>Insight &amp; Analisis KPI</h2>
-        <div class="section-note">Temuan utama dari tabel KPI per unit</div>
+        <div class="section-note">Temuan utama dari tabel KPI per unit (polarisasi negatif)</div>
       </div>
       <div class="insight-grid">
-        <div class="insight-card risk">
-          <div class="insight-label">Kantor Induk Menjadi Titik Fokus</div>
+        <div class="insight-card">
+          <div class="insight-label">Kantor Induk Mencapai 155,63%</div>
           <div class="insight-text">
-            Kantor Induk mencapai <b>64,25%</b> dari target s/d September (Rp69.604 juta dari
-            Rp108.328 juta), kekurangan sekitar <b>Rp38,72 Miliar</b>. Target Kantor Induk setara
-            <b>47,02%</b> dari target seluruh unit, sedangkan kontribusi realisasinya <b>29,20%</b>.
+            Realisasi Kantor Induk <b>Rp69.604 juta</b> berada <b>Rp38,72 Miliar</b> di bawah target
+            s/d September (Rp108.328 juta). Dengan polarisasi negatif, realisasi yang lebih kecil dari
+            target dibaca sebagai kinerja baik. Kontribusi realisasinya <b>29,20%</b> dari total,
+            sedangkan porsi targetnya <b>47,02%</b> dari target seluruh unit.
           </div>
         </div>
 
         <div class="insight-card">
-          <div class="insight-label">12 dari 14 Unit Mencapai Target</div>
+          <div class="insight-label">Hanya 2 dari 14 Unit Mencapai Target</div>
           <div class="insight-text">
-            Sebanyak <b>12 UP3</b> sudah berada di atas 100% target s/d September. <b>UP3 Semarang</b>
-            menjadi yang tertinggi dengan <b>243,18%</b>, atau surplus sekitar <b>Rp13,99 Miliar</b>.
+            Kantor Induk (<b>155,63%</b>) dan UP2D (<b>100,34%</b>) memiliki realisasi di bawah atau sama
+            dengan target. UP2D paling tipis: realisasi Rp7.605 juta lebih rendah <b>Rp25,72 juta</b>
+            dari target Rp7.631 juta.
+          </div>
+        </div>
+
+        <div class="insight-card risk">
+          <div class="insight-label">Seluruh 12 UP3 Melampaui Target</div>
+          <div class="insight-text">
+            Semua UP3 berada di bawah 100% karena realisasinya lebih besar dari target. Pencapaian
+            tertinggi UP3 adalah <b>UP3 Purwokerto</b> (<b>87,28%</b>), sedangkan <b>UP3 Semarang</b>
+            paling jauh dengan <b>41,12%</b>: realisasi Rp23.768 juta dibanding target Rp9.774 juta,
+            kelebihan sekitar <b>Rp13,99 Miliar</b>.
           </div>
         </div>
 
         <div class="insight-card warn">
-          <div class="insight-label">UP2D Hampir Mencapai Target</div>
+          <div class="insight-label">Kelebihan Realisasi UP3 Rp46,70 Miliar</div>
           <div class="insight-text">
-            UP2D berada di <b>99,66%</b> (Rp7.605 juta dari Rp7.631 juta), kurang sekitar
-            <b>Rp25,72 juta</b> untuk mencapai target. Posisi ini perlu dijaga pada sisa periode.
+            Total realisasi 12 UP3 sebesar <b>Rp161.120 juta</b> melampaui target s/d September
+            <b>Rp114.422 juta</b>, dengan kelebihan <b>Rp46.697 juta</b>. Pencapaian gabungan UP3
+            (target &divide; realisasi) sebesar <b>71,02%</b>.
           </div>
         </div>
 
-        <div class="insight-card">
-          <div class="insight-label">13 Unit Selain Kantor Induk Mencapai 138,24%</div>
+        <div class="insight-card risk">
+          <div class="insight-label">Proyeksi Akhir Tahun Berisiko Melampaui Target Revisi</div>
           <div class="insight-text">
-            Gabungan 13 unit selain Kantor Induk merealisasikan <b>Rp168.725 juta</b> dari target
-            <b>Rp122.053 juta</b>. Beban target Kantor Induk yang besar menjadi faktor utama
-            rendahnya pencapaian total pada tingkat kantor induk.
-          </div>
-        </div>
-
-        <div class="insight-card">
-          <div class="insight-label">Kebutuhan Realisasi Oktober&ndash;Desember Relatif Ringan</div>
-          <div class="insight-text">
-            Rata-rata realisasi Januari&ndash;September sekitar <b>Rp26,48 Miliar per bulan</b>. Untuk
-            mencapai target revisi tahunan Rp292,39 Miliar, dibutuhkan tambahan <b>Rp54,07 Miliar</b>,
-            atau sekitar <b>Rp18,02 Miliar per bulan</b> pada Oktober&ndash;Desember.
+            Pencapaian total <b>96,67%</b> berarti realisasi sudah melampaui target s/d September sebesar
+            <b>Rp7,95 Miliar</b>. Rata-rata realisasi Januari&ndash;September <b>Rp26,48 Miliar per bulan</b>;
+            jika laju ini berlanjut, total akhir tahun sekitar <b>Rp317,77 Miliar</b>, melampaui target
+            revisi Rp292,39 Miliar sekitar <b>Rp25,38 Miliar</b>. Ruang tersisa hanya <b>Rp54,07 Miliar</b>
+            (sekitar <b>Rp18,02 Miliar per bulan</b> untuk Oktober&ndash;Desember).
           </div>
         </div>
 
@@ -858,7 +632,7 @@
     <section>
       <div class="section-head">
         <h2>Tabel KPI per Unit</h2>
-        <div class="section-note">Diurutkan dari realisasi terbesar &middot; satuan Rp juta</div>
+        <div class="section-note">Terbesar ke terkecil &middot; satuan Rp juta &middot; pencapaian (polarisasi negatif) = target &divide; realisasi</div>
       </div>
       <div class="unit-table-wrap">
         <table class="unit-table">
@@ -889,12 +663,8 @@
       pada kolom "Total Realisasi sd September 2026" dan tab KPI menggunakan posisi s.d. September 2026. Dashboard ini memakai posisi September.
     </div>
     <div class="fnote">
-      <b>Catatan metodologi:</b> Pencapaian kategori dan total dihitung terhadap target s/d September. Pencapaian
-      per jenis biaya dihitung terhadap Target SMT II karena target s/d September per jenis biaya tidak tersedia pada sumber.
-      Akun kontra dan nilai negatif ditandai tersendiri dan tidak dibaca dengan persentase biasa.
-    </div>
-    <div class="fnote">
-      <b>Catatan:</b> Pos Pembelian Tenaga Listrik, Sewa, dan Beban Pinjaman bernilai nol pada seluruh kolom sehingga tidak ditampilkan.
+      <b>Catatan metodologi:</b> Pencapaian KPI memakai polarisasi negatif, yaitu target s/d September
+      dibagi realisasi s/d September. Nilai &ge; 100% berarti baik atau realisasi masih di bawah batas maksimal target.
     </div>
     <div class="legend">
       <span><i style="background:var(--green)"></i> Kontributor dominan / tercapai</span>
@@ -906,7 +676,6 @@
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
 (function(){
   "use strict";
@@ -1007,21 +776,33 @@
   function fmtPct(v, d){
     return n2(v, d === undefined ? 2 : d) + '%';
   }
+  // ratio(a, b) = a / b * 100, null jika pembagi tidak valid
   function ratio(a, b){
     return (b === null || b === undefined || b <= 0) ? null : a / b * 100;
   }
-  function pctCol(p){
-    return p >= 100 ? 'var(--green)' : (p >= 50 ? 'var(--amber)' : 'var(--red)');
+
+  // Rincian: polarisasi negatif berdasarkan realisasi / target (semakin kecil semakin hijau)
+  function pctColNeg(p){
+    return p <= 90 ? 'var(--green)' : (p <= 100 ? 'var(--amber)' : 'var(--red)');
   }
-  function pctBarCol(p){
-    return p >= 100 ? '#1F5C4E' : (p >= 90 ? '#B2790E' : '#B24A2E');
+
+  // KPI: pencapaian = target / realisasi (semakin besar semakin hijau)
+  function pctHex(p){
+    return p >= 100 ? '#286651' : (p >= 90 ? '#B8872F' : '#A93B41');
+  }
+  // Rincian Kategori: semakin kecil porsi realisasi (mendekati 0%) semakin hijau,
+  // semakin besar (mendekati 100%) semakin merah
+  function shareColor(share){
+    if (share <= 10) return {fill:'status-fill-high', tag:'tag-high'};
+    if (share <= 30) return {fill:'status-fill-mid',  tag:'tag-mid'};
+    return {fill:'status-fill-risk', tag:'tag-risk'};
   }
 
   var charts = {};
 
   /* ===================== RINCIAN: GAUGES ===================== */
   function gauge(label, value, caption, tagCls, tagText, realText, targetText){
-    var col = pctCol(value);
+    var col = pctColNeg(value);
     var dash = Math.max(0, Math.min(100, value)).toFixed(1);
     var card = document.createElement('div');
     card.className = 'gauge-card';
@@ -1044,29 +825,30 @@
   function renderGauges(){
     gauge("TOTAL NAC", ratio(TOT.real, TOT.tsept),
       "realisasi s.d. September terhadap target s.d. September",
-      "gap-even", "Di atas target s/d Sept", fmtM(TOT.real), fmtM(TOT.tsept));
+      "gap-risk", "Di atas target s/d Sept", fmtM(TOT.real), fmtM(TOT.tsept));
     gauge("KATEGORI A", ratio(CAT.A.real, CAT.A.tsept),
       "realisasi Kategori A terhadap target s/d September",
-      "gap-even", "Di atas target s/d Sept", fmtM(CAT.A.real), fmtM(CAT.A.tsept));
+      "gap-risk", "Di atas target s/d Sept", fmtM(CAT.A.real), fmtM(CAT.A.tsept));
     gauge("KATEGORI B", ratio(CAT.B.real, CAT.B.tsept),
       "realisasi Kategori B terhadap target s/d September",
-      "gap-risk", "Di bawah target s/d Sept", fmtM(CAT.B.real), fmtM(CAT.B.tsept));
+      "gap-even", "Di bawah target s/d Sept", fmtM(CAT.B.real), fmtM(CAT.B.tsept));
   }
 
   /* ===================== RINCIAN: CHARTS ===================== */
   var axisRp = function(v){ return n2(v / 1e9, 0) + ' M'; };
+  var FONT_SANS = "Arial, Helvetica, sans-serif";
+  var FONT_MONO = "'SFMono-Regular', Consolas, monospace";
 
   function initRincianCharts(){
     if (!window.Chart) return;
 
-    // Donut kategori
     charts.donut = new Chart(document.getElementById('donutKategori').getContext('2d'), {
       type: 'doughnut',
       data: {
         labels: [CAT.A.name, CAT.B.name],
         datasets: [{
           data: [CAT.A.real, CAT.B.real],
-          backgroundColor: ['#0E2A3F', '#1F5C4E'],
+          backgroundColor: ['#0F2547', '#C99A3F'],
           borderColor: '#FFFFFF',
           borderWidth: 2
         }]
@@ -1077,7 +859,7 @@
         plugins: {
           legend: {
             position: 'bottom',
-            labels: { font: {family: "'Segoe UI', Arial, sans-serif", size: 12}, color: '#45596B', padding: 16 }
+            labels: { font: {family: FONT_SANS, size: 12}, color: '#454B57', padding: 16 }
           },
           tooltip: {
             callbacks: {
@@ -1088,7 +870,6 @@
       }
     });
 
-    // Stacked bar per unit, urut total terbesar
     var unitsSorted = UNITS.map(function(u){ return {code:u.code, name:u.name, a:u.a, b:u.b, t:u.a + u.b}; })
       .sort(function(x, y){ return y.t - x.t; });
 
@@ -1097,15 +878,15 @@
       data: {
         labels: unitsSorted.map(function(u){ return u.code; }),
         datasets: [
-          { label: 'Kategori A', data: unitsSorted.map(function(u){ return u.a; }), backgroundColor: '#0E2A3F', borderRadius: 2, maxBarThickness: 26 },
-          { label: 'Kategori B', data: unitsSorted.map(function(u){ return u.b; }), backgroundColor: '#1F5C4E', borderRadius: 2, maxBarThickness: 26 }
+          { label: 'Kategori A', data: unitsSorted.map(function(u){ return u.a; }), backgroundColor: '#0F2547', borderRadius: 2, maxBarThickness: 26 },
+          { label: 'Kategori B', data: unitsSorted.map(function(u){ return u.b; }), backgroundColor: '#C99A3F', borderRadius: 2, maxBarThickness: 26 }
         ]
       },
       options: {
         indexAxis: 'y',
         responsive: true,
         plugins: {
-          legend: { position: 'bottom', labels: { font: {family: "'Segoe UI', Arial, sans-serif", size: 12}, color: '#45596B', padding: 14 } },
+          legend: { position: 'bottom', labels: { font: {family: FONT_SANS, size: 12}, color: '#454B57', padding: 14 } },
           tooltip: {
             callbacks: {
               label: function(c){ return ' ' + c.dataset.label + ': ' + fmtRp(c.parsed.x) + ' (' + fmtPct(c.parsed.x / TOT.real * 100) + ')'; }
@@ -1115,19 +896,18 @@
         scales: {
           x: {
             stacked: true,
-            grid: { color: '#DDDACF' },
-            ticks: { color: '#45596B', font: {family: "'SFMono-Regular', Consolas, monospace", size: 10}, callback: axisRp }
+            grid: { color: '#E7EAF0' },
+            ticks: { color: '#454B57', font: {family: FONT_MONO, size: 10}, callback: axisRp }
           },
           y: {
             stacked: true,
             grid: { display: false },
-            ticks: { color: '#0E2A3F', font: {family: "'Segoe UI', Arial, sans-serif", size: 12, weight: '600'} }
+            ticks: { color: '#0F2547', font: {family: FONT_SANS, size: 12, weight: '600'} }
           }
         }
       }
     });
 
-    // Top 8 jenis biaya
     var topAll = ITEMS.A.concat(ITEMS.B)
       .filter(function(x){ return x.real > 0; })
       .sort(function(x, y){ return y.real - x.real; });
@@ -1140,8 +920,8 @@
         datasets: [{
           label: 'Realisasi NAC',
           data: top8.map(function(x){ return x.real; }),
-          backgroundColor: '#0E2A3F',
-          borderRadius: 3,
+          backgroundColor: '#0F2547',
+          borderRadius: 2,
           maxBarThickness: 26
         }]
       },
@@ -1158,12 +938,12 @@
         },
         scales: {
           x: {
-            grid: { color: '#DDDACF' },
-            ticks: { color: '#45596B', font: {family: "'SFMono-Regular', Consolas, monospace", size: 10}, callback: axisRp }
+            grid: { color: '#E7EAF0' },
+            ticks: { color: '#454B57', font: {family: FONT_MONO, size: 10}, callback: axisRp }
           },
           y: {
             grid: { display: false },
-            ticks: { color: '#0E2A3F', font: {family: "'Segoe UI', Arial, sans-serif", size: 11, weight: '600'} }
+            ticks: { color: '#0F2547', font: {family: FONT_SANS, size: 11, weight: '600'} }
           }
         }
       }
@@ -1218,7 +998,7 @@
       '<div class="ks"><div class="ks-label">Total ' + cat.name + '</div><div class="ks-val">' + fmtM(cat.real) + '</div></div>' +
       '<div class="ks"><div class="ks-label">% dari Total NAC</div><div class="ks-val">' + fmtPct(cat.real / TOT.real * 100) + '</div></div>' +
       '<div class="ks"><div class="ks-label">Target s/d Sept</div><div class="ks-val">' + fmtM(cat.tsept) + '</div></div>' +
-      '<div class="ks"><div class="ks-label">Pencapaian</div><div class="ks-val" style="color:' + pctCol(pc) + '">' + fmtPct(pc) + '</div></div>';
+      '<div class="ks"><div class="ks-label">Pencapaian</div><div class="ks-val" style="color:' + pctColNeg(pc) + '">' + fmtPct(pc) + '</div></div>';
 
     var box = document.getElementById(listId);
     list.forEach(function(it, idx){
@@ -1227,9 +1007,14 @@
       if (it.contra)            info = {tag:'Akun Kontra',        cls:'tag-contra', fill:'status-fill-contra'};
       else if (it.real < 0)     info = {tag:'Koreksi Negatif',    cls:'tag-risk',   fill:'status-fill-risk'};
       else if (it.real === 0)   info = {tag:'Belum Terealisasi',  cls:'tag-minor',  fill:'status-fill-minor'};
-      else if (share >= 10)     info = {tag:'Dominan',            cls:'tag-high',   fill:'status-fill-high'};
-      else if (share >= 3)      info = {tag:'Signifikan',         cls:'tag-mid',    fill:'status-fill-mid'};
-      else                      info = {tag:'Minor',              cls:'tag-minor',  fill:'status-fill-minor'};
+      else {
+        var sc = shareColor(Math.max(0, share));
+        info = {
+          tag:  share >= 10 ? 'Dominan' : (share >= 3 ? 'Signifikan' : 'Minor'),
+          cls:  sc.tag,
+          fill: sc.fill
+        };
+      }
 
       var p = ratio(it.real, it.tgt);
       var row = document.createElement('div');
@@ -1243,7 +1028,7 @@
         '<div class="item-figures">' +
           '<div class="fig"><span class="fig-label">Realisasi s/d Sept</span><span class="fig-val">' + fmtRp(it.real) + '</span></div>' +
           '<div class="fig"><span class="fig-label">Target SMT II</span><span class="fig-val">' + (it.tgt === null ? '—' : fmtRp(it.tgt)) + '</span></div>' +
-          '<div class="fig"><span class="fig-label">Pencapaian thd SMT II</span><span class="fig-val">' + (p === null ? '—' : fmtPct(p)) + '</span></div>' +
+          '<div class="fig"><span class="fig-label">Realisasi thd SMT II</span><span class="fig-val">' + (p === null ? '—' : fmtPct(p)) + '</span></div>' +
           '<div class="fig"><span class="fig-label">Realisasi 2025</span><span class="fig-val">' + fmtRp(it.y25) + '</span></div>' +
         '</div>' +
         '<div class="item-bar-wrap">' +
@@ -1263,16 +1048,19 @@
     initRincianCharts();
   }
 
-  /* ===================== KPI TAB ===================== */
+  /* ===================== KPI TAB (polarisasi negatif: target / realisasi) ===================== */
   function kpiStatus(p){
     if (p >= 100) return {tag:'Tercapai', cls:'tag-high'};
     if (p >= 90)  return {tag:'Hampir', cls:'tag-mid'};
     return {tag:'Perlu Perhatian', cls:'tag-risk'};
   }
+  function kpiTextCol(p){
+    return p >= 100 ? 'var(--green)' : (p >= 90 ? 'var(--amber)' : 'var(--red)');
+  }
 
   function initKpi(){
     var rows = KPI_UNITS.map(function(u){
-      return {n:u.n, rev:u.rev, tsept:u.tsept, real:u.real, pct:u.real / u.tsept * 100};
+      return {n:u.n, rev:u.rev, tsept:u.tsept, real:u.real, pct: u.tsept / u.real * 100};
     });
     var byReal = rows.slice().sort(function(x, y){ return y.real - x.real; });
     var byPct  = rows.slice().sort(function(x, y){ return y.pct - x.pct; });
@@ -1288,11 +1076,14 @@
         '<td class="num opt">' + n2(r.rev, 2) + '</td>' +
         '<td class="num">' + n2(r.tsept, 2) + '</td>' +
         '<td class="num">' + n2(r.real, 2) + '</td>' +
-        '<td class="num" style="color:' + pctCol(r.pct) + '">' + fmtPct(r.pct) + '</td>' +
+        '<td class="num" style="color:' + kpiTextCol(r.pct) + '">' + fmtPct(r.pct) + '</td>' +
         '<td><span class="item-tag ' + st.cls + '">' + st.tag + '</span></td>';
       body.appendChild(tr);
     });
+
     var totRev = 292394.37, totT = 230380.57, totR = 238328.56;
+    var totPct = totT / totR * 100;
+    var stTot = kpiStatus(totPct);
     var trT = document.createElement('tr');
     trT.className = 'total';
     trT.innerHTML =
@@ -1300,47 +1091,85 @@
       '<td class="num opt">' + n2(totRev, 2) + '</td>' +
       '<td class="num">' + n2(totT, 2) + '</td>' +
       '<td class="num">' + n2(totR, 2) + '</td>' +
-      '<td class="num">' + fmtPct(totR / totT * 100) + '</td>' +
-      '<td><span class="item-tag tag-high">Tercapai</span></td>';
+      '<td class="num">' + fmtPct(totPct) + '</td>' +
+      '<td><span class="item-tag ' + stTot.cls + '">' + stTot.tag + '</span></td>';
     body.appendChild(trT);
 
     if (!window.Chart) return;
 
-    // Target vs realisasi (urut realisasi terbesar), satuan Miliar
+    // Target vs realisasi per unit, dengan pengurutan dari drop menu
+    var kpiSorted = byReal;
+
+    function applyKpiSort(key){
+      kpiSorted = rows.slice().sort(function(x, y){ return y[key] - x[key]; });
+      var d = charts.kpi.data;
+      d.labels = kpiSorted.map(function(r){ return r.n; });
+      d.datasets[0].data = kpiSorted.map(function(r){ return r.tsept; });
+      d.datasets[1].data = kpiSorted.map(function(r){ return r.real; });
+      d.datasets[1].backgroundColor = kpiSorted.map(function(r){ return pctHex(r.pct); });
+      charts.kpi.update();
+    }
+
     charts.kpi = new Chart(document.getElementById('kpiChart').getContext('2d'), {
       type: 'bar',
       data: {
-        labels: byReal.map(function(r){ return r.n; }),
+        labels: kpiSorted.map(function(r){ return r.n; }),
         datasets: [
-          { label: 'Target s/d Sept', data: byReal.map(function(r){ return r.tsept; }), backgroundColor: '#C9C5B8', borderRadius: 3, maxBarThickness: 16 },
-          { label: 'Realisasi s/d Sept', data: byReal.map(function(r){ return r.real; }), backgroundColor: '#1F5C4E', borderRadius: 3, maxBarThickness: 16 }
+          {
+            label: 'Target s/d Sept',
+            data: kpiSorted.map(function(r){ return r.tsept; }),
+            backgroundColor: '#C9CED8',
+            borderRadius: 2,
+            maxBarThickness: 16
+          },
+          {
+            label: 'Realisasi s/d Sept',
+            data: kpiSorted.map(function(r){ return r.real; }),
+            backgroundColor: kpiSorted.map(function(r){ return pctHex(r.pct); }),
+            borderRadius: 2,
+            maxBarThickness: 16
+          }
         ]
       },
       options: {
         indexAxis: 'y',
         responsive: true,
         plugins: {
-          legend: { position: 'bottom', labels: { font: {family: "'Segoe UI', Arial, sans-serif", size: 12}, color: '#45596B', padding: 14 } },
+          legend: { display: false },
           tooltip: {
             callbacks: {
-              label: function(c){ return ' ' + c.dataset.label + ': Rp ' + n2(c.parsed.x / 1000, 2) + ' M'; }
+              label: function(c){
+                if (c.datasetIndex === 1) {
+                  var r = kpiSorted[c.dataIndex];
+                  return ' Realisasi: Rp ' + n2(c.parsed.x / 1000, 2) + ' M (pencapaian ' + fmtPct(r.pct) + ')';
+                }
+                return ' Target: Rp ' + n2(c.parsed.x / 1000, 2) + ' M';
+              }
             }
           }
         },
         scales: {
           x: {
-            grid: { color: '#DDDACF' },
-            ticks: { color: '#45596B', font: {family: "'SFMono-Regular', Consolas, monospace", size: 10}, callback: function(v){ return n2(v / 1000, 0) + ' M'; } }
+            grid: { color: '#E7EAF0' },
+            ticks: {
+              color: '#454B57',
+              font: {family: FONT_MONO, size: 10},
+              callback: function(v){ return n2(v / 1000, 0) + ' M'; }
+            }
           },
           y: {
             grid: { display: false },
-            ticks: { color: '#0E2A3F', font: {family: "'Segoe UI', Arial, sans-serif", size: 12, weight: '600'} }
+            ticks: { color: '#0F2547', font: {family: FONT_SANS, size: 12, weight: '600'} }
           }
         }
       }
     });
 
-    // Pencapaian (urut tertinggi)
+    document.getElementById('kpiSort').addEventListener('change', function(e){
+      applyKpiSort(e.target.value);
+    });
+
+    // Pencapaian polarisasi negatif (target / realisasi), urut tertinggi
     charts.kpiPct = new Chart(document.getElementById('kpiPctChart').getContext('2d'), {
       type: 'bar',
       data: {
@@ -1348,8 +1177,8 @@
         datasets: [{
           label: 'Pencapaian (%)',
           data: byPct.map(function(r){ return r.pct; }),
-          backgroundColor: byPct.map(function(r){ return pctBarCol(r.pct); }),
-          borderRadius: 3,
+          backgroundColor: byPct.map(function(r){ return pctHex(r.pct); }),
+          borderRadius: 2,
           maxBarThickness: 22
         }]
       },
@@ -1360,19 +1189,19 @@
           legend: { display: false },
           tooltip: {
             callbacks: {
-              label: function(c){ return ' ' + fmtPct(c.parsed.x); }
+              label: function(c){ return ' Pencapaian: ' + fmtPct(c.parsed.x); }
             }
           }
         },
         scales: {
           x: {
             beginAtZero: true,
-            grid: { color: '#DDDACF' },
-            ticks: { color: '#45596B', font: {family: "'SFMono-Regular', Consolas, monospace", size: 10}, callback: function(v){ return v + '%'; } }
+            grid: { color: '#E7EAF0' },
+            ticks: { color: '#454B57', font: {family: FONT_MONO, size: 10}, callback: function(v){ return v + '%'; } }
           },
           y: {
             grid: { display: false },
-            ticks: { color: '#0E2A3F', font: {family: "'Segoe UI', Arial, sans-serif", size: 12, weight: '600'} }
+            ticks: { color: '#0F2547', font: {family: FONT_SANS, size: 12, weight: '600'} }
           }
         }
       }
@@ -1394,6 +1223,9 @@
       inits[name]();
       inited[name] = true;
     }
+    setTimeout(function(){
+      Object.values(charts).forEach(function(c){ c && c.resize(); });
+    }, 10);
   }
 
   document.querySelectorAll('.tab').forEach(function(t){
