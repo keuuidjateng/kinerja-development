@@ -91,7 +91,7 @@ body{padding-bottom:60px}
 .funnel-label{font-size:12px;color:var(--text2)}
 .funnel-label b{display:block;font-size:13px;color:var(--pln);font-weight:700;margin-bottom:2px}
 .funnel-track{height:26px;background:var(--bg-ter);border-radius:2px;position:relative;overflow:hidden}
-.funnel-fill{height:100%;border-radius:2px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;min-width:0}
+.funnel-fill{height:100%;border-radius:2px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px}
 .funnel-fill span{font-size:11px;color:#fff;font-weight:700;white-space:nowrap}
 .funnel-value{text-align:right}
 .f-pct{font-family:Georgia,serif;color:var(--pln);font-size:17px;font-weight:700}
@@ -207,9 +207,9 @@ table.ledger{width:100%;border-collapse:collapse;min-width:1050px;font-size:12px
   <div class="header-sub">Ikhtisar 11 program berdasarkan Nilai AO, Nilai SKKO, kontraktualisasi PRK, nilai komitmen, permintaan bayar, realisasi bayar, dan persentase disburse.</div>
   <div class="header-period">&#128197; Program Anggaran Operasi — 11 Program</div>
   <div class="header-stats">
-    <div class="header-stat"><div class="hs-label">Total Nilai SKKO</div><div class="hs-value">Rp1.502,03 <small>M</small></div></div>
-    <div class="header-stat"><div class="hs-label">Realisasi Bayar thd SKKO</div><div class="hs-value">64,43 <small>%</small></div></div>
-    <div class="header-stat"><div class="hs-label">PRK Terkontrak</div><div class="hs-value">331 <small>/ 348 item</small></div></div>
+    <div class="header-stat"><div class="hs-label">Total Nilai SKKO</div><div class="hs-value" id="hsSkko"></div></div>
+    <div class="header-stat"><div class="hs-label">Realisasi Bayar thd SKKO</div><div class="hs-value" id="hsReal"></div></div>
+    <div class="header-stat"><div class="hs-label">PRK Terkontrak</div><div class="hs-value" id="hsPrk"></div></div>
     <div class="header-stat"><div class="hs-label">Program Dipantau</div><div class="hs-value">11 <small>program</small></div></div>
   </div>
 </div>
@@ -218,7 +218,7 @@ table.ledger{width:100%;border-collapse:collapse;min-width:1050px;font-size:12px
 <div class="section">
   <div class="sec-hdr">Ikhtisar Capaian Utama</div>
   <div class="kpi-grid" id="kpiGrid"></div>
-  <div class="note">Seluruh angka dihitung dari data Excel yang diberikan. Grafik dan tabel default diurutkan terbesar → terkecil berdasarkan Nilai SKKO. Satuan M = miliar rupiah, T = triliun rupiah.</div>
+  <div class="note">Seluruh angka dihitung dari data Excel yang diberikan. Grafik dan tabel default diurutkan terbesar → terkecil berdasarkan Nilai SKKO.</div>
 </div>
 
 <!-- ALUR -->
@@ -300,7 +300,7 @@ table.ledger{width:100%;border-collapse:collapse;min-width:1050px;font-size:12px
     <div><b>AO</b> — Nilai Anggaran Operasi</div>
     <div><b>% Disburse</b> = Realisasi Bayar ÷ Nilai SKKO</div>
   </div>
-  <div class="fine">Catatan: seluruh angka, persentase, dan insight pada halaman ini dihitung dari dataset Excel yang diberikan. Nilai AO total dan SKKO total menggunakan penjumlahan baris program; baris "TOTAL AO" (56,99 T) dan "TOTAL AKO" (1,58 T) di file sumber tidak digunakan karena tidak sesuai dengan penjumlahan baris. Realisasi Bayar pada seluruh program sama dengan Permintaan Bayar sehingga backlog tercatat nihil.</div>
+  <div class="fine">Catatan: seluruh angka, persentase, dan insight pada halaman ini dihitung dari dataset Excel yang diberikan. Tidak ada data eksternal yang digunakan.</div>
 </div>
 
 </div>
@@ -316,21 +316,27 @@ Chart.defaults.color=C.text2;
 Chart.defaults.font.size=11;
 const gridColor=C.border;
 
-/* Data: [kode, nama, AO, SKKO, PRK total, PRK terkontrak, Total Komitmen, Nota Dinas, Sisa SKKO, Permintaan Bayar, Realisasi Bayar] (Rupiah) */
-const raw=[
-["AGA","Administrasi Niaga",339012722171,338568827231,59,54,328757359306,1184016872,9811467925,259151776211,259151776211],
-["BBM","Bahan Bakar dan Pelumas",3293728000,1494575007,2,1,1339406757,149850000,155168250,1349323972,1349323972],
-["INS","Pemeliharaan Instalasi",802233378991,732964056823,65,63,641028799179,8841451444,91935257644,464627156532,464627156532],
-["KIT","Pemeliharaan Intalasi Pembangkit",6698563345,6698563345,1,1,990216348,0,5708346997,990216348,990216348],
-["MUM","Administrasi Umum",67072810365,35893958505,142,138,29934917172,0,5959041333,28767936962,28767936962],
-["NONAHG","Sewa Non AHG",28682112277,21330325840,1,1,12648786234,0,8681539606,15013474403,15013474403],
-["PTL","Pembelian Tenaga Listrik",309533103514,126955752235,1,1,72091617826,0,54864134409,72043556798,72043556798],
-["SDM","Kepegawaian",1060923246059,19988197706,17,17,6080703726,0,13907493980,6254956613,6254956613],
-["SEWAAHG","Utang Usaha AHG",19868248016,12942400784,2,2,9558568548,0,3383832236,12392773899,12392773899],
-["SRN","Pemeliharaan Sarana",189596952346,189596952346,55,52,149814228482,968820986,39782723864,105974743785,105974743785],
-["TUL","Pemeliharaan TUL",16388917491,15591773277,3,1,2049760743,0,13542012534,1244491809,1244491809]
-].map(x=>({code:x[0],name:x[1],ao:x[2],skko:x[3],prk:x[4],contracted:x[5],commit:x[6],notaDinas:x[7],sisa:x[8],request:x[9],real:x[10]}))
-.map(d=>({...d,disb:d.real/d.skko*100,commitPct:d.commit/d.skko*100,prkPct:d.contracted/d.prk*100}));
+/* Data: [kode, nama, nilai AO, nilai SKKO, PRK total, PRK terkontrak, nota dinas, komitmen terkontrak, sisa SKKO, permintaan bayar, realisasi bayar] */
+const rows=[
+["AGA","Administrasi Niaga",339012722171,338568827231,59,54,1184016872,327573342434,9811467925,259151776211,259151776211],
+["BBM","Bahan Bakar dan Pelumas",3293728000,1494575007,2,1,149850000,1189556757,155168250,1349323972,1349323972],
+["INS","Pemeliharaan Instalasi",802233378991,732964056823,65,63,8841451444,632187347735,91935257644,464627156532,464627156532],
+["KIT","Pemeliharaan Instalasi Pembangkit",6698563345,6698563345,1,1,0,990216348,5708346997,990216348,990216348],
+["MUM","Administrasi Umum",67072810365,35893958505,142,138,0,29934917172,5959041333,28767936962,28767936962],
+["NONAHG","Sewa Non AHG",28682112277,21330325840,1,1,0,12648786234,8681539606,15013474403,15013474403],
+["PTL","Pembelian Tenaga Listrik",309533103514,126955752235,1,1,0,72091617826,54864134409,72043556798,72043556798],
+["SDM","Kepegawaian",1060923246059,19988197706,17,17,0,6080703726,13907493980,6254956613,6254956613],
+["SEWAAHG","Utang Usaha AHG",19868248016,12942400784,2,2,0,9558568548,3383832236,12392773899,12392773899],
+["SRN","Pemeliharaan Sarana",189596952346,189596952346,55,52,968820986,148845407496,39782723864,105974743785,105974743785],
+["TUL","Pemeliharaan TUL",16388917491,15591773277,3,1,0,2049760743,13542012534,1244491809,1244491809]
+];
+const raw=rows.map(x=>{
+  const d={code:x[0],name:x[1],ao:x[2],skko:x[3],prk:x[4],contracted:x[5],commit:x[6]+x[7],sisa:x[8],request:x[9],real:x[10]};
+  d.disb=d.real/d.skko*100;
+  d.commitPct=d.commit/d.skko*100;
+  d.prkPct=d.contracted/d.prk*100;
+  return d;
+});
 
 const totalReal=raw.reduce((s,d)=>s+d.real,0);
 const totalSkko=raw.reduce((s,d)=>s+d.skko,0);
@@ -340,23 +346,25 @@ const totalAo=raw.reduce((s,d)=>s+d.ao,0);
 const totalSisa=raw.reduce((s,d)=>s+d.sisa,0);
 const totalPrk=raw.reduce((s,d)=>s+d.prk,0);
 const totalContracted=raw.reduce((s,d)=>s+d.contracted,0);
-const byCode=c=>raw.find(d=>d.code===c);
+const backlog=totalRequest-totalReal;
 
-/* Format: M = miliar (1e9), T = triliun (1e12), id-ID */
-const nf=(v,d=2)=>new Intl.NumberFormat("id-ID",{minimumFractionDigits:d,maximumFractionDigits:d}).format(v);
-const fmtRp=v=>"Rp"+new Intl.NumberFormat("id-ID",{maximumFractionDigits:0}).format(v);
-const fmtM=v=>nf(v/1e9)+" M";
-const fmtB=v=>"Rp"+fmtM(v);
-const fmtT=v=>"Rp"+nf(v/1e12)+" T";
-const pct=(v,d=2)=>nf(v,d)+"%";
+/* Formatter — satuan Miliar (M = 1e9), Triliun (T = 1e12) */
+const nf0=new Intl.NumberFormat("id-ID",{maximumFractionDigits:0});
+const nf2=new Intl.NumberFormat("id-ID",{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtRp=v=>"Rp"+nf0.format(v);
+const fmtRpM=v=>"Rp"+nf2.format(v/1e9)+" M";      /* rupiah mentah → "Rp1.502,03 M" */
+const fmtM=v=>nf2.format(v/1e9)+" M";             /* rupiah mentah → "1.502,03 M" */
+const fmtMx=x=>nf2.format(x)+" M";                /* nilai sudah dalam Miliar */
+const fmtT=v=>nf2.format(v/1e12)+" T";
+const pct=(v,d=2)=>v.toFixed(d).replace(".",",")+"%";
 
 /* ---------- METRIK ---------- */
 const METRICS={
-  ao:    {name:"Nilai AO",        label:"Nilai AO (Rp Miliar)",          color:C.blue, field:"ao",     unit:"money"},
-  skko:  {name:"Nilai SKKO",      label:"Nilai SKKO (Rp Miliar)",        color:C.pln,  field:"skko",   unit:"money"},
-  commit:{name:"Nilai Komitmen",  label:"Nilai Komitmen (Rp Miliar)",    color:C.gold, field:"commit", unit:"money"},
-  real:  {name:"Realisasi Bayar", label:"Realisasi Bayar (Rp Miliar)",   color:C.green,field:"real",   unit:"money"},
-  disb:  {name:"% Disburse",      label:"% Disburse (Realisasi ÷ SKKO)", color:C.red,  field:"disb",   unit:"pct"}
+  ao:    {name:"Nilai AO",       label:"Nilai AO (Rp Miliar)",          color:C.blue,  field:"ao",     unit:"money"},
+  skko:  {name:"Nilai SKKO",     label:"Nilai SKKO (Rp Miliar)",        color:C.pln,   field:"skko",   unit:"money"},
+  commit:{name:"Nilai Komitmen", label:"Nilai Komitmen (Rp Miliar)",    color:C.gold,  field:"commit", unit:"money"},
+  real:  {name:"Realisasi Bayar",label:"Realisasi Bayar (Rp Miliar)",   color:C.green, field:"real",   unit:"money"},
+  disb:  {name:"% Disburse",     label:"% Disburse (Realisasi ÷ SKKO)", color:C.red,   field:"disb",   unit:"pct"}
 };
 const ORDER=["ao","skko","commit","real","disb"];
 const metricVal=(key,d)=>{
@@ -372,21 +380,27 @@ function status(d){
  return ["Capaian","good"];
 }
 
+/* ---------- HEADER ---------- */
+function renderHeader(){
+ document.getElementById("hsSkko").innerHTML="Rp"+nf2.format(totalSkko/1e9)+" <small>M</small>";
+ document.getElementById("hsReal").innerHTML=pct(totalReal/totalSkko*100).replace("%","")+" <small>%</small>";
+ document.getElementById("hsPrk").innerHTML=totalContracted+" <small>/ "+totalPrk+" item</small>";
+}
+
 /* ---------- KPI ---------- */
 function renderKpi(){
- const sdm=byCode("SDM");
- const sdmAoShare=sdm.ao/totalAo*100;
+ const topAo=[...raw].sort((a,b)=>b.ao-a.ao)[0];
  const k=[
-  {label:"Nilai AO",value:fmtT(totalAo),sub:`<b class="amber">${pct(sdmAoShare)}</b> berasal dari SDM (${fmtT(sdm.ao)})`,bar:sdmAoShare,barColor:"#F0D191"},
-  {label:"Nilai SKKO",value:fmtB(totalSkko),sub:"Basis acuan komitmen, permintaan bayar, dan disburse",bar:100},
-  {label:"Total Nilai Komitmen",value:fmtB(totalCommit),sub:`<b>${pct(totalCommit/totalSkko*100)}</b> dari SKKO; sisa <b class="warn">${pct(100-totalCommit/totalSkko*100)}</b>`,bar:totalCommit/totalSkko*100},
-  {label:"Sisa SKKO",value:fmtB(totalSisa),sub:`<b class="warn">${pct(totalSisa/totalSkko*100)}</b> belum masuk nilai komitmen`,bar:totalSisa/totalSkko*100,barColor:"#F0AFA9"},
-  {label:"Permintaan Bayar",value:fmtB(totalRequest),sub:`<b>${pct(totalRequest/totalSkko*100)}</b> dari SKKO telah diminta bayar`,bar:totalRequest/totalSkko*100,barColor:"#F0D191"},
-  {label:"Realisasi Bayar",value:fmtB(totalReal),sub:`<b>${pct(totalReal/totalSkko*100)}</b> dari SKKO telah terealisasi`,bar:totalReal/totalSkko*100},
-  {label:"Backlog Pembayaran",value:fmtB(totalRequest-totalReal),sub:`<b>${pct((totalRequest-totalReal)/totalRequest*100)}</b> dari permintaan bayar belum terealisasi`,bar:(totalRequest-totalReal)/totalRequest*100,barColor:"#F0AFA9"},
+  {label:"Nilai AO",value:fmtT(totalAo),sub:`<b class="amber">${pct(topAo.ao/totalAo*100)}</b> berasal dari ${topAo.code} (${fmtT(topAo.ao)})`,bar:topAo.ao/totalAo*100,barColor:"#F0D191"},
+  {label:"Nilai SKKO",value:fmtRpM(totalSkko),sub:"Basis acuan komitmen, permintaan bayar, dan disburse",bar:100},
+  {label:"Total Nilai Komitmen",value:fmtRpM(totalCommit),sub:`<b>${pct(totalCommit/totalSkko*100)}</b> dari SKKO; sisa <b class="warn">${pct(100-totalCommit/totalSkko*100)}</b>`,bar:totalCommit/totalSkko*100},
+  {label:"Sisa SKKO",value:fmtRpM(totalSisa),sub:`<b class="warn">${pct(totalSisa/totalSkko*100)}</b> belum masuk nilai komitmen`,bar:totalSisa/totalSkko*100,barColor:"#F0AFA9"},
+  {label:"Permintaan Bayar",value:fmtRpM(totalRequest),sub:`<b>${pct(totalRequest/totalSkko*100)}</b> dari SKKO telah diminta bayar`,bar:totalRequest/totalSkko*100,barColor:"#F0D191"},
+  {label:"Realisasi Bayar",value:fmtRpM(totalReal),sub:`<b>${pct(totalReal/totalSkko*100)}</b> dari SKKO telah terealisasi`,bar:totalReal/totalSkko*100},
+  {label:"Backlog Pembayaran",value:fmtRpM(backlog),sub:backlog>0?`<b class="warn">${pct(backlog/totalRequest*100)}</b> dari permintaan bayar belum terealisasi`:`<b>Seluruh</b> permintaan bayar telah terealisasi`,bar:backlog/totalRequest*100,barColor:"#F0AFA9"},
   {label:"PRK Terkontrak",value:pct(totalContracted/totalPrk*100),sub:`${totalContracted} dari ${totalPrk} item telah terkontrak`,bar:totalContracted/totalPrk*100}
  ];
- document.getElementById("kpiGrid").innerHTML=k.map(x=>`<div class="kpi"><div class="k-label">${x.label}</div><div class="k-value num">${x.value}</div><div class="k-sub">${x.sub}</div><div class="kpi-bar"><i style="width:${Math.min(Math.max(x.bar,0),100)}%;${x.barColor?"background:"+x.barColor:""}"></i></div></div>`).join("");
+ document.getElementById("kpiGrid").innerHTML=k.map(x=>`<div class="kpi"><div class="k-label">${x.label}</div><div class="k-value num">${x.value}</div><div class="k-sub">${x.sub}</div><div class="kpi-bar"><i style="width:${Math.min(x.bar,100)}%;${x.barColor?"background:"+x.barColor:""}"></i></div></div>`).join("");
 }
 
 /* ---------- FUNNEL ---------- */
@@ -399,12 +413,12 @@ function renderFunnel(){
  ];
  document.getElementById("funnelWrap").innerHTML=stages.map(s=>{
   const p=s.val/totalSkko*100;
-  return `<div class="funnel-row"><div class="funnel-label"><b>${s.label}</b>${s.sub}</div><div class="funnel-track"><div class="funnel-fill" style="width:${p}%;background:${s.color}"><span>Rp${fmtM(s.val)}</span></div></div><div class="funnel-value"><div class="f-pct">${pct(p)}</div></div></div>`;
+  return `<div class="funnel-row"><div class="funnel-label"><b>${s.label}</b>${s.sub}</div><div class="funnel-track"><div class="funnel-fill" style="width:${p}%;background:${s.color}"><span>${fmtRpM(s.val)}</span></div></div><div class="funnel-value"><div class="f-pct">${pct(p)}</div></div></div>`;
  }).join("");
  const gap=totalRequest/totalCommit*100;
  const realReq=totalReal/totalRequest*100;
- const backlog=totalRequest-totalReal;
- document.getElementById("funnelNote").innerHTML=`Gap terbesar berada pada tahap <b>Komitmen → Permintaan Bayar</b>: permintaan bayar baru sekitar <b>${pct(gap)}</b> dari total komitmen. Dari permintaan bayar ke realisasi, <b>${pct(realReq)}</b> sudah terealisasi, sehingga backlog pembayaran ${backlog<=0?"<b>nihil</b>":"sebesar <b>"+fmtM(backlog)+"</b>"}.`;
+ const gapAmt=totalCommit-totalRequest;
+ document.getElementById("funnelNote").innerHTML=`Gap terbesar berada pada tahap <b>Komitmen → Permintaan Bayar</b>: permintaan bayar baru sekitar <b>${pct(gap)}</b> dari total komitmen (selisih <b>${fmtRpM(gapAmt)}</b>). Dari permintaan bayar ke realisasi, <b>${pct(realReq)}</b> sudah terealisasi, ${backlog>0?`sehingga backlog relatif kecil sebesar <b>${fmtRpM(backlog)}</b>.`:"sehingga tidak ada backlog pembayaran."}`;
 }
 
 /* ---------- TABEL RINCIAN (sortable) ---------- */
@@ -483,7 +497,7 @@ checksWrap.addEventListener("change",e=>{
  renderCompare();
 });
 
-/* ---------- GRAFIK PERBANDINGAN ---------- */
+/* ---------- GRAFIK BATANG (perbandingan) ---------- */
 let compareChart,shareChart;
 const legendOpts={position:'top',align:'end',labels:{boxWidth:10,boxHeight:10,usePointStyle:false}};
 
@@ -538,7 +552,7 @@ function renderCompare(){
        legend:legendOpts,
        tooltip:{callbacks:{label:c=>{
          const m=METRICS[active[c.datasetIndex]];
-         return m.name+": "+(m.unit==="pct"?pct(c.parsed.x):fmtM(c.parsed.x*1e9));
+         return m.name+": "+(m.unit==="pct"?pct(c.parsed.x):fmtMx(c.parsed.x));
        }}}
      },
      scales
@@ -546,7 +560,7 @@ function renderCompare(){
  });
 
  const top=arr[0];
- const topVal=selM.unit==="pct"?pct(top.disb):fmtM(top[selM.field]);
+ const topVal=selM.unit==="pct"?pct(top.disb):fmtRpM(top[selM.field]);
  insEl.innerHTML=`Urutan mengikuti <b>${selM.name}</b>: <b>${top.code}</b> di posisi teratas (${topVal}). Tiga teratas: ${arr.slice(0,3).map(d=>d.code).join(", ")}.`;
 }
 
@@ -566,7 +580,7 @@ function renderDonut(){
    : `Komposisi ${M.name} per Program`;
  document.getElementById("donutNote").textContent=isDisb
    ? "% Disburse tidak dapat dijumlahkan, sehingga donat menampilkan pangsa Realisasi Bayar."
-   : `Pangsa setiap program terhadap total ${M.name} ${fmtM(total)}.`;
+   : `Pangsa setiap program terhadap total ${M.name} ${fmtRpM(total)}.`;
 
  if(shareChart){shareChart.destroy();shareChart=null;}
  shareChart=new Chart(document.getElementById("chartShare"),{
@@ -579,7 +593,10 @@ function renderDonut(){
      responsive:true,maintainAspectRatio:false,cutout:"58%",
      plugins:{
        legend:{position:"bottom",labels:{color:C.text2,font:{size:10},boxWidth:10,padding:7}},
-       tooltip:{callbacks:{label:c=>c.label+": "+fmtM(c.parsed*1e9)+" ("+pct(c.parsed/(total/1e9)*100)+")"}}
+       tooltip:{callbacks:{label:c=>{
+         const share=c.parsed/(total/1e9)*100;
+         return c.label+": "+fmtMx(c.parsed)+" ("+pct(share)+")";
+       }}}
      }
    }
  });
@@ -592,26 +609,27 @@ function renderDonut(){
 function renderFindings(){
  const topReal=[...raw].sort((a,b)=>b.real-a.real).slice(0,3);
  const topReal3=topReal.reduce((s,d)=>s+d.real,0)/totalReal*100;
- const ins=byCode("INS");
+ const top1=topReal[0];
  const f=[
-  {cls:"ok",h:"Penyerapan Kas Sudah Lebih dari Separuh SKKO",p:`Dari Nilai SKKO <span class="hl num">${fmtM(totalSkko)}</span>, realisasi bayar mencapai <span class="hl num">${fmtM(totalReal)}</span> atau <span class="hl num">${pct(totalReal/totalSkko*100)}</span>. Sekitar <span class="hl num">${fmtM(totalSkko-totalReal)}</span> masih belum terealisasi sebagai pembayaran.`},
-  {cls:"",h:"Realisasi Terkonsentrasi pada Tiga Program",p:`<span class="hl">${topReal.map(d=>d.code).join(", ")}</span> menjadi tiga kontributor realisasi terbesar dengan total sekitar <span class="hl num">${pct(topReal3)}</span> dari realisasi bayar. ${ins.code} sendiri menyumbang <span class="hl num">${pct(ins.real/totalReal*100)}</span>.`},
-  {cls:"warn",h:"Kontraktualisasi PRK Tinggi, tetapi Nilai Komitmen Belum Penuh",p:`Secara item, <span class="hl num">${totalContracted} dari ${totalPrk} PRK</span> telah terkontrak atau <span class="hl num">${pct(totalContracted/totalPrk*100)}</span>. Namun total nilai komitmen baru <span class="hl num">${pct(totalCommit/totalSkko*100)}</span> dari SKKO, menyisakan <span class="hl num">${fmtM(totalSkko-totalCommit)}</span>.`},
-  {cls:"danger",h:"Gap Utama Terjadi Sebelum Tahap Pembayaran",p:`Permintaan bayar mencapai <span class="hl num">${fmtM(totalRequest)}</span>, baru sekitar <span class="hl num">${pct(totalRequest/totalCommit*100)}</span> dari total nilai komitmen <span class="hl num">${fmtM(totalCommit)}</span>, atau masih <span class="hl num">${fmtM(totalCommit-totalRequest)}</span> yang belum diajukan. Realisasi terhadap permintaan bayar tercatat <span class="hl num">${pct(totalReal/totalRequest*100)}</span>.`}
+  {cls:"warn",h:`Penyerapan Kas Baru ${pct(totalReal/totalSkko*100)} dari SKKO`,p:`Dari Nilai SKKO <span class="hl num">${fmtRpM(totalSkko)}</span>, realisasi bayar mencapai <span class="hl num">${fmtRpM(totalReal)}</span> atau <span class="hl num">${pct(totalReal/totalSkko*100)}</span>. Dengan demikian, sekitar <span class="hl num">${fmtRpM(totalSkko-totalReal)}</span> belum terealisasi sebagai pembayaran.`},
+  {cls:"",h:"Realisasi Terkonsentrasi pada Tiga Program",p:`<span class="hl">${topReal.map(d=>d.code).join(", ")}</span> menjadi tiga kontributor realisasi terbesar dengan total sekitar <span class="hl num">${pct(topReal3)}</span> dari realisasi bayar. ${top1.code} sendiri menyumbang sekitar <span class="hl num">${pct(top1.real/totalReal*100)}</span>.`},
+  {cls:"ok",h:"Kontraktualisasi PRK Tinggi, Komitmen Belum Penuh",p:`Secara item, <span class="hl num">${totalContracted} dari ${totalPrk} PRK</span> telah terkontrak atau <span class="hl num">${pct(totalContracted/totalPrk*100)}</span>. Namun total nilai komitmen baru <span class="hl num">${pct(totalCommit/totalSkko*100)}</span> dari SKKO, menyisakan <span class="hl num">${fmtRpM(totalSkko-totalCommit)}</span>.`},
+  {cls:"danger",h:"Gap Utama Terjadi Sebelum Tahap Pembayaran",p:`Permintaan bayar mencapai <span class="hl num">${fmtRpM(totalRequest)}</span>, tetapi baru sekitar <span class="hl num">${pct(totalRequest/totalCommit*100)}</span> dari total nilai komitmen <span class="hl num">${fmtRpM(totalCommit)}</span>. Sebaliknya, realisasi terhadap permintaan bayar sudah <span class="hl num">${pct(totalReal/totalRequest*100)}</span>${backlog>0?"":", sehingga tidak ada backlog pembayaran"}.`}
  ];
  document.getElementById("findings").innerHTML=f.map(x=>`<div class="ins ${x.cls}"><div class="ins-title">${x.h}</div><div class="ins-text">${x.p}</div></div>`).join("");
 }
 
 /* ---------- PERHATIAN ---------- */
 function renderAttention(){
- const tul=byCode("TUL"), kit=byCode("KIT"), sdm=byCode("SDM");
+ const tul=raw.find(d=>d.code==="TUL"), kit=raw.find(d=>d.code==="KIT"), sdm=raw.find(d=>d.code==="SDM");
  document.getElementById("attnGrid").innerHTML=`
-  <div class="attn"><div class="a-label">Perlu Percepatan</div><h4>TUL — Disburse Terendah</h4><p>TUL memiliki % disburse hanya <b class="num">${pct(tul.disb)}</b>, PRK terkontrak <b>${tul.contracted} dari ${tul.prk}</b> item atau <b class="num">${pct(tul.prkPct)}</b>, dan nilai komitmen baru <b class="num">${pct(tul.commitPct)}</b> dari SKKO.</p></div>
-  <div class="attn"><div class="a-label">Perlu Percepatan</div><h4>KIT — Komitmen &amp; Disburse Rendah</h4><p>PRK KIT sudah terkontrak <b>${kit.contracted} dari ${kit.prk}</b> item, tetapi nilai komitmen hanya <b class="num">${pct(kit.commitPct)}</b> dari SKKO dan % disburse juga <b class="num">${pct(kit.disb)}</b>.</p></div>
-  <div class="attn amber"><div class="a-label">Catatan Cakupan</div><h4>SDM — AO Terbesar, SKKO Kecil</h4><p>SDM menyumbang <b class="num">${pct(sdm.ao/totalAo*100)}</b> dari total Nilai AO (${fmtT(sdm.ao)}), sementara Nilai SKKO hanya ${fmtM(sdm.skko)} (<b class="num">${pct(sdm.skko/totalSkko*100)}</b> dari total SKKO). Perbedaan skala ini perlu dibaca sesuai cakupan mekanisme pelaporan data.</p></div>`;
+  <div class="attn"><div class="a-label">Perlu Percepatan</div><h4>TUL — Disburse Terendah</h4><p>TUL memiliki % disburse hanya <b class="num">${pct(tul.disb)}</b> dan PRK terkontrak <b>${tul.contracted} dari ${tul.prk}</b> item atau <b class="num">${pct(tul.prkPct)}</b>; keduanya termasuk yang terendah di antara program.</p></div>
+  <div class="attn"><div class="a-label">Perlu Percepatan</div><h4>KIT — Komitmen &amp; Disburse Rendah</h4><p>Nilai komitmen dan realisasi bayar masing-masing hanya <b class="num">${pct(kit.commitPct)}</b> dari SKKO (${fmtRpM(kit.real)} dari ${fmtRpM(kit.skko)}), sehingga sisa SKKO sebesar <b class="num">${fmtRpM(kit.sisa)}</b> perlu dikejar.</p></div>
+  <div class="attn amber"><div class="a-label">Catatan Cakupan</div><h4>SDM — AO Sangat Dominan</h4><p>SDM menyumbang <b class="num">${pct(sdm.ao/totalAo*100)}</b> dari total Nilai AO (${fmtT(sdm.ao)}), sementara Nilai SKKO hanya ${fmtRpM(sdm.skko)}. Perbedaan skala ini perlu dibaca sesuai cakupan mekanisme pelaporan data.</p></div>`;
 }
 
 /* ---------- INIT ---------- */
+renderHeader();
 renderKpi();
 renderFunnel();
 renderFindings();
