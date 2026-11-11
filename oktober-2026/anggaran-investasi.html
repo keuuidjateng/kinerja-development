@@ -76,6 +76,8 @@ select:focus,input[type="search"]:focus{border-color:var(--teal);box-shadow:0 0 
 .grid-wide{display:grid;grid-template-columns:1.35fr .65fr;gap:16px}
 .box{background:#fff;border:1px solid var(--line);border-radius:4px;padding:17px;margin:16px 0;box-shadow:0 1px 4px rgba(11,46,79,.025);min-width:0}
 .box h3{margin:0 0 12px;font-family:Arial,serif;color:var(--navy-d);font-size:17px}
+.box-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.box-head h3{margin:0}
 .chart{height:360px;position:relative}
 .chart.small-chart{height:320px}
 .chart.tall{height:460px}
@@ -84,6 +86,19 @@ select:focus,input[type="search"]:focus{border-color:var(--teal);box-shadow:0 0 
 .chart-toolbar{display:flex;align-items:center;gap:8px;margin:0 0 10px}
 .chart-toolbar label{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--grey);font-weight:700}
 .chart-toolbar select{width:auto;min-width:200px;padding:7px 10px;font-size:12.5px}
+.box-head .chart-toolbar{margin:0}
+
+/* LEGEND DISBURSE */
+.dis-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--grey);margin-top:10px}
+.dis-legend span{display:inline-flex;align-items:center;gap:6px}
+.lg-bar{width:12px;height:10px;border-radius:2px;background:#0B2E4F;display:inline-block}
+.lg-soft{background:#0B2E4F73;border:1px solid #0B2E4F}
+.lg-dot{width:10px;height:10px;border-radius:50%;background:#0B2E4F99;border:1px solid #0B2E4F;display:inline-block}
+.lg-dash{width:18px;height:0;border-top:2px dashed #1E7A4C;display:inline-block}
+.dis-key{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 16px;margin-top:12px;font-size:11.5px;color:var(--text2)}
+.dis-key span{display:flex;gap:6px;align-items:center}
+.dis-key b{color:var(--navy-d)}
+.dis-key i{width:10px;height:10px;border-radius:2px;display:inline-block;flex-shrink:0}
 
 /* TABLE */
 .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:4px}
@@ -258,8 +273,26 @@ tr.total td{font-weight:700;background:#EEF2F6;border-top:1.5px solid var(--navy
     </div>
 
     <div class="box">
-      <h3>% Realisasi Bayar terhadap AKI per Program</h3>
+      <div class="box-head">
+        <h3>% Realisasi Bayar terhadap AKI per Program</h3>
+        <div class="chart-toolbar"><label for="disSort">Urutkan</label>
+          <select id="disSort">
+            <option value="aki">Nilai AKI</option>
+            <option value="rb">Realisasi Bayar</option>
+            <option value="pct">% Realisasi Bayar thd AKI</option>
+          </select></div>
+      </div>
       <div class="chart"><canvas id="disburseChart"></canvas></div>
+      <div class="dis-legend">
+        <span><i class="lg-bar"></i>Nilai AKI (Rp M)</span>
+        <span><i class="lg-bar lg-soft"></i>Realisasi Bayar (Rp M)</span>
+        <span><i class="lg-dot"></i>% Realisasi Bayar thd AKI</span>
+        <span><i class="lg-dash" style="border-top-color:#1E7A4C"></i>Total Disburse AKI (98,78%)</span>
+        <span><i class="lg-dash" style="border-top-color:#1E7A4C"></i>95–100% (aman)</span>
+        <span><i class="lg-dash" style="border-top-color:#C9A227"></i>90–95% / 100–105% (waspada)</span>
+        <span><i class="lg-dash" style="border-top-color:#B23A2E"></i>di luar 90–105% (perlu perhatian)</span>
+      </div>
+      <div id="disKey" class="dis-key"></div>
     </div>
 
     <div class="grid">
@@ -325,7 +358,14 @@ tr.total td{font-weight:700;background:#EEF2F6;border-top:1.5px solid var(--navy
     </div>
 
     <div class="box">
-      <h3>Progres Terkontrak &amp; Realisasi per Program — Terbesar ke Terkecil</h3>
+      <div class="box-head">
+        <h3>Progres Terkontrak &amp; Realisasi per Program — Terbesar ke Terkecil</h3>
+        <div class="chart-toolbar"><label for="progSort">Urutkan</label>
+          <select id="progSort">
+            <option value="komPct">Terkontrak (SPK) thd SKKI</option>
+            <option value="disPct">Realisasi Bayar thd AKI</option>
+          </select></div>
+      </div>
       <div id="progList"></div>
     </div>
 
@@ -560,6 +600,7 @@ const fmtN1 = v => v.toLocaleString('id-ID',{minimumFractionDigits:1,maximumFrac
 const charts = {};
 const legendOpts = {position:'top',align:'end',labels:{boxWidth:10,boxHeight:10,font:{size:11}}};
 const gridY = {grid:{color:C.grid},ticks:{callback:v=>v.toLocaleString('id-ID')}};
+const MONTH_ORDER = ['jan','feb','mar','apr','mei','jun','jul','agu','sep','okt','nov','des'];
 
 /* ---------- TAB SWITCH ---------- */
 document.querySelectorAll('.tab').forEach(btn=>{
@@ -594,8 +635,13 @@ function makeTableSortable(table, skipFirst){
       th.dataset.sortDir = dir;
       th.classList.add(dir==='asc'?'sort-asc':'sort-desc');
       th.querySelector('.sort-ic').textContent = dir==='asc'?'↑':'↓';
+      const isMonthCol = table.id==='monthlyTable' && col===0;
       const parse = row => {
         const t = row.cells[col].textContent.trim();
+        if(isMonthCol){
+          const idx = MONTH_ORDER.indexOf(t.toLowerCase().slice(0,3));
+          return idx>=0 ? idx : 99;
+        }
         const n = parseFloat(t.replace(/\./g,'').replace(/,/g,'.').replace(/%/g,'').replace(/[()]/g,''));
         return Number.isNaN(n) ? t.toLowerCase() : n;
       };
@@ -764,22 +810,33 @@ pTot.innerHTML = `<td>TOTAL</td>
   <td>${fmtPct(pct(TOT.rb,TOT.aki))}</td>`;
 document.getElementById('programTableFoot').appendChild(pTot);
 
-/* ---------- PROGRESS LIST (program tab) ---------- */
+/* ---------- PROGRESS LIST (program tab, dengan dropdown Urutkan) ---------- */
+const PROG_SORT = {
+  komPct: p=>pct(p.spk,p.skki),
+  disPct: p=>pct(p.rb,p.aki)
+};
 const progList = document.getElementById('progList');
-programs.forEach(p=>{
-  const komPct = pct(p.spk,p.skki);
-  const disPct = pct(p.rb,p.aki);
-  const row = document.createElement('div');
-  row.innerHTML = `
-    <div class="prog-row" style="margin-bottom:14px">
-      <div style="display:flex;justify-content:space-between;font-size:12.5px;color:#41526B;margin-bottom:4px"><span><strong style="color:${p.color}">${p.code}</strong> — ${p.name}</span><strong style="color:#0B2E4F">${fmtM(M(p.ai))}</strong></div>
-      <div style="height:6px;background:#E8EDF1;border-radius:6px;overflow:hidden;margin-bottom:6px"><div style="height:100%;width:${komPct}%;background:linear-gradient(90deg,#0B2E4F,#0E7C7B)"></div></div>
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:#6B7280;margin-bottom:4px"><span>Terkontrak (SPK) thd SKKI</span><span>${fmtPct(komPct)}</span></div>
-      <div style="height:6px;background:#E8EDF1;border-radius:6px;overflow:hidden;margin-bottom:6px"><div style="height:100%;width:${disPct}%;background:#C9A227"></div></div>
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:#6B7280"><span>Realisasi Bayar thd AKI</span><span>${fmtPct(disPct)}</span></div>
-    </div>`;
-  progList.appendChild(row);
-});
+function renderProgList(key){
+  const list = [...programs].sort((a,b)=>PROG_SORT[key](b)-PROG_SORT[key](a));
+  progList.innerHTML = '';
+  list.forEach(p=>{
+    const komPct = pct(p.spk,p.skki);
+    const disPct = pct(p.rb,p.aki);
+    const row = document.createElement('div');
+    row.innerHTML = `
+      <div class="prog-row" style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;color:#41526B;margin-bottom:4px"><span><strong style="color:${p.color}">${p.code}</strong> — ${p.name}</span><strong style="color:#0B2E4F">${fmtM(M(p.ai))}</strong></div>
+        <div style="height:6px;background:#E8EDF1;border-radius:6px;overflow:hidden;margin-bottom:6px"><div style="height:100%;width:${komPct}%;background:linear-gradient(90deg,#0B2E4F,#0E7C7B)"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:#6B7280;margin-bottom:4px"><span>Terkontrak (SPK) thd SKKI</span><span>${fmtPct(komPct)}</span></div>
+        <div style="height:6px;background:#E8EDF1;border-radius:6px;overflow:hidden;margin-bottom:6px"><div style="height:100%;width:${disPct}%;background:#C9A227"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:#6B7280"><span>Realisasi Bayar thd AKI</span><span>${fmtPct(disPct)}</span></div>
+      </div>`;
+    progList.appendChild(row);
+  });
+}
+const progSortEl = document.getElementById('progSort');
+progSortEl.addEventListener('change',()=>renderProgList(progSortEl.value));
+renderProgList(progSortEl.value);
 
 /* ---------- OVERVIEW & PROGRAM CHARTS ---------- */
 charts.funnel = new Chart(document.getElementById('funnelChart'), {
@@ -814,19 +871,138 @@ programs.forEach(p=>{
   dLegend.innerHTML += `<span style="display:inline-flex;align-items:center;gap:5px;margin-right:12px"><i style="width:10px;height:10px;border-radius:2px;background:${p.color};display:inline-block"></i>${p.code} ${fmtN1(pct(p.ai,TOT.ai))}%</span>`;
 });
 
-const byDisburse = [...programs].sort((a,b)=>pct(b.rb,b.aki)-pct(a.rb,a.aki));
-charts.disburse = new Chart(document.getElementById('disburseChart'), {
-  type:'bar',
-  data:{
-    labels:byDisburse.map(p=>p.code),
-    datasets:[{data:byDisburse.map(p=>+pct(p.rb,p.aki).toFixed(2)), backgroundColor:byDisburse.map(p=>p.color), borderRadius:3, maxBarThickness:48}]
-  },
-  options:{
-    responsive:true, maintainAspectRatio:false,
-    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>c.raw+'% realisasi thd AKI'}}},
-    scales:{x:{grid:{display:false}}, y:{grid:{color:C.grid},ticks:{callback:v=>v+'%'},min:0,max:100}}
+/* ---------- DISBURSE: Nilai AKI | Realisasi Bayar (batang, Rp M) + % Realisasi (titik) + garis 98,78% ---------- */
+const DIS_SORT = {
+  aki: p=>p.aki,
+  rb:  p=>p.rb,
+  pct: p=>pct(p.rb,p.aki)
+};
+const TOTAL_DISBURSE = +pct(TOT.rb,TOT.aki).toFixed(2);
+
+const disKeyEl = document.getElementById('disKey');
+disKeyEl.innerHTML = programs.map(p=>`<span><i style="background:${p.color}"></i><b>${p.code}</b> = ${p.name}</span>`).join('');
+
+/* Pita zona warna di latar grafik (berdasarkan jarak dari 95%) */
+const disZonePlugin = {
+  id:'disZones',
+  beforeDatasetsDraw(chart){
+    if(chart.canvas.id!=='disburseChart') return;
+    const {ctx, chartArea:a, scales:{y}} = chart;
+    if(!a) return;
+    const zones = [
+      {from:0,   to:90,  c:'rgba(178,58,46,.08)'},
+      {from:90,  to:95,  c:'rgba(201,162,39,.12)'},
+      {from:95,  to:100, c:'rgba(30,122,76,.12)'},
+      {from:100, to:105, c:'rgba(201,162,39,.12)'},
+      {from:105, to:120, c:'rgba(178,58,46,.08)'}
+    ];
+    ctx.save();
+    zones.forEach(z=>{
+      const yTop = y.getPixelForValue(z.to);
+      const yBot = y.getPixelForValue(z.from);
+      ctx.fillStyle = z.c;
+      ctx.fillRect(a.left, yTop, a.right-a.left, yBot-yTop);
+    });
+    ctx.restore();
   }
-});
+};
+
+/* Garis putus-putus 98,78% membentang dari sumbu kiri ke sumbu kanan */
+const disLinePlugin = {
+  id:'disLine',
+  afterDatasetsDraw(chart){
+    if(chart.canvas.id!=='disburseChart') return;
+    const {ctx, chartArea:a, scales:{y}} = chart;
+    if(!a) return;
+    const yPos = y.getPixelForValue(TOTAL_DISBURSE);
+    ctx.save();
+    ctx.beginPath();
+    ctx.setLineDash([6,4]);
+    ctx.strokeStyle = '#1E7A4C';
+    ctx.lineWidth = 2;
+    ctx.moveTo(a.left, yPos);
+    ctx.lineTo(a.right, yPos);
+    ctx.stroke();
+    ctx.restore();
+  }
+};
+
+function renderDisburse(key){
+  const list = [...programs].sort((a,b)=>DIS_SORT[key](b)-DIS_SORT[key](a));
+  if(charts.disburse) charts.disburse.destroy();
+  charts.disburse = new Chart(document.getElementById('disburseChart'), {
+    type:'bar',
+    plugins:[disZonePlugin, disLinePlugin],
+    data:{
+      labels:list.map(p=>p.code),
+      datasets:[
+        {
+          type:'bar', label:'Nilai AKI',
+          data:list.map(p=>+M(p.aki).toFixed(2)),
+          backgroundColor:list.map(p=>p.color),
+          borderColor:list.map(p=>p.color),
+          borderWidth:1, borderRadius:3, maxBarThickness:30,
+          yAxisID:'y1', order:2
+        },
+        {
+          type:'bar', label:'Realisasi Bayar',
+          data:list.map(p=>+M(p.rb).toFixed(2)),
+          backgroundColor:list.map(p=>p.color+'73'),
+          borderColor:list.map(p=>p.color),
+          borderWidth:1, borderRadius:3, maxBarThickness:30,
+          yAxisID:'y1', order:2
+        },
+        {
+          type:'line', label:'% Realisasi Bayar thd AKI',
+          data:list.map(p=>+pct(p.rb,p.aki).toFixed(2)),
+          showLine:false,
+          pointStyle:'circle',
+          pointRadius:7, pointHoverRadius:9,
+          pointBackgroundColor:list.map(p=>p.color+'99'),
+          pointBorderColor:list.map(p=>p.color),
+          pointBorderWidth:1,
+          yAxisID:'y', order:1
+        }
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{mode:'index', intersect:false},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          usePointStyle:true,
+          callbacks:{
+            label:c=> c.dataset.yAxisID==='y'
+              ? c.dataset.label+': '+c.raw+'%'
+              : c.dataset.label+': '+fmtM(c.raw),
+            labelPointStyle:ctx=>({
+              pointStyle: ctx.dataset.yAxisID==='y' ? 'circle' : 'rect',
+              rotation:0
+            })
+          }
+        }
+      },
+      scales:{
+        x:{grid:{display:false}},
+        y:{
+          position:'left', min:0, max:120,
+          grid:{color:C.grid},
+          ticks:{stepSize:20, callback:v=>v+'%'},
+          title:{display:true, text:'% Realisasi Bayar thd AKI'}
+        },
+        y1:{
+          position:'right', min:0, grid:{display:false},
+          ticks:{callback:v=>v.toLocaleString('id-ID')+' M'},
+          title:{display:true, text:'Rp Miliar'}
+        }
+      }
+    }
+  });
+}
+const disSortEl = document.getElementById('disSort');
+disSortEl.addEventListener('change',()=>renderDisburse(disSortEl.value));
+renderDisburse(disSortEl.value);
 
 charts.programStack = new Chart(document.getElementById('programStackChart'), {
   type:'bar',
