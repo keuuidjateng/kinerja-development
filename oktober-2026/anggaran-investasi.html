@@ -28,7 +28,7 @@ button,select,input{font-family:inherit}
 .sub{font-size:14px;color:#CBD6E4;max-width:1000px;margin:0 0 20px}
 .metabar{display:flex;gap:30px;flex-wrap:wrap;border-top:1px solid #ffffff2e;padding-top:14px}
 .metabar div{font-size:11.5px;color:#B9C6D6}
-.metabar strong{display:block;color:#fff;font-size:13px;margin-top:2px}
+.metabar strong{display:block;color:#fff;font-family:Arial,serif;font-size:22px;font-weight:700;margin-top:2px}
 
 /* TABS */
 .tabs{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 8px #0000000b}
@@ -602,7 +602,7 @@ const legendOpts = {position:'top',align:'end',labels:{boxWidth:10,boxHeight:10,
 const gridY = {grid:{color:C.grid},ticks:{callback:v=>v.toLocaleString('id-ID')}};
 const MONTH_ORDER = ['jan','feb','mar','apr','mei','jun','jul','agu','sep','okt','nov','des'];
 
-/* ---------- TAB SWITCH (dengan ingatan tab terakhir) ---------- */
+/* ---------- TAB SWITCH (ingat tab hanya saat refresh; buka ulang halaman = Overview) ---------- */
 const TAB_KEY = 'anggaranInvestasi.activeTab';
 function activateTab(name){
   const btn = document.querySelector('.tab[data-tab="'+name+'"]');
@@ -622,6 +622,13 @@ document.querySelectorAll('.tab').forEach(btn=>{
   });
 });
 (function restoreTab(){
+  let isReload = false;
+  try{
+    const nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    if(nav) isReload = nav.type === 'reload';
+    else if(performance.navigation) isReload = performance.navigation.type === 1;
+  }catch(e){}
+  if(!isReload) return;
   let saved = null;
   try{ saved = localStorage.getItem(TAB_KEY); }catch(e){}
   if(saved) activateTab(saved);
