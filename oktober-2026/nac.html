@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Non Allowable Cost — UID Jawa Tengah | Oktober 2026</title>
+<!-- Kode Favicon -->
+<link rel="icon" type="image/png" href="../gambar/Logo PLN Favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+<style>
+:root{
+  --navy:#0B2E4F;--navy-d:#081E36;--navy-soft:#12406B;
+  --gold:#C9A227;--teal:#0E7C7B;--teal2:#159A98;
+  --grey:#6B7280;--lgrey:#E7E9EC;--bg:#FBFBFA;--card:#FFF;
+  --red:#B23A2E;--green:#1E7A4C;--amber:#A87F12;--line:#D7DBE1;--blue:#2877A8;--purple:#7656A6;
+  --text2:#41526B;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;color:#20304A;background:var(--bg);line-height:1.5;font-size:14px}
+button,select,input{font-family:inherit}
+.wrap{max-width:1380px;margin:auto;padding:0 28px 70px}
+
+/* HEADER */
+.hero{background:radial-gradient(circle at 80% 20%,rgba(21,154,152,.18),transparent 32%),linear-gradient(135deg,var(--navy-d),var(--navy) 60%,var(--navy-soft));color:#fff;padding:40px 0 34px}
+.hero-inner{max-width:1380px;margin:auto;padding:0 28px}
+.eyebrow{text-transform:uppercase;letter-spacing:3px;font-size:11px;color:var(--gold);font-weight:700;margin-bottom:13px}
+.hero h1{font-size:36px;margin:0 0 10px;line-height:1.2}
+.sub{font-size:14px;color:#CBD6E4;max-width:1000px;margin:0 0 20px}
+.metabar{display:flex;gap:30px;flex-wrap:wrap;border-top:1px solid #ffffff2e;padding-top:14px}
+.metabar div{font-size:11.5px;color:#B9C6D6}
+.metabar strong{display:block;color:#fff;font-size:22px;font-weight:700;margin-top:2px}
+.metabar small{display:block;font-size:11px;color:#8FA3BC;margin-top:2px}
+
+/* TABS */
+.tabs{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 8px #0000000b}
+.tabbar{max-width:1380px;margin:auto;padding:0 28px;display:flex;gap:3px;overflow-x:auto}
+.tab{border:0;background:transparent;padding:15px 18px;font-weight:700;color:#607086;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:7px;font-size:14px}
+.tab svg{width:15px;height:15px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tab:hover{color:var(--navy-d);background:#D9E9F7}
+.tab.active{background:var(--navy);color:#fff;border-bottom-color:var(--gold)}
+.tab:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+.panel{display:none;counter-reset:sec}
+.panel.active{display:block}
+
+/* SECTIONS */
+section{padding:34px 0 5px}
+.section-head{margin-bottom:20px}
+.section-title{font-size:23px;color:var(--navy-d);margin:0 0 5px;display:flex;align-items:baseline;gap:11px;flex-wrap:wrap}
+.section-title .num{color:var(--gold);font-size:14px;counter-increment:sec}
+.section-title .num::before{content:counter(sec,decimal-leading-zero)}
+.section-note{font-size:12px;color:var(--grey);margin-top:2px}
+.rule{height:3px;width:55px;background:var(--gold);margin:12px 0 0}
+.sub-title{font-size:17px;color:var(--navy-d);margin:0 0 14px}
+
+/* KPI CARDS */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}
+.card{background:#E8EEF5;border:1px solid var(--line);border-top:3px solid var(--navy);border-radius:4px;padding:16px;min-height:132px;box-shadow:0 1px 4px rgba(11,46,79,.03)}
+.card.teal{background:#E3F1F0;border-top-color:var(--teal)}
+.card.gold{background:#F8F1DC;border-top-color:var(--gold)}
+.card.green{background:#E4F1EA;border-top-color:var(--green)}
+.label{text-transform:uppercase;letter-spacing:.8px;font-size:10.5px;color:var(--grey);font-weight:700}
+.value{font-size:22px;font-weight:700;color:var(--navy-d);margin:7px 0}
+.small{font-size:11px;color:var(--grey)}
+
+/* GAUGES */
+.gauge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.gauge-card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:18px 18px 20px;text-align:center;box-shadow:0 1px 4px rgba(11,46,79,.025)}
+.gauge-eyebrow{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:6px}
+.gauge-svg{width:200px;height:110px}
+.gauge-bg{fill:none;stroke:#E8EDF1;stroke-width:14}
+.gauge-fg{fill:none;stroke-width:14;stroke-linecap:butt}
+.gauge-value{font-size:30px;font-weight:700;margin-top:-22px}
+.gauge-caption{font-size:12px;color:var(--grey);margin-bottom:8px}
+.gap{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:11px;margin-bottom:14px;text-transform:uppercase;letter-spacing:.03em}
+.gap-over{background:#F8F1DC;color:var(--amber)}
+.gap-even{background:#E4F1EA;color:var(--green)}
+.gap-risk{background:#FBEEEC;color:var(--red)}
+.gauge-figs{display:flex;justify-content:space-between;border-top:1px solid var(--lgrey);padding-top:12px;margin-top:4px;gap:12px}
+.gauge-figs div{display:flex;flex-direction:column;text-align:left;min-width:0}
+.gauge-figs span{font-size:10px;color:var(--grey);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.gauge-figs b{font-size:13px;margin-top:3px;color:var(--navy-d)}
+
+/* BOXES & CHARTS */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chart-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:16px}
+.box{background:#fff;border:1px solid var(--line);border-radius:4px;padding:17px;margin:16px 0;box-shadow:0 1px 4px rgba(11,46,79,.025);min-width:0}
+.box h3,.chart-card h3{margin:0 0 4px;color:var(--navy-d);font-size:17px}
+.box .chart-sub,.chart-card .chart-sub{font-size:12px;color:var(--grey);margin-bottom:14px;line-height:1.6}
+.box-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.box-head h3{margin:0}
+.chart{height:320px;position:relative}
+.chart.small{height:260px}
+.chart.tall{height:440px}
+.chart-card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:17px;margin:16px 0;box-shadow:0 1px 4px rgba(11,46,79,.025);min-width:0}
+.donut-center-label{text-align:center;margin-top:8px}
+.dcl-val{font-size:19px;font-weight:700;color:var(--navy)}
+.dcl-sub{font-size:11px;color:var(--grey)}
+
+/* CHART TOOLBAR */
+.chart-toolbar{display:flex;align-items:center;gap:8px;margin:0 0 12px}
+.chart-toolbar label{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--grey);font-weight:700}
+.chart-toolbar select{width:auto;min-width:200px;border:1px solid #CCD3DB;background:#fff;border-radius:4px;padding:7px 10px;font-size:12.5px;color:var(--navy-d);outline:none;cursor:pointer}
+.chart-toolbar select:focus{border-color:var(--teal);box-shadow:0 0 0 2px rgba(14,124,123,.10)}
+
+/* ACCOUNTING NOTE */
+.acct{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:2px;padding:16px 20px 8px;margin-bottom:22px}
+.acct-head{font-size:10.5px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--amber);margin-bottom:10px}
+.acct-list{margin:0;padding-left:20px;font-size:13.5px;color:var(--navy-d);line-height:1.6}
+.acct-list li{margin-bottom:6px}
+.acct-list b{color:var(--navy)}
+
+/* INSIGHTS */
+.insight-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px}
+.ins{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:2px;padding:18px 20px}
+.ins.ok{border-left-color:var(--green)}
+.ins.warn{border-left-color:var(--gold)}
+.ins.danger{border-left-color:var(--red)}
+.ins-title{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--navy);margin-bottom:8px}
+.ins.ok .ins-title{color:var(--green)}
+.ins.warn .ins-title{color:var(--amber)}
+.ins.danger .ins-title{color:var(--red)}
+.ins-text{font-size:14px;color:var(--navy-d);line-height:1.55}
+.ins-text b{color:var(--navy-d)}
+
+/* REKOMENDASI */
+.reco{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 20px}
+.reco-card{background:var(--navy-d);color:#fff;border-radius:4px;padding:18px}
+.reco-card .k{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);font-weight:700}
+.reco-card p{font-size:12.5px;color:#DCE4EE;margin:8px 0 0;line-height:1.6}
+
+/* CALLOUT */
+.callout{padding:15px 18px;background:#F4F0DF;border-left:4px solid var(--gold);border-radius:2px;margin:18px 0;color:#4A3E14}
+.callout.navy{background:var(--navy);color:#fff;border-left-color:var(--gold);padding:20px 22px;margin:0}
+.callout-label{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:700}
+.callout-value{font-size:26px;font-weight:700;line-height:1.15;margin-bottom:6px}
+.callout-text{font-size:12.5px;color:#C7D3E3;line-height:1.6}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* TOP LIST */
+.top-wrap{background:#fff;border:1px solid var(--line);border-radius:4px;padding:8px 22px}
+.top-row{display:grid;grid-template-columns:40px 1fr 150px;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--lgrey)}
+.top-row:last-child{border-bottom:none}
+.top-rank{width:28px;height:28px;border-radius:50%;background:var(--navy-d);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.top-name{font-size:13.5px;color:var(--navy-d);font-weight:700;margin-bottom:3px}
+.top-meta{font-size:11.5px;color:var(--grey);margin-bottom:7px}
+.top-track{height:8px;background:#E8EDF1;border-radius:10px;overflow:hidden}
+.top-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--teal));border-radius:10px}
+.top-val{font-size:12px;text-align:right;color:var(--navy-d);font-weight:700}
+
+/* CATEGORY */
+.kat-summary{display:flex;gap:24px;margin-bottom:18px;flex-wrap:wrap;background:var(--navy-d);color:#fff;border-radius:4px;padding:18px 22px}
+.kat-summary .ks{min-width:145px}
+.kat-summary .ks-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:#9FB2CC;font-weight:700}
+.kat-summary .ks-val{font-size:16px;font-weight:700;margin-top:4px;color:#fff}
+.item-row{background:#fff;border:1px solid var(--line);border-radius:4px;padding:16px 20px;margin-bottom:10px}
+.item-main{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.item-no{font-size:11.5px;color:var(--grey);background:#E8EDF1;padding:2px 7px;border-radius:2px;font-weight:700}
+.item-name{font-size:14px;font-weight:700;color:var(--navy);flex:1;min-width:200px}
+.item-tag{font-size:10px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;padding:3px 9px;border-radius:11px;white-space:nowrap}
+.tag-high{background:#E4F1EA;color:var(--green)}
+.tag-mid{background:#F8F1DC;color:var(--amber)}
+.tag-minor{background:#EEF0F4;color:var(--text2)}
+.tag-contra{background:#EEF0F4;color:var(--text2)}
+.tag-risk{background:#FBEEEC;color:var(--red)}
+.item-figures{display:flex;gap:28px;margin-bottom:12px;flex-wrap:wrap}
+.fig{display:flex;flex-direction:column;min-width:130px}
+.fig-label{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--grey);font-weight:700;margin-bottom:3px}
+.fig-val{font-size:12.5px;color:var(--navy-d)}
+.item-bar-wrap{display:flex;align-items:center;gap:12px}
+.item-bar-track{position:relative;flex:1;height:8px;background:#E8EDF1;border-radius:10px;overflow:hidden}
+.item-bar-fill{position:absolute;left:0;top:0;height:100%;border-radius:10px}
+.status-fill-high{background:var(--green)}
+.status-fill-mid{background:var(--gold)}
+.status-fill-minor{background:var(--grey)}
+.status-fill-contra{background:var(--grey)}
+.status-fill-risk{background:var(--red)}
+.item-bar-pct{font-size:11.5px;color:var(--text2);white-space:nowrap;min-width:170px;text-align:right}
+
+/* TABLES */
+.table-wrap{background:#fff;overflow-x:auto;border:1px solid var(--line);border-radius:4px}
+table.unit-table{width:100%;border-collapse:collapse;font-size:12px;min-width:760px}
+table.unit-table th{text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:#fff;background:var(--navy-d);padding:10px;white-space:nowrap}
+table.unit-table th.sortable{cursor:pointer;user-select:none}
+table.unit-table th.sortable:hover{background:var(--navy-soft)}
+table.unit-table th .sort-ic{display:inline-block;margin-left:6px;opacity:.5;font-size:10px}
+table.unit-table th.sort-asc .sort-ic,table.unit-table th.sort-desc .sort-ic{opacity:1;color:var(--gold)}
+table.unit-table td{padding:8px 10px;border-bottom:1px solid var(--lgrey);color:var(--navy-d);vertical-align:middle}
+table.unit-table tbody tr:nth-child(even){background:#F6F8FA}
+table.unit-table tbody tr:hover{background:#EEF6F6}
+table.unit-table tr:last-child td{border-bottom:none}
+table.unit-table tr.total td{font-weight:700;background:#EEF2F6;border-top:1.5px solid var(--navy);color:var(--navy-d)}
+table.unit-table td.num{text-align:right;white-space:nowrap}
+table.unit-table th.num{text-align:right}
+table.unit-table td.rank{color:var(--navy);font-weight:700}
+.unit-sub{font-size:11px;color:var(--grey);font-weight:400;margin-left:6px}
+.unit-name{font-weight:700;color:var(--navy-d)}
+.derived{font-size:10px;color:var(--amber);font-weight:700;margin-left:6px;text-transform:uppercase;letter-spacing:.04em}
+.mini-track{width:100%;height:6px;background:#E8EDF1;border-radius:6px;overflow:hidden;min-width:80px}
+.mini-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--teal));border-radius:6px}
+
+/* FOOTER */
+.footer{background:var(--navy-d);color:#B9C6D6;padding:25px 0;font-size:11px}
+.footer .wrap{padding-bottom:0}
+.fnote{margin-bottom:6px;line-height:1.6}
+.fnote b{color:#fff}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px}
+.legend span{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:#B9C6D6}
+.legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+
+/* RESPONSIVE */
+@media(max-width:1050px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .grid-wide{grid-template-columns:1fr}
+  .chart-grid{grid-template-columns:1fr}
+}
+@media(max-width:850px){
+  .grid,.two-col,.insight-grid,.gauge-grid,.reco{grid-template-columns:1fr}
+  .hero h1{font-size:28px}
+  .chart{height:300px}
+  .chart.tall{height:380px}
+  .top-row{grid-template-columns:30px 1fr}
+  .top-val{grid-column:2;text-align:left;margin-top:4px}
+  .opt{display:none}
+  .item-bar-pct{min-width:0}
+}
+@media(max-width:600px){
+  .wrap,.hero-inner,.tabbar{padding-left:15px;padding-right:15px}
+  .cards{grid-template-columns:1fr}
+  .hero{padding-top:32px}
+  .hero h1{font-size:25px}
+  section{padding-top:26px}
+  .metabar{gap:18px}
+  .item-figures{gap:16px}
+  .fig{min-width:120px}
+  .tab{padding:12px 12px;font-size:12px}
+  .value{font-size:20px}
+}
+@media print{
+  .tabs{display:none}
+  .panel{display:block!important}
+  .hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">PLN UID Jawa Tengah &middot; Analisis Non Allowable Cost &middot; Strictly Private &amp; Confidential</div>
+    <h1>Non Allowable Cost — UID Jawa Tengah</h1>
+    <p class="sub">Analisis realisasi NAC s.d. Oktober 2026 berdasarkan 2 kategori biaya, 14 unit pelaksana, serta pencapaian KPI terhadap target revisi Tahun 2026.</p>
+    <div class="metabar">
+      <div>Total Realisasi s.d Okt<strong>Rp 274,05 M</strong><small>realisasi 2026</small></div>
+      <div>Target Revisi 2026<strong>Rp 292,39 M</strong><small>realisasi 93,73% dari target revisi</small></div>
+      <div>Realisasi Tahun 2025<strong>Rp 303,63 M</strong><small>referensi tahun sebelumnya</small></div>
+      <div>Sisa thd Target Revisi<strong>Rp 18,35 M</strong><small>selisih target revisi dan realisasi s.d Okt</small></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabbar">
+    <button class="tab active" data-tab="rincian"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Rincian NAC</button>
+    <button class="tab" data-tab="kpi"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>KPI NAC</button>
+    <button class="tab" data-tab="insight"><svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>Analisis &amp; Rekomendasi</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ===================== TAB 1: RINCIAN NAC ===================== -->
+  <div id="tab-rincian" class="panel active">
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title"><span class="num"></span>Ringkasan Kinerja</h2>
+        <div class="section-note">Posisi s.d. Oktober 2026 &middot; seluruh nominal dalam Rupiah</div>
+        <div class="rule"></div>
+      </div>
+
+      <div class="acct">
+        <div class="acct-head">Catatan Akuntansi</div>
+        <ol class="acct-list">
+          <li>Target NAC tahun 2026 hasil revisi sebesar <b>Rp292,394 Miliar</b>, turun <b>22,67%</b> dari target awal Rp378,108 Miliar.</li>
+          <li>Realisasi NAC s.d. Oktober 2026 sebesar <b>Rp274,046 Miliar</b>, atau <b>110,24%</b> dari target s.d. Oktober sebesar Rp248,593 Miliar (selisih <b>Rp25,453 Miliar</b>).</li>
+          <li>Kategori A membukukan <b>Rp253,152 Miliar</b> (<b>127,44%</b> dari target) dan Kategori B <b>Rp20,894 Miliar</b> (<b>41,83%</b> dari target).</li>
+          <li>Beban PPh 21 Pegawai menjadi realisasi terbesar, yaitu <b>Rp163,998 Miliar</b> atau <b>59,85%</b> dari total realisasi NAC.</li>
+          <li>Penyisihan Piutang (kontra) sebesar <b>Rp18,053 Miliar</b>, dengan UP3 Semarang menyumbang sekitar <b>50%</b> (Rp9,032 Miliar).</li>
+          <li>Realisasi bulan Oktober sekitar <b>Rp35,72 Miliar</b> (selisih realisasi s.d. Oktober dan s.d. September pada data sebelumnya), di atas rata-rata Januari&ndash;September sebesar Rp26,48 Miliar per bulan.</li>
+        </ol>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="label">Total Realisasi NAC</div>
+          <div class="value">Rp 274,05 M</div>
+          <div class="small">Rp 274.045.995.566</div>
+        </div>
+        <div class="card teal">
+          <div class="label">Realisasi thd Target s/d Okt</div>
+          <div class="value">110,24%</div>
+          <div class="small">target Rp 248,59 M</div>
+        </div>
+        <div class="card gold">
+          <div class="label">Kontributor Unit Terbesar</div>
+          <div class="value">UID</div>
+          <div class="small">Rp 74,80 M &middot; 27,30% dari total</div>
+        </div>
+        <div class="card green">
+          <div class="label">Kontributor Jenis Biaya Terbesar</div>
+          <div class="value">PPh 21</div>
+          <div class="small">Rp 164,00 M &middot; 59,85% dari total</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title"><span class="num"></span>Realisasi (Polarisasi Negatif)</h2>
+        <div class="section-note">Realisasi s.d. Oktober terhadap target s.d. Oktober</div>
+        <div class="rule"></div>
+      </div>
+      <div class="gauge-grid" id="gaugeGrid"></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title"><span class="num"></span>Komposisi &amp; Distribusi</h2>
+        <div class="section-note">Grafik interaktif &mdash; arahkan kursor untuk detail</div>
+        <div class="rule"></div>
+      </div>
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>Komposisi Kategori NAC</h3>
+          <div class="chart-sub">Kategori A dan B membentuk total realisasi s.d. Oktober</div>
+          <div class="chart small"><canvas id="donutKategori"></canvas></div>
+          <div class="donut-center-label">
+            <div class="dcl-val">Rp 274,05 M</div>
+            <div class="dcl-sub">Total NAC</div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Distribusi Realisasi per Unit</h3>
+          <div class="chart-sub">14 unit, ditumpuk per kategori, diurutkan dari realisasi terbesar</div>
+          <div class="chart tall"><canvas id="unitChart"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title"><span class="num"></span>Struktur Realisasi per Jenis Biaya</h2>
+        <div class="section-note">Top 8 kontributor s.d. Oktober</div>
+        <div class="rule"></div>
+      </div>
+      <div class="chart-card">
+        <h3>Top Jenis Biaya</h3>
+        <div class="chart-sub">Kontribusi dihitung terhadap total NAC Rp 274,05 M</div>
+        <div class="chart"><canvas id="topChart"></canvas></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title"><span class="num"></span>Kontributor Jenis Biaya</h2>
+        <div class="section-note">Seluruh jenis biaya bernilai realisasi positif, terbesar ke terkecil</div>
+        <div class="rule"></div>
+      </div>
+      <div class="top-wrap" id="topItemsWrap"></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title"><span class="num"></span>Peringkat 14 Unit Pelaksana</h2>
+        <div class="section-note">Terbesar ke terkecil &middot; realisasi s.d. Oktober &middot; klik judul kolom untuk mengurutkan</div>
+        <div class="rule"></div>
+      </div>
+      <div class="table-wrap">
+        <table class="unit-table" id="unitTable">
+          <thead>
+            <tr>
+              <th style="width:40px">#</th>
+              <th class="sortable" data-col="1" data-type="text">Unit</th>
+              <th class="opt sortable" data-col="2" data-type="num" style="width:200px">Proporsi</th>
+              <th class="num sortable" data-col="3" data-type="num" style="width:110px">% dari Total</th>
+              <th class="num sortable" data-col="4" data-type="num" style="width:150px">Kategori A</th>
+              <th class="num sortable" data-col="5" data-type="num" style="width:150px">Kategori B</th>
+              <th class="num sortable" data-col="6" data-type="num" style="width:170px">Realisasi</th>
+            </tr>
+          </thead>
+          <tbody id="unitTableBody"></tbody>
+          <tfoot id="unitTableFoot"></tfoot>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title"><span class="num"></span>Rincian Kategori A</h2>
+        <div class="section-note">Beban usaha &middot; terbesar ke terkecil</div>
+        <div class="rule"></div>
+      </div>
+      <div class="kat-summary" id="katSummaryA"></div>
+      <div id="katItemsA"></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title"><span class="num"></span>Rincian Kategori B</h2>
+        <div class="section-note">Terbesar ke terkecil</div>
+        <div class="rule"></div>
+      </div>
+      <div class="kat-summary" id="katSummaryB"></div>
+      <div id="katItemsB"></div>
+    </section>
+
+    <section>
+      <div class="two-col">
+        <div class="callout navy">
+          <div class="callout-label">Target Revisi Tahun 2026</div>
+          <div class="callout-value">Rp 292,39 M</div>
+          <div class="callout-text">
+            Target awal Rp378,11 Miliar telah direvisi. Realisasi s.d. Oktober mencapai
+            93,73% dari target revisi tahunan, dengan sisa Rp18,35 Miliar.
+          </div>
+        </div>
+        <div class="callout navy">
+          <div class="callout-label">Realisasi Tahun 2025</div>
+          <div class="callout-value">Rp 303,63 M</div>
+          <div class="callout-text">
+            Realisasi 2026 s.d. Oktober setara 90,26% dari realisasi 2025. Perbandingan langsung
+            perlu mempertimbangkan perbedaan periode pengamatan.
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== TAB 2: KPI NAC ===================== -->
+  <div id="tab-kpi" class="panel">
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title"><span class="num"></span>Ringkasan KPI</h2>
+        <div class="section-note">Target revisi dan realisasi s.d. Oktober 2026 &middot; pencapaian = realisasi &divide; target</div>
+        <div class="rule"></div>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="label">Target Revisi NAC 2026</div>
+          <div class="value">Rp 292,39 M</div>
+          <div class="small">292.394,37 juta</div>
+        </div>
+        <div class="card teal">
+          <div class="label">Target s/d Oktober</div>
+          <div class="value">Rp 248,59 M</div>
+          <div class="small">248.592,68 juta</div>
+        </div>
+        <div class="card gold">
+          <div class="label">Realisasi s/d Oktober</div>
+          <div class="value">Rp 274,05 M</div>
+          <div class="small">274.046,00 juta &middot; pencapaian 110,24%</div>
+        </div>
+        <div class="card green">
+          <div class="label">Unit Melampaui Target</div>
+          <div class="value">13 / 14</div>
+          <div class="small">Kantor Induk (UID) di bawah target (63,99%)</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title"><span class="num"></span>Realisasi vs Target per Unit</h2>
+        <div class="section-note">Target s/d Oktober vs realisasi s/d Oktober</div>
+        <div class="rule"></div>
+      </div>
+      <div class="chart-card">
+        <h3>Perbandingan Target dan Realisasi</h3>
+        <div class="chart-sub">
+          Satuan Miliar (Rp) &middot; Abu-abu = target &middot; Warna realisasi:
+          <span style="color:#1E7A4C">&#9632; &lt; 95% target</span>&nbsp;
+          <span style="color:#C9A227">&#9632; 95&ndash;99% target</span>&nbsp;
+          <span style="color:#B23A2E">&#9632; &ge; 100% target</span>
+        </div>
+        <div class="chart-toolbar">
+          <label for="kpiSort">Urutkan berdasarkan</label>
+          <select id="kpiSort">
+            <option value="real" selected>Realisasi terbesar</option>
+            <option value="tsept">Target terbesar</option>
+          </select>
+        </div>
+        <div class="chart tall"><canvas id="kpiChart"></canvas></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title"><span class="num"></span>Pencapaian per Unit</h2>
+        <div class="section-note">Polarisasi negatif = target &divide; realisasi &middot; diurutkan dari tertinggi ke terendah &middot; merah &lt; 95%, kuning 95&ndash;99%, hijau &ge; 100%</div>
+        <div class="rule"></div>
+      </div>
+      <div class="chart-card">
+        <h3>Persentase Pencapaian s/d Oktober</h3>
+        <div class="chart-sub">
+          Rumus Pencapaian Polarisasi Negatif = target s/d Oktober &divide; realisasi s/d Oktober &times; 100% &middot; Warna:
+          <span style="color:#B23A2E">&#9632; &lt; 95%</span>&nbsp;
+          <span style="color:#C9A227">&#9632; 95&ndash;99%</span>&nbsp;
+          <span style="color:#1E7A4C">&#9632; &ge; 100%</span>
+        </div>
+        <div class="chart tall"><canvas id="kpiPctChart"></canvas></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title"><span class="num"></span>Tabel KPI per Unit</h2>
+        <div class="section-note">Terbesar ke terkecil &middot; satuan Rp juta &middot; % realisasi = realisasi &divide; target &middot; klik judul kolom untuk mengurutkan</div>
+        <div class="rule"></div>
+      </div>
+      <div class="table-wrap">
+        <table class="unit-table" id="kpiTable">
+          <thead>
+            <tr>
+              <th style="width:40px">#</th>
+              <th class="sortable" data-col="1" data-type="text">Unit</th>
+              <th class="num sortable opt" data-col="2" data-type="num" style="width:150px">Target Revisi 2026</th>
+              <th class="num sortable" data-col="3" data-type="num" style="width:150px">Target s/d Okt</th>
+              <th class="num sortable" data-col="4" data-type="num" style="width:150px">Realisasi s/d Okt</th>
+              <th class="num sortable" data-col="5" data-type="num" style="width:130px">Selisih</th>
+              <th class="num sortable" data-col="6" data-type="num" style="width:120px">% Realisasi</th>
+              <th class="sortable" data-col="7" data-type="num" style="width:230px">Status</th>
+            </tr>
+          </thead>
+          <tbody id="kpiTableBody"></tbody>
+          <tfoot id="kpiTableFoot"></tfoot>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== TAB 3: ANALISIS & REKOMENDASI ===================== -->
+  <div id="tab-insight" class="panel">
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title"><span class="num"></span>Temuan Utama</h2>
+        <div class="section-note">Temuan dari tab Rincian NAC dan KPI NAC, diturunkan langsung dari data sumber</div>
+        <div class="rule"></div>
+      </div>
+      <div class="insight-grid">
+        <div class="ins danger">
+          <div class="ins-title">PPh 21 Mendominasi Struktur NAC</div>
+          <div class="ins-text">
+            <b>Beban PPh 21 Pegawai</b> mencapai <b>Rp163,998 Miliar</b> atau <b>59,85%</b>
+            dari total realisasi NAC. Bersama <b>Insentif Kinerja Perusahaan</b> (Rp27,821 Miliar),
+            kedua pos ini menyumbang sekitar <b>70%</b> total, sehingga perubahan kecil pada
+            akun kepegawaian akan sangat memengaruhi profil NAC.
+          </div>
+        </div>
+
+        <div class="ins danger">
+          <div class="ins-title">Realisasi Melampaui Target s.d. Oktober</div>
+          <div class="ins-text">
+            Realisasi <b>Rp274,046 Miliar</b> melampaui target s.d. Oktober sebesar
+            <b>Rp248,593 Miliar</b> (pencapaian <b>110,24%</b>, kelebihan <b>Rp25,453 Miliar</b>).
+            Sisa menuju target revisi 2026 Rp292,394 Miliar hanya <b>Rp18,350 Miliar</b> untuk November&ndash;Desember.
+          </div>
+        </div>
+
+        <div class="ins danger">
+          <div class="ins-title">Kategori A Melampaui Target</div>
+          <div class="ins-text">
+            Kategori A mencapai <b>127,44%</b> dari target s.d. Oktober, dengan kelebihan <b>Rp54,510 Miliar</b>
+            dan porsi <b>92,38%</b> dari total NAC. Kategori B baru <b>41,83%</b> dari target
+            (Rp20,894 Miliar dari Rp49,951 Miliar) dan belum memiliki realisasi pada Pendapatan Luar Usaha.
+          </div>
+        </div>
+
+        <div class="ins warn">
+          <div class="ins-title">Akselerasi Realisasi pada Oktober</div>
+          <div class="ins-text">
+            Penambahan realisasi bulan Oktober sekitar <b>Rp35,72 Miliar</b>, lebih tinggi dari rata-rata
+            Januari&ndash;September sebesar <b>Rp26,48 Miliar per bulan</b>. Angka ini bergantung pada
+            posisi s.d. September dari data sebelumnya dan perlu dikonfirmasi ulang dengan data bulanan.
+          </div>
+        </div>
+
+        <div class="ins">
+          <div class="ins-title">UID Kontributor Terbesar, Terkonsentrasi</div>
+          <div class="ins-text">
+            UID menyumbang <b>Rp74,802 Miliar</b> atau <b>27,30%</b> dari total NAC. Posisi kedua
+            ditempati <b>SMG</b> dengan <b>Rp26,974 Miliar</b>, selisih sekitar <b>Rp47,83 Miliar</b>.
+            Realisasi UID hampir tiga kali lipat SMG.
+          </div>
+        </div>
+
+        <div class="ins danger">
+          <div class="ins-title">Proyeksi Akhir Tahun Berisiko Melampaui Target Revisi</div>
+          <div class="ins-text">
+            Rata-rata realisasi Januari&ndash;Oktober <b>Rp27,40 Miliar per bulan</b>. Jika laju ini berlanjut,
+            total akhir tahun sekitar <b>Rp328,86 Miliar</b>, melampaui target revisi sekitar <b>Rp36,46 Miliar</b>.
+            Agar tetap dalam target revisi, realisasi November&ndash;Desember harus ditekan maksimal
+            <b>Rp9,17 Miliar per bulan</b>. Proyeksi ini bersifat sederhana (rata-rata linier).
+          </div>
+        </div>
+
+        <div class="ins danger">
+          <div class="ins-title">UP3 Semarang Tertinggi di 255,76%</div>
+          <div class="ins-text">
+            Realisasi UP3 Semarang <b>Rp26.974 juta</b> jauh di atas target s/d Oktober
+            <b>Rp10.547 juta</b>, selisih <b>Rp16,43 Miliar</b>. UP3 Semarang juga menjadi penyumbang
+            sekitar <b>50%</b> Penyisihan Piutang di level unit.
+          </div>
+        </div>
+
+        <div class="ins danger">
+          <div class="ins-title">Seluruh 13 Unit Terdata Melampaui Target</div>
+          <div class="ins-text">
+            Semua UP3 dan UP2D berada di atas 100%. Pencapaian gabungan 13 unit tersebut sebesar
+            <b>151,28%</b>: realisasi <b>Rp199,24 Miliar</b> dibanding target <b>Rp131,70 Miliar</b>,
+            kelebihan sekitar <b>Rp67,54 Miliar</b>. Yang paling tipis adalah <b>UP2D</b> (<b>112,47%</b>).
+          </div>
+        </div>
+
+        <div class="ins ok">
+          <div class="ins-title">Kantor Induk (UID) Masih di Bawah Target</div>
+          <div class="ins-text">
+            Realisasi Kantor Induk <b>Rp74.802 juta</b> berada <b>Rp42,09 Miliar</b> di bawah target
+            s/d Oktober (Rp116.892 juta), dengan pencapaian <b>63,99%</b>. Porsi target Kantor Induk
+            sebesar <b>47,02%</b> dari target seluruh unit, sementara porsi realisasinya <b>27,30%</b>.
+          </div>
+        </div>
+
+        <div class="ins warn">
+          <div class="ins-title">Kelebihan Realisasi Unit UP3 Menjadi Perhatian</div>
+          <div class="ins-text">
+            Pada level unit pelaksana (UP3 dan UP2D), kelebihan realisasi terhadap target mencapai
+            <b>Rp67,54 Miliar</b>. Unit dengan kelebihan terbesar setelah Semarang adalah
+            <b>UP3 Tegal</b> (realisasi Rp19.850 juta vs target Rp14.253 juta).
+          </div>
+        </div>
+
+        <div class="ins danger">
+          <div class="ins-title">Ruang Target Revisi Menipis</div>
+          <div class="ins-text">
+            Sisa target revisi <b>Rp18,35 Miliar</b> untuk dua bulan terakhir setara sekitar
+            <b>Rp9,17 Miliar per bulan</b>, sedangkan laju rata-rata realisasi 2026 mencapai
+            <b>Rp27,40 Miliar per bulan</b>.
+          </div>
+        </div>
+
+        <div class="ins warn">
+          <div class="ins-title">Catatan Konsistensi Data KPI</div>
+          <div class="ins-text">
+            Data KPI sumber tidak mencantumkan Kantor Induk (UID). Nilai target revisi dan target s/d Oktober
+            Kantor Induk pada dashboard ini dihitung sebagai <b>selisih baris TOTAL</b> dengan 13 unit lainnya
+            dan bertanda <b>turunan</b>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title"><span class="num"></span>Rekomendasi</h2>
+        <div class="section-note">Usulan tindak lanjut berdasarkan temuan di atas</div>
+        <div class="rule"></div>
+      </div>
+      <div class="reco">
+        <div class="reco-card">
+          <div class="k">Rekomendasi 1 · Batas Realisasi Nov&ndash;Des</div>
+          <p>Tetapkan batas realisasi maksimal sekitar Rp9,17 Miliar per bulan untuk November dan Desember agar total tahun tetap berada dalam target revisi Rp292,39 Miliar, lalu pantau realisasi bulanan terhadap batas tersebut.</p>
+        </div>
+        <div class="reco-card">
+          <div class="k">Rekomendasi 2 · Pengendalian PPh 21 &amp; Insentif</div>
+          <p>Pos PPh 21 Pegawai dan Insentif Kinerja Perusahaan menyumbang sekitar 70% total NAC. Perkuat proyeksi beban kepegawaian dan verifikasi data gaji sebelum penutupan setiap bulan.</p>
+        </div>
+        <div class="reco-card">
+          <div class="k">Rekomendasi 3 · Penyisihan Piutang UP3 Semarang</div>
+          <p>Tinjau dasar perhitungan penyisihan piutang di UP3 Semarang yang menyumbang sekitar 50% dari total, termasuk umur piutang dan kebijakan penyisihannya.</p>
+        </div>
+        <div class="reco-card">
+          <div class="k">Rekomendasi 4 · Unit dengan Kelebihan Terbesar</div>
+          <p>Lakukan evaluasi pengendalian biaya di UP3 Semarang dan UP3 Tegal yang melampaui target paling besar, serta pantau UP2D agar tidak bertambah melampaui target.</p>
+        </div>
+        <div class="reco-card">
+          <div class="k">Rekomendasi 5 · Validasi Data</div>
+          <p>Rekonsiliasi nilai target Kantor Induk (UID) yang bersifat turunan dengan sumber resmi, dan konfirmasi realisasi Oktober yang dihitung dari selisih data s.d. September sebelum dijadikan dasar keputusan.</p>
+        </div>
+        <div class="reco-card">
+          <div class="k">Rekomendasi 6 · Pendapatan Luar Usaha</div>
+          <p>Konfirmasi status target Pendapatan Luar Usaha SMT II sebesar Rp68,76 Miliar yang belum terealisasi, serta pastikan pos Kategori B yang masih jauh di bawah target tetap relevan untuk dicapai.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="fnote">
+      <b>Sumber data:</b> Rekapitulasi Non Allowable Cost UID Jawa Tengah, tab "Rincian NAC" dan "KPI NAC",
+      dengan posisi realisasi s.d. Oktober 2026, target s.d. Oktober, dan revisi target 2026.
+    </div>
+    <div class="fnote">
+      <b>Catatan periode:</b> Judul kolom persentase pada sumber menyebut "thd Target s/d Sept 2026", namun
+      nilai persentase dihitung terhadap target s/d Oktober 2026. Dashboard ini memakai posisi Oktober secara konsisten.
+    </div>
+    <div class="fnote">
+      <b>Catatan metodologi:</b> Pencapaian memakai realisasi &divide; target (sesuai kolom sumber). Untuk NAC
+      (polarisasi negatif), nilai &le; 90% berarti hijau, 90&ndash;100% kuning, dan &gt; 100% merah karena realisasi
+      melebihi target. Target per jenis biaya tidak tersedia pada data sumber terbaru, sehingga analisis per item
+      memakai realisasi dan perbandingan dengan realisasi 2025. Item tanpa realisasi dan tanpa data 2025 tidak ditampilkan.
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--green)"></i> Kontributor dominan / di bawah target</span>
+      <span><i style="background:var(--gold)"></i> Kontributor signifikan / hampir batas</span>
+      <span><i style="background:var(--red)"></i> Fokus / melampaui target</span>
+      <span><i style="background:var(--grey)"></i> Minor / akun kontra</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ===================== DATA: RINCIAN NAC (Rupiah) ===================== */
+  var TOT = {
+    y25:  303625206804,
+    revisi: 292394372108,
+    tsept: 248592676325,
+    real: 274045995566
+  };
+
+  var CAT = {
+    A: { name:"Kategori A", y25:242700338718, revisi:213022150889, tsept:198642048632, real:253152051889 },
+    B: { name:"Kategori B", y25:60924868086,  revisi:79372221219,  tsept:49950627693,  real:20893943677 }
+  };
+
+  // Realisasi per unit (Kategori A & B), kolom UID..UP2D
+  var UNITS = [
+    {code:"UID",  name:"Kantor Induk", a:68001644511, b:6800183823},
+    {code:"KDS",  name:"UP3 Kudus",       a:17037493751, b:1447820699},
+    {code:"SKA",  name:"UP3 Surakarta",   a:15365813785, b:1323679560},
+    {code:"MGL",  name:"UP3 Magelang",    a:15569773144, b:888637981},
+    {code:"PKT",  name:"UP3 Purwokerto",  a:15131976595, b:868178734},
+    {code:"TGL",  name:"UP3 Tegal",       a:18231213738, b:1619286170},
+    {code:"SMG",  name:"UP3 Semarang",    a:25203795821, b:1770248589},
+    {code:"SLG",  name:"UP3 Salatiga",    a:10119957360, b:1008562616},
+    {code:"KLT",  name:"UP3 Klaten",      a:13173508013, b:738615328},
+    {code:"PKL",  name:"UP3 Pekalongan",  a:10943522992, b:1079891317},
+    {code:"CLP",  name:"UP3 Cilacap",     a:12860250829, b:965965985},
+    {code:"GRB",  name:"UP3 Grobogan",    a:9824135484,  b:1011323338},
+    {code:"SKH",  name:"UP3 Sukoharjo",   a:13082434983, b:717604882},
+    {code:"UP2D", name:"UP2D",            a:8606530885,  b:653944656}
+  ];
+
+  // Item: y25 = realisasi 2025 (null jika tidak ada), real = realisasi s.d. Oktober
+  var ITEMS = {
+    A: [
+      {n:"PPh 21 Pegawai",                                     y25:169695878308, real:163997527652},
+      {n:"Insentif Kinerja Perusahaan",                        y25:44225795695,  real:27821331186},
+      {n:"Beban Penyisihan Piutang (kontra)",                  y25:-45153465885, real:18052588508, contra:true},
+      {n:"Administrasi Wisma & Rumah Dinas",                   y25:46417725,     real:18222271},
+      {n:"Penyusutan Wisma & Rumah Dinas",                     y25:851418982,    real:619663863},
+      {n:"Beban Tunjangan Cuti Tahunan",                       y25:31316324000,  real:11664161000},
+      {n:"Beban Penghargaan Kesetiaan Kerja (Winduan)",        y25:5679822000,   real:3620647000},
+      {n:"Iuran BPJS Kesehatan (Pemberi Kerja)",               y25:7769221842,   real:6265533678},
+      {n:"Iuran BPJS Hari Tua (Pemberi Kerja)",                y25:7799940029,   real:6312668317},
+      {n:"Iuran BPJS Kecelakaan Kerja (Pemberi Kerja)",        y25:2677277531,   real:2166781589},
+      {n:"Iuran BPJS Kecelakaan Kematian (Pemberi Kerja)",     y25:632427570,    real:511837971},
+      {n:"Iuran BPJS Jaminan Pensiun (Pemberi Kerja)",         y25:3718523093,   real:3055738242},
+      {n:"Bantuan Kematian / Pemakaman",                       y25:1519443000,   real:33448000},
+      {n:"Pembinaan Spiritual, Budaya & Olah Raga (SBO)",      y25:2500875000,   real:2459085221},
+      {n:"Bahan Makanan & Konsumsi",                           y25:9409908200,   real:6043914443},
+      {n:"Beban Penyisihan Material (kontra)",                 y25:-31557681,    real:298891876, contra:true},
+      {n:"Penyusutan Aset Tetap dari Hibah",                   y25:0,            real:203364309},
+      {n:"Penyusutan Aset Tetap dari Revaluasi (Fungsi Pendukung)", y25:42089309, real:6646763}
+    ],
+    B: [
+      {n:"Pemeliharaan",                    y25:17510370624, real:9456260030},
+      {n:"Administrasi",                    y25:37914563671, real:11699874017},
+      {n:"Kepegawaian",                     y25:1518320819,  real:207222142},
+      {n:"Penyusutan Aset Tetap",           y25:1658974472,  real:-469412512},
+      {n:"Penyesuaian Tahun Lalu",          y25:1761850526,  real:0},
+      {n:"Bahan Bakar dan Minyak Pelumas",  y25:560787974,   real:0}
+    ]
+  };
+
+  /* ===================== DATA: KPI NAC (Rp juta) ===================== */
+  var KPI_TOT = {rev:292394.37, tsept:248592.68, real:274046.00};
+  var KPI_UNITS = [
+    {n:"Kantor Induk (UID)", rev:137487.14, tsept:116891.90, real:74801.83, derived:true},
+    {n:"UP3 Kudus",       rev:14457.77,  tsept:12291.87, real:18485},
+    {n:"UP3 Surakarta",   rev:12293.66,  tsept:10451.96, real:16689},
+    {n:"UP3 Magelang",    rev:13139.41,  tsept:11171.01, real:16458},
+    {n:"UP3 Purwokerto",  rev:16035.25,  tsept:13633.03, real:16000},
+    {n:"UP3 Tegal",       rev:16764.65,  tsept:14253.16, real:19850},
+    {n:"UP3 Semarang",    rev:12404.89,  tsept:10546.53, real:26974},
+    {n:"UP3 Salatiga",    rev:7427.25,   tsept:6314.58,  real:11129},
+    {n:"UP3 Klaten",      rev:12446.46,  tsept:10581.87, real:13912},
+    {n:"UP3 Pekalongan",  rev:8424.42,   tsept:7162.37,  real:12023},
+    {n:"UP3 Cilacap",     rev:11767.39,  tsept:10004.53, real:13826},
+    {n:"UP3 Grobogan",    rev:8395.28,   tsept:7137.59,  real:10835},
+    {n:"UP3 Sukoharjo",   rev:11666.05,  tsept:9918.37,  real:13800},
+    {n:"UP2D",            rev:9684.75,   tsept:8233.91,  real:9260}
+  ];
+
+  /* ===================== HELPERS ===================== */
+  function n2(v, d){
+    return Number(v).toLocaleString('id-ID', {minimumFractionDigits:d, maximumFractionDigits:d});
+  }
+  function fmtRp(v){
+    var neg = v < 0;
+    var s = Math.round(Math.abs(v)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return (neg ? '-' : '') + 'Rp ' + s;
+  }
+  function fmtM(v, d){
+    return 'Rp ' + n2(v / 1e9, d === undefined ? 2 : d) + ' M';
+  }
+  function fmtPct(v, d){
+    return n2(v, d === undefined ? 2 : d) + '%';
+  }
+  // ratio(a, b) = a / b * 100, null jika pembagi tidak valid
+  function ratio(a, b){
+    return (b === null || b === undefined || b <= 0) ? null : a / b * 100;
+  }
+
+  // Polarisasi negatif (realisasi / target) untuk gauge & kategori: <=90 hijau, <=100 kuning, >100 merah
+  function pctColNeg(p){
+    return p <= 90 ? 'var(--green)' : (p <= 100 ? 'var(--gold)' : 'var(--red)');
+  }
+  // Realisasi / target pada grafik & tabel KPI: <95 hijau, 95-99 kuning, >=100 merah
+  function pctHex(p){
+    return p < 95 ? '#1E7A4C' : (p < 100 ? '#C9A227' : '#B23A2E');
+  }
+  // Polarisasi negatif (target / realisasi): <95 merah, 95-99 kuning, >=100 hijau
+  function polarHex(p){
+    return p < 95 ? '#B23A2E' : (p < 100 ? '#C9A227' : '#1E7A4C');
+  }
+  // Porsi realisasi per item terhadap kategori
+  function shareColor(share){
+    if (share >= 10) return {fill:'status-fill-risk', tag:'tag-risk'};
+    if (share >= 3)  return {fill:'status-fill-mid',  tag:'tag-mid'};
+    return {fill:'status-fill-high', tag:'tag-high'};
+  }
+
+  var charts = {};
+  var FONT_SANS = "Arial, Helvetica, sans-serif";
+  var GRID = '#E7E9EC';
+  var TICK = '#41526B';
+
+  if (window.Chart) {
+    Chart.defaults.font.family = FONT_SANS;
+    Chart.defaults.color = TICK;
+    Chart.defaults.font.size = 11;
+  }
+
+  /* ===================== RINCIAN: GAUGES ===================== */
+  function gauge(label, value, caption, tagCls, tagText, realText, targetText){
+    var col = pctColNeg(value);
+    var dash = Math.max(0, Math.min(100, value)).toFixed(1);
+    var card = document.createElement('div');
+    card.className = 'gauge-card';
+    card.innerHTML =
+      '<div class="gauge-eyebrow">' + label + '</div>' +
+      '<svg viewBox="0 0 200 110" class="gauge-svg">' +
+        '<path d="M 22 92 A 78 78 0 0 1 178 92" pathLength="100" class="gauge-bg"/>' +
+        '<path d="M 22 92 A 78 78 0 0 1 178 92" pathLength="100" class="gauge-fg" style="stroke:' + col + '" stroke-dasharray="' + dash + ' 100"/>' +
+      '</svg>' +
+      '<div class="gauge-value" style="color:' + col + '">' + fmtPct(value) + '</div>' +
+      '<div class="gauge-caption">' + caption + '</div>' +
+      '<span class="gap ' + tagCls + '">' + tagText + '</span>' +
+      '<div class="gauge-figs">' +
+        '<div><span>Realisasi</span><b>' + realText + '</b></div>' +
+        '<div><span>Target s/d Okt</span><b>' + targetText + '</b></div>' +
+      '</div>';
+    document.getElementById('gaugeGrid').appendChild(card);
+  }
+
+  function renderGauges(){
+    var pTot = ratio(TOT.real, TOT.tsept);
+    var pA   = ratio(CAT.A.real, CAT.A.tsept);
+    var pB   = ratio(CAT.B.real, CAT.B.tsept);
+    gauge("TOTAL NAC", pTot,
+      "realisasi s.d. Oktober terhadap target s.d. Oktober",
+      pTot > 100 ? "gap-risk" : "gap-even", pTot > 100 ? "Di atas target s/d Okt" : "Di bawah target s/d Okt",
+      fmtM(TOT.real), fmtM(TOT.tsept));
+    gauge("KATEGORI A", pA,
+      "realisasi Kategori A terhadap target s/d Oktober",
+      pA > 100 ? "gap-risk" : "gap-even", pA > 100 ? "Di atas target s/d Okt" : "Di bawah target s/d Okt",
+      fmtM(CAT.A.real), fmtM(CAT.A.tsept));
+    gauge("KATEGORI B", pB,
+      "realisasi Kategori B terhadap target s/d Oktober",
+      pB > 100 ? "gap-risk" : "gap-even", pB > 100 ? "Di atas target s/d Okt" : "Di bawah target s/d Okt",
+      fmtM(CAT.B.real), fmtM(CAT.B.tsept));
+  }
+
+  /* ===================== RINCIAN: CHARTS ===================== */
+  var axisRp = function(v){ return n2(v / 1e9, 0) + ' M'; };
+
+  function initRincianCharts(){
+    if (!window.Chart) return;
+
+    charts.donut = new Chart(document.getElementById('donutKategori').getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: [CAT.A.name, CAT.B.name],
+        datasets: [{
+          data: [CAT.A.real, CAT.B.real],
+          backgroundColor: ['#0B2E4F', '#C9A227'],
+          borderColor: '#FFFFFF',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '68%',
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { font: {family: FONT_SANS, size: 12}, color: TICK, padding: 16, boxWidth: 10, boxHeight: 10 }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(c){ return ' ' + c.label + ': ' + fmtRp(c.parsed) + ' (' + fmtPct(c.parsed / TOT.real * 100) + ')'; }
+            }
+          }
+        }
+      }
+    });
+
+    var unitsSorted = UNITS.map(function(u){ return {code:u.code, name:u.name, a:u.a, b:u.b, t:u.a + u.b}; })
+      .sort(function(x, y){ return y.t - x.t; });
+
+    charts.unit = new Chart(document.getElementById('unitChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: unitsSorted.map(function(u){ return u.code; }),
+        datasets: [
+          { label: 'Kategori A', data: unitsSorted.map(function(u){ return u.a; }), backgroundColor: '#0B2E4F', borderRadius: 3, maxBarThickness: 26 },
+          { label: 'Kategori B', data: unitsSorted.map(function(u){ return u.b; }), backgroundColor: '#C9A227', borderRadius: 3, maxBarThickness: 26 }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top', align: 'end', labels: { font: {family: FONT_SANS, size: 11}, color: TICK, boxWidth: 10, boxHeight: 10 } },
+          tooltip: {
+            callbacks: {
+              label: function(c){ return ' ' + c.dataset.label + ': ' + fmtRp(c.parsed.x) + ' (' + fmtPct(c.parsed.x / TOT.real * 100) + ')'; }
+            }
+          }
+        },
+        scales: {
+          x: {
+            stacked: true,
+            grid: { color: GRID },
+            ticks: { color: TICK, font: {family: FONT_SANS, size: 10}, callback: axisRp }
+          },
+          y: {
+            stacked: true,
+            grid: { display: false },
+            ticks: { color: '#0B2E4F', font: {family: FONT_SANS, size: 12, weight: '600'} }
+          }
+        }
+      }
+    });
+
+    var topAll = ITEMS.A.concat(ITEMS.B)
+      .filter(function(x){ return x.real > 0; })
+      .sort(function(x, y){ return y.real - x.real; });
+    var top8 = topAll.slice(0, 8);
+
+    charts.top = new Chart(document.getElementById('topChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: top8.map(function(x){ return x.n; }),
+        datasets: [{
+          label: 'Realisasi NAC',
+          data: top8.map(function(x){ return x.real; }),
+          backgroundColor: '#0B2E4F',
+          borderRadius: 3,
+          maxBarThickness: 26
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(c){ return ' ' + fmtRp(c.parsed.x) + ' (' + fmtPct(c.parsed.x / TOT.real * 100) + ')'; }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: GRID },
+            ticks: { color: TICK, font: {family: FONT_SANS, size: 10}, callback: axisRp }
+          },
+          y: {
+            grid: { display: false },
+            ticks: { color: '#0B2E4F', font: {family: FONT_SANS, size: 11, weight: '600'} }
+          }
+        }
+      }
+    });
+  }
+
+  /* ===================== RINCIAN: LISTS & TABLES ===================== */
+  function renderTopList(){
+    var all = ITEMS.A.concat(ITEMS.B)
+      .filter(function(x){ return x.real > 0; })
+      .sort(function(x, y){ return y.real - x.real; });
+    var max = all[0].real;
+    var wrap = document.getElementById('topItemsWrap');
+    all.forEach(function(it, idx){
+      var row = document.createElement('div');
+      row.className = 'top-row';
+      row.innerHTML =
+        '<div class="top-rank">' + (idx + 1) + '</div>' +
+        '<div>' +
+          '<div class="top-name">' + it.n + '</div>' +
+          '<div class="top-meta">' + fmtPct(it.real / TOT.real * 100) + ' dari total NAC</div>' +
+          '<div class="top-track"><div class="top-fill" style="width:' + (it.real / max * 100).toFixed(1) + '%"></div></div>' +
+        '</div>' +
+        '<div class="top-val">' + fmtM(it.real) + '</div>';
+      wrap.appendChild(row);
+    });
+  }
+
+  function renderUnitTable(){
+    var rows = UNITS.map(function(u){ return {code:u.code, name:u.name, a:u.a, b:u.b, t:u.a + u.b}; })
+      .sort(function(x, y){ return y.t - x.t; });
+    var max = rows[0].t;
+    var body = document.getElementById('unitTableBody');
+    rows.forEach(function(u, idx){
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td class="rank">' + (idx + 1) + '</td>' +
+        '<td data-sort="' + u.code + '"><b class="unit-name">' + u.code + '</b><span class="unit-sub">' + u.name + '</span></td>' +
+        '<td class="opt" data-sort="' + u.t + '"><div class="mini-track"><div class="mini-fill" style="width:' + (u.t / max * 100).toFixed(1) + '%"></div></div></td>' +
+        '<td class="num" data-sort="' + u.t + '">' + fmtPct(u.t / TOT.real * 100) + '</td>' +
+        '<td class="num" data-sort="' + u.a + '">' + fmtRp(u.a) + '</td>' +
+        '<td class="num" data-sort="' + u.b + '">' + fmtRp(u.b) + '</td>' +
+        '<td class="num" data-sort="' + u.t + '"><b>' + fmtRp(u.t) + '</b></td>';
+      body.appendChild(tr);
+    });
+
+    // Baris TOTAL berada di tfoot agar tidak ikut diurutkan
+    document.getElementById('unitTableFoot').innerHTML =
+      '<tr class="total">' +
+        '<td></td><td><b>TOTAL</b></td><td class="opt"></td>' +
+        '<td class="num">100,00%</td>' +
+        '<td class="num">' + fmtRp(CAT.A.real) + '</td>' +
+        '<td class="num">' + fmtRp(CAT.B.real) + '</td>' +
+        '<td class="num">' + fmtRp(TOT.real) + '</td>' +
+      '</tr>';
+  }
+
+  /* ===================== GENERIC SORTABLE TABLE ===================== */
+  // Kolom yang bisa diurutkan: <th class="sortable" data-col="N" data-type="text|num">.
+  // Nilai pengurutan diambil dari atribut data-sort pada sel; baris di tfoot tidak ikut.
+  function sortTbody(tbody, col, dir){
+    var rows = Array.from(tbody.rows);
+    rows.sort(function(a, b){
+      var av = a.cells[col].getAttribute('data-sort');
+      var bv = b.cells[col].getAttribute('data-sort');
+      var an = parseFloat(av), bn = parseFloat(bv);
+      var r = (!isNaN(an) && !isNaN(bn)) ? (an - bn) : String(av).localeCompare(String(bv), 'id');
+      return dir === 'asc' ? r : -r;
+    });
+    rows.forEach(function(r){ tbody.appendChild(r); });
+  }
+
+  function initSortable(tableId){
+    var table = document.getElementById(tableId);
+    var ths = table.querySelectorAll('thead th.sortable');
+    var state = {col:-1, dir:'asc'};
+    ths.forEach(function(th){
+      var ic = document.createElement('span');
+      ic.className = 'sort-ic';
+      ic.textContent = '↕';
+      th.appendChild(ic);
+      th.title = 'Klik untuk mengurutkan';
+      th.addEventListener('click', function(){
+        var col = +th.getAttribute('data-col');
+        var dir;
+        if (state.col === col) dir = state.dir === 'asc' ? 'desc' : 'asc';
+        else dir = th.getAttribute('data-type') === 'num' ? 'desc' : 'asc';
+        state = {col:col, dir:dir};
+        ths.forEach(function(h){
+          h.classList.remove('sort-asc', 'sort-desc');
+          h.querySelector('.sort-ic').textContent = '↕';
+        });
+        th.classList.add(dir === 'asc' ? 'sort-asc' : 'sort-desc');
+        th.querySelector('.sort-ic').textContent = dir === 'asc' ? '↑' : '↓';
+        sortTbody(table.tBodies[0], col, dir);
+      });
+    });
+  }
+
+  function renderCat(key, sumId, listId){
+    var cat = CAT[key];
+    var list = ITEMS[key].slice().sort(function(x, y){ return y.real - x.real; });
+    var pc = cat.real / cat.tsept * 100;
+
+    document.getElementById(sumId).innerHTML =
+      '<div class="ks"><div class="ks-label">Total ' + cat.name + '</div><div class="ks-val">' + fmtM(cat.real) + '</div></div>' +
+      '<div class="ks"><div class="ks-label">% dari Total NAC</div><div class="ks-val">' + fmtPct(cat.real / TOT.real * 100) + '</div></div>' +
+      '<div class="ks"><div class="ks-label">Target s/d Okt</div><div class="ks-val">' + fmtM(cat.tsept) + '</div></div>' +
+      '<div class="ks"><div class="ks-label">Pencapaian</div><div class="ks-val" style="color:' + pctColNeg(pc) + '">' + fmtPct(pc) + '</div></div>';
+
+    var box = document.getElementById(listId);
+    list.forEach(function(it, idx){
+      var share = cat.real ? it.real / cat.real * 100 : 0;
+      var info;
+      if (it.contra)            info = {tag:'Akun Kontra',       cls:'tag-contra', fill:'status-fill-contra'};
+      else if (it.real < 0)     info = {tag:'Koreksi Negatif',   cls:'tag-risk',   fill:'status-fill-risk'};
+      else if (it.real === 0)   info = {tag:'Belum Terealisasi', cls:'tag-minor',  fill:'status-fill-minor'};
+      else {
+        var sc = shareColor(share);
+        info = {
+          tag:  share >= 10 ? 'Dominan' : (share >= 3 ? 'Signifikan' : 'Minor'),
+          cls:  sc.tag,
+          fill: sc.fill
+        };
+      }
+
+      var vs25 = (it.y25 && it.y25 > 0) ? ratio(it.real, it.y25) : null;
+      var row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML =
+        '<div class="item-main">' +
+          '<span class="item-no">' + (idx + 1) + '</span>' +
+          '<span class="item-name">' + it.n + '</span>' +
+          '<span class="item-tag ' + info.cls + '">' + info.tag + '</span>' +
+        '</div>' +
+        '<div class="item-figures">' +
+          '<div class="fig"><span class="fig-label">Realisasi s/d Okt</span><span class="fig-val">' + fmtRp(it.real) + '</span></div>' +
+          '<div class="fig"><span class="fig-label">Realisasi 2025</span><span class="fig-val">' + (it.y25 === null ? '—' : fmtRp(it.y25)) + '</span></div>' +
+          '<div class="fig"><span class="fig-label">Realisasi thd 2025</span><span class="fig-val">' + (vs25 === null ? '—' : fmtPct(vs25)) + '</span></div>' +
+        '</div>' +
+        '<div class="item-bar-wrap">' +
+          '<div class="item-bar-track"><div class="item-bar-fill ' + info.fill + '" style="width:' + Math.max(0, Math.min(100, share)).toFixed(1) + '%"></div></div>' +
+          '<span class="item-bar-pct">' + fmtPct(share) + ' dari ' + cat.name + '</span>' +
+        '</div>';
+      box.appendChild(row);
+    });
+  }
+
+  function initRincian(){
+    renderGauges();
+    renderTopList();
+    renderUnitTable();
+    initSortable('unitTable');
+    renderCat('A', 'katSummaryA', 'katItemsA');
+    renderCat('B', 'katSummaryB', 'katItemsB');
+    initRincianCharts();
+  }
+
+  /* ===================== KPI TAB ===================== */
+  // Status berdasarkan % realisasi (realisasi / target)
+  function kpiStatus(p){
+    if (p < 95)  return {tag:'Di Bawah Target Maksimal', cls:'tag-high'};
+    if (p < 100) return {tag:'Hampir Batas', cls:'tag-mid'};
+    return {tag:'Melampaui Target Maksimal', cls:'tag-risk'};
+  }
+  function sgn(v){
+    return (v > 0 ? '+' : '') + n2(v, 2);
+  }
+
+  function initKpi(){
+    var rows = KPI_UNITS.map(function(u){
+      return {
+        n:u.n, rev:u.rev, tsept:u.tsept, real:u.real, derived:!!u.derived,
+        pct: u.real / u.tsept * 100,        // % realisasi (realisasi / target)
+        pol: u.tsept / u.real * 100         // pencapaian polarisasi negatif (target / realisasi)
+      };
+    });
+    var byReal = rows.slice().sort(function(x, y){ return y.real - x.real; });
+    var byPol  = rows.slice().sort(function(x, y){ return y.pol - x.pol; });
+
+    // Tabel KPI per unit
+    var body = document.getElementById('kpiTableBody');
+    byReal.forEach(function(r, idx){
+      var st = kpiStatus(r.pct);
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td class="rank">' + (idx + 1) + '</td>' +
+        '<td data-sort="' + r.n + '"><b class="unit-name">' + r.n + '</b>' + (r.derived ? '<span class="derived">turunan</span>' : '') + '</td>' +
+        '<td class="num opt" data-sort="' + r.rev + '">' + n2(r.rev, 2) + '</td>' +
+        '<td class="num" data-sort="' + r.tsept + '">' + n2(r.tsept, 2) + '</td>' +
+        '<td class="num" data-sort="' + r.real + '">' + n2(r.real, 2) + '</td>' +
+        '<td class="num" data-sort="' + (r.real - r.tsept) + '">' + sgn(r.real - r.tsept) + '</td>' +
+        '<td class="num" data-sort="' + r.pct + '" style="color:' + pctHex(r.pct) + '">' + fmtPct(r.pct) + '</td>' +
+        '<td data-sort="' + r.pct + '"><span class="item-tag ' + st.cls + '">' + st.tag + '</span></td>';
+      body.appendChild(tr);
+    });
+
+    // Baris TOTAL berada di tfoot agar tidak ikut diurutkan
+    var totPct = KPI_TOT.real / KPI_TOT.tsept * 100;
+    var stTot = kpiStatus(totPct);
+    document.getElementById('kpiTableFoot').innerHTML =
+      '<tr class="total">' +
+        '<td></td><td><b>TOTAL</b></td>' +
+        '<td class="num opt">' + n2(KPI_TOT.rev, 2) + '</td>' +
+        '<td class="num">' + n2(KPI_TOT.tsept, 2) + '</td>' +
+        '<td class="num">' + n2(KPI_TOT.real, 2) + '</td>' +
+        '<td class="num">' + sgn(KPI_TOT.real - KPI_TOT.tsept) + '</td>' +
+        '<td class="num">' + fmtPct(totPct) + '</td>' +
+        '<td><span class="item-tag ' + stTot.cls + '">' + stTot.tag + '</span></td>' +
+      '</tr>';
+
+    initSortable('kpiTable');
+
+    if (!window.Chart) return;
+
+    // Target vs realisasi per unit, dengan pengurutan dari drop menu
+    var kpiSorted = byReal;
+
+    function applyKpiSort(key){
+      kpiSorted = rows.slice().sort(function(x, y){ return y[key] - x[key]; });
+      var d = charts.kpi.data;
+      d.labels = kpiSorted.map(function(r){ return r.n; });
+      d.datasets[0].data = kpiSorted.map(function(r){ return r.tsept; });
+      d.datasets[1].data = kpiSorted.map(function(r){ return r.real; });
+      d.datasets[1].backgroundColor = kpiSorted.map(function(r){ return pctHex(r.pct); });
+      charts.kpi.update();
+    }
+
+    charts.kpi = new Chart(document.getElementById('kpiChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: kpiSorted.map(function(r){ return r.n; }),
+        datasets: [
+          {
+            label: 'Target s/d Okt',
+            data: kpiSorted.map(function(r){ return r.tsept; }),
+            backgroundColor: '#C9CED8',
+            borderRadius: 3,
+            maxBarThickness: 16
+          },
+          {
+            label: 'Realisasi s/d Okt',
+            data: kpiSorted.map(function(r){ return r.real; }),
+            backgroundColor: kpiSorted.map(function(r){ return pctHex(r.pct); }),
+            borderRadius: 3,
+            maxBarThickness: 16
+          }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(c){
+                if (c.datasetIndex === 1) {
+                  var r = kpiSorted[c.dataIndex];
+                  return ' Realisasi: Rp ' + n2(c.parsed.x / 1000, 2) + ' M (% realisasi ' + fmtPct(r.pct) + ')';
+                }
+                return ' Target: Rp ' + n2(c.parsed.x / 1000, 2) + ' M';
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: GRID },
+            ticks: {
+              color: TICK,
+              font: {family: FONT_SANS, size: 10},
+              callback: function(v){ return n2(v / 1000, 0) + ' M'; }
+            }
+          },
+          y: {
+            grid: { display: false },
+            ticks: { color: '#0B2E4F', font: {family: FONT_SANS, size: 12, weight: '600'} }
+          }
+        }
+      }
+    });
+
+    document.getElementById('kpiSort').addEventListener('change', function(e){
+      applyKpiSort(e.target.value);
+    });
+
+    // Pencapaian polarisasi negatif (target / realisasi), tertinggi ke terendah
+    charts.kpiPct = new Chart(document.getElementById('kpiPctChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: byPol.map(function(r){ return r.n; }),
+        datasets: [{
+          label: 'Pencapaian (%)',
+          data: byPol.map(function(r){ return r.pol; }),
+          backgroundColor: byPol.map(function(r){ return polarHex(r.pol); }),
+          borderRadius: 3,
+          maxBarThickness: 22
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(c){ return ' Pencapaian: ' + fmtPct(c.parsed.x); }
+            }
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            grid: { color: GRID },
+            ticks: { color: TICK, font: {family: FONT_SANS, size: 10}, callback: function(v){ return v + '%'; } }
+          },
+          y: {
+            grid: { display: false },
+            ticks: { color: '#0B2E4F', font: {family: FONT_SANS, size: 12, weight: '600'} }
+          }
+        }
+      }
+    });
+  }
+
+  /* ===================== TAB SWITCHING ===================== */
+  var TAB_KEY = 'nac.activeTab';
+  var VALID_TABS = ['rincian', 'kpi', 'insight'];
+  var inited = {};
+  var inits = {
+    rincian: initRincian,
+    kpi: initKpi,
+    insight: function(){}
+  };
+
+  function activate(name){
+    document.querySelectorAll('.tab').forEach(function(t){
+      t.classList.toggle('active', t.getAttribute('data-tab') === name);
+    });
+    document.querySelectorAll('.panel').forEach(function(p){
+      p.classList.toggle('active', p.id === 'tab-' + name);
+    });
+    if (!inited[name]) {
+      inits[name]();
+      inited[name] = true;
+    }
+    setTimeout(function(){
+      Object.values(charts).forEach(function(c){ c && c.resize(); });
+    }, 100);
+  }
+
+  document.querySelectorAll('.tab').forEach(function(t){
+    t.addEventListener('click', function(){
+      activate(t.getAttribute('data-tab'));
+      try { localStorage.setItem(TAB_KEY, t.getAttribute('data-tab')); } catch(e) {}
+    });
+  });
+
+  (function restoreTab(){
+    var isReload = false;
+    try {
+      var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+      if (nav) isReload = nav.type === 'reload';
+      else if (performance.navigation) isReload = performance.navigation.type === 1;
+    } catch(e) {}
+    if (!isReload) { activate('rincian'); return; }
+    var saved = null;
+    try { saved = localStorage.getItem(TAB_KEY); } catch(e) {}
+    activate(VALID_TABS.indexOf(saved) >= 0 ? saved : 'rincian');
+  })();
+
+})();
+</script>
+</body>
+</html>
