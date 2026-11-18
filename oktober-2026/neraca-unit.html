@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Analisis Posisi Keuangan UID Jawa Tengah</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+<style>
+:root{
+  --navy:#0B2E4F;--navy-d:#081E36;--navy-soft:#12406B;
+  --gold:#C9A227;--teal:#0E7C7B;--teal2:#159A98;
+  --grey:#6B7280;--lgrey:#E7E9EC;--bg:#FBFBFA;--card:#FFF;
+  --red:#B23A2E;--green:#1E7A4C;--line:#D7DBE1;--blue:#2877A8;--purple:#7656A6;
+  --text2:#41526B;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;color:#20304A;background:var(--bg);line-height:1.5;font-size:14px}
+button,select,input{font-family:inherit}
+.wrap{max-width:1380px;margin:auto;padding:0 28px 70px}
+
+/* HERO */
+.hero{background:radial-gradient(circle at 80% 20%,rgba(21,154,152,.18),transparent 32%),linear-gradient(135deg,var(--navy-d),var(--navy) 60%,var(--navy-soft));color:#fff;padding:40px 0 34px}
+.hero-inner{max-width:1380px;margin:auto;padding:0 28px}
+.eyebrow{text-transform:uppercase;letter-spacing:3px;font-size:11px;color:var(--gold);font-weight:700;margin-bottom:13px}
+.hero h1{font-family:Arial,sans-serif;font-size:36px;margin:0 0 10px;line-height:1.2}
+.sub{font-size:14px;color:#CBD6E4;max-width:1000px;margin:0 0 20px}
+.metabar{display:flex;gap:30px;flex-wrap:wrap;border-top:1px solid #ffffff2e;padding-top:14px}
+.metabar div{font-size:11.5px;color:#B9C6D6}
+.metabar strong{display:block;color:#fff;font-family:Arial,sans-serif;font-size:22px;font-weight:700;margin-top:2px}
+
+/* TABS */
+.tabs{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 8px #0000000b}
+.tabbar{max-width:1380px;margin:auto;padding:0 28px;display:flex;gap:3px;overflow-x:auto}
+.tab{border:0;background:transparent;padding:15px 18px;font-weight:700;color:#607086;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:7px}
+.tab svg{width:15px;height:15px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tab:hover{color:var(--navy-d);background:#D9E9F7}
+.tab.active{background:var(--navy);color:#fff;border-bottom-color:var(--gold)}
+
+/* PANELS & SECTIONS */
+.panel{display:none}
+.panel.active{display:block}
+.section{padding:34px 0 5px}
+.section-title{font-family:Arial,sans-serif;font-size:23px;color:var(--navy-d);margin:0 0 5px;display:flex;align-items:baseline;gap:11px}
+.num{color:var(--gold);font-size:14px}
+.rule{height:3px;width:55px;background:var(--gold);margin:12px 0 20px}
+.intro{color:var(--text2);margin-bottom:20px;max-width:1100px}
+.sub-title{font-family:Arial,sans-serif;font-size:17px;color:var(--navy-d);margin:26px 0 14px}
+
+/* KPI */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}
+.card{background:#E8EEF5;border:1px solid var(--line);border-top:3px solid var(--navy);border-radius:4px;padding:16px;min-height:132px;box-shadow:0 1px 4px rgba(11,46,79,.03)}
+.card.teal{background:#E3F1F0;border-top-color:var(--teal)}
+.card.gold{background:#F8F1DC;border-top-color:var(--gold)}
+.card.green{background:#E4F1EA;border-top-color:var(--green)}
+.card.red{background:#FBEEEC;border-top-color:var(--red)}
+.label{text-transform:uppercase;letter-spacing:.8px;font-size:10.5px;color:var(--grey);font-weight:700}
+.value{font-family:Arial,sans-serif;font-size:22px;font-weight:700;color:var(--navy-d);margin:7px 0}
+.delta{font-size:12px;font-weight:700}
+.pos{color:var(--green)}
+.neg{color:var(--red)}
+.neutral{color:var(--grey)}
+.small{font-size:11px;color:var(--grey)}
+
+/* FILTER */
+.filter-box{background:#fff;border:1px solid var(--line);border-radius:4px;padding:16px;margin:18px 0}
+.filter-grid{display:grid;grid-template-columns:minmax(240px,380px);gap:12px}
+.field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--grey);font-weight:700;margin-bottom:6px}
+select{width:100%;border:1px solid #CCD3DB;background:#fff;border-radius:4px;padding:10px 11px;color:var(--navy-d);outline:none;cursor:pointer;font-weight:700}
+select:focus{border-color:var(--teal);box-shadow:0 0 0 2px rgba(14,124,123,.10)}
+
+/* GRID / BOX */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid > .box:only-child{grid-column:1/-1}
+.grid > .box:last-child:nth-child(odd){grid-column:1/-1}
+.box{background:#fff;border:1px solid var(--line);border-radius:4px;padding:17px;margin:16px 0;box-shadow:0 1px 4px rgba(11,46,79,.025);min-width:0}
+.grid > .box{margin:0 0 0}
+.box h3{margin:0 0 12px;font-family:Arial,sans-serif;color:var(--navy-d);font-size:17px}
+.chart{height:360px;position:relative}
+.chart.small-chart{height:320px}
+.chart.tall{height:460px}
+
+/* STACK (infografis komposisi) */
+.stack-title{font-weight:700;color:var(--navy-d);font-size:13px;margin:14px 0 2px}
+.stack{display:flex;height:28px;border-radius:3px;overflow:hidden;background:#E8EBEF;margin:6px 0 10px}
+.seg{height:100%;transition:width .4s}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12px;color:var(--text2)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.legend em{font-style:normal;color:var(--grey);font-size:11px}
+
+/* TABLE (fit lebar kolom, tanpa scroll) */
+.table-wrap{overflow:hidden;border:1px solid var(--line);border-radius:4px}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:0}
+th{background:var(--navy-d);color:#fff;text-align:right;padding:10px 8px;white-space:normal;cursor:pointer;position:sticky;top:0;z-index:2;vertical-align:middle}
+th:first-child,td:first-child{text-align:left}
+th:hover{background:var(--navy-soft)}
+th .sort-ic{display:inline-block;margin-left:5px;opacity:.5;font-size:10px}
+th.sort-asc .sort-ic,th.sort-desc .sort-ic{opacity:1;color:var(--gold)}
+td{padding:8px 8px;border-bottom:1px solid var(--lgrey);text-align:right;white-space:normal;word-break:break-word}
+tbody tr:nth-child(even){background:#F6F8FA}
+tbody tr:hover{background:#EEF6F6}
+tr.total td{font-weight:700;background:#EEF2F6;border-top:1.5px solid var(--navy)}
+
+/* INSIGHT CARDS */
+.insight-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px}
+.ins{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:2px;padding:18px 20px}
+.ins.ok{border-left-color:var(--green)}
+.ins.warn{border-left-color:var(--gold)}
+.ins.danger{border-left-color:var(--red)}
+.ins-title{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--navy);margin-bottom:8px}
+.ins.ok .ins-title{color:var(--green)}
+.ins.warn .ins-title{color:#A87F12}
+.ins.danger .ins-title{color:var(--red)}
+.ins-text{font-size:14px;color:var(--navy-d);line-height:1.55}
+
+/* CALLOUT */
+.callout{padding:15px 18px;background:#F4F0DF;border-left:4px solid var(--gold);border-radius:2px;margin:18px 0;color:#4A3E14}
+.callout.blue{background:#EAF1F8;border-left-color:var(--navy);color:#1E3350}
+.callout.teal{background:#E8F5F4;border-left-color:var(--teal);color:#164B4A}
+.callout.red{background:#FBEEEC;border-left-color:var(--red);color:#5C2119}
+.reco{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+.reco-card{background:var(--navy-d);color:#fff;border-radius:4px;padding:18px}
+.reco-card .k{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);font-weight:700}
+.reco-card p{font-size:12.5px;color:#DCE4EE;margin:8px 0 0}
+
+/* BADGE */
+.badge{display:inline-block;padding:4px 8px;border-radius:3px;font-size:10px;font-weight:700;background:#EAF1F8;color:var(--navy)}
+.badge.green{background:#E8F4ED;color:var(--green)}
+.badge.red{background:#FBEEEC;color:var(--red)}
+.badge.gold{background:#F4F0DF;color:#735D0E}
+
+/* FOOTER */
+.footer{background:var(--navy-d);color:#B9C6D6;padding:25px 0;font-size:11px}
+.footer .wrap{padding-bottom:0;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+/* RESPONSIVE */
+@media(max-width:1050px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .reco{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:850px){
+  .grid,.insight-grid{grid-template-columns:1fr}
+  .reco{grid-template-columns:1fr}
+  .hero h1{font-size:28px}
+  .chart{height:300px}
+  .chart.tall{height:380px}
+}
+@media(max-width:600px){
+  .wrap,.hero-inner,.tabbar{padding-left:15px;padding-right:15px}
+  .cards{grid-template-columns:1fr}
+  .hero{padding-top:32px}
+  .hero h1{font-size:25px}
+  .metabar strong{font-size:17px}
+  .metabar{gap:16px}
+  .section{padding-top:26px}
+  .chart{height:270px}
+  .chart.tall{height:340px}
+  th,td{padding:7px 5px;font-size:11px}
+}
+@media print{
+  .tabs,.filter-box{display:none}
+  .panel{display:block!important}
+  .hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Analisis Posisi Keuangan · Strictly Private &amp; Confidential</div>
+    <h1>Posisi Keuangan UID Jawa Tengah<br>Data Aset, Ekuitas &amp; Liabilitas</h1>
+    <p class="sub">Dashboard untuk menganalisis struktur aset, aset lancar, aset tetap, ekuitas, akun antar satuan administrasi serta liabilitas pada UID dan Unit Pelaksana.</p>
+    <div class="metabar">
+      <div>Basis Data<strong>Data Excel Posisi Keuangan</strong></div>
+      <div>Entitas<strong>UID Jawa Tengah</strong></div>
+      <div>Cakupan<strong>UID · UP3 · UP2D</strong></div>
+      <div>Satuan<strong>Rp</strong></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabbar">
+    <button class="tab active" data-tab="overview"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Overview</button>
+    <button class="tab" data-tab="aset"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-5h6v5"/><path d="M9 10h.01"/><path d="M15 10h.01"/><path d="M9 13h.01"/><path d="M15 13h.01"/></svg>Aset</button>
+    <button class="tab" data-tab="el"><svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M4 7h16"/><path d="M4 7l-2.5 6h5z"/><path d="M20 7l-2.5 6h5z"/><path d="M8 21h8"/></svg>Ekuitas &amp; Liabilitas</button>
+    <button class="tab" data-tab="analisis"><svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>Analisis &amp; Rekomendasi</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ========== TAB 01 OVERVIEW ========== -->
+<section id="overview" class="panel active">
+  <div class="section">
+    <h2 class="section-title"><span class="num">01</span>Ringkasan Eksekutif</h2>
+    <div class="rule"></div>
+    <div class="intro">Gunakan filter unit untuk melihat posisi keuangan per satuan. Secara default dashboard menampilkan angka <b>GABUNGAN</b>.</div>
+
+    <div class="filter-box">
+      <div class="filter-grid">
+        <div class="field"><label for="unitSelect">Pilih Unit</label><select class="unit-select" id="unitSelect"></select></div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="label">Total Aset</div>
+        <div class="value" id="kpiAssets">-</div>
+        <div class="delta neutral" id="kpiAssetsPct">-</div>
+        <div class="small" id="kpiUnit">-</div>
+      </div>
+      <div class="card red">
+        <div class="label">Total Ekuitas</div>
+        <div class="value" id="kpiEquity">-</div>
+        <div class="delta neutral" id="kpiEquityPct">-</div>
+        <div class="small">Saldo laba / ekuitas entitas induk</div>
+      </div>
+      <div class="card gold">
+        <div class="label">Total Liabilitas</div>
+        <div class="value" id="kpiLiab">-</div>
+        <div class="delta neutral" id="kpiLiabPct">-</div>
+        <div class="small">Liabilitas jangka panjang + jangka pendek</div>
+      </div>
+      <div class="card teal">
+        <div class="label">Total Antar Satuan Administrasi</div>
+        <div class="value" id="kpiInter">-</div>
+        <div class="delta neutral" id="kpiInterPct">-</div>
+        <div class="small">Akun antar satuan administrasi</div>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3>Infografis Struktur Posisi Keuangan</h3>
+      <div class="stack-title">Struktur Aktiva</div>
+      <div id="stackAktiva"></div>
+      <div class="stack-title">Struktur Pasiva</div>
+      <div id="stackPasiva"></div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <h3>Komposisi Aset</h3>
+        <div class="chart"><canvas id="overviewAssetChart"></canvas></div>
+      </div>
+      <div class="box">
+        <h3>Komposisi Ekuitas &amp; Liabilitas</h3>
+        <div class="chart"><canvas id="overviewELChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <h3>Ringkasan Posisi Keuangan (Aset atau Aktiva)</h3>
+        <div class="table-wrap"><table><thead><tr><th>Uraian</th><th>Nilai</th><th>Porsi</th></tr></thead><tbody id="overviewTable"></tbody></table></div>
+      </div>
+      <div class="box">
+        <h3>Ringkasan Posisi Keuangan (Ekuitas Liabilitas atau Pasiva)</h3>
+        <div class="table-wrap"><table><thead><tr><th>Uraian</th><th>Nilai</th><th>Porsi</th></tr></thead><tbody id="pasivaTable"></tbody></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TAB 02 ASET ========== -->
+<section id="aset" class="panel">
+  <div class="section">
+    <h2 class="section-title"><span class="num">02</span>Aset</h2>
+    <div class="rule"></div>
+    <div class="intro">Analisis difokuskan pada Aset Tetap Netto, Pekerjaan Dalam Pelaksanaan, Aset Lancar, Piutang Usaha dan Persediaan.</div>
+
+    <div class="filter-box">
+      <div class="filter-grid">
+        <div class="field"><label for="unitSelectAset">Pilih Unit</label><select class="unit-select" id="unitSelectAset"></select></div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card teal">
+        <div class="label">Aset Tetap Netto</div>
+        <div class="value" id="asKpiFixed">-</div>
+        <div class="delta neutral" id="asKpiFixedPct">-</div>
+        <div class="small">Setelah akumulasi penyusutan &amp; rugi penurunan</div>
+      </div>
+      <div class="card">
+        <div class="label">Pekerjaan Dalam Pelaksanaan</div>
+        <div class="value" id="asKpiPdp">-</div>
+        <div class="delta neutral" id="asKpiPdpPct">-</div>
+        <div class="small">Aset dalam proses pembangunan</div>
+      </div>
+      <div class="card gold">
+        <div class="label">Aset Lancar</div>
+        <div class="value" id="asKpiCurrent">-</div>
+        <div class="delta neutral" id="asKpiCurrentPct">-</div>
+        <div class="small">Termasuk piutang &amp; persediaan</div>
+      </div>
+      <div class="card green">
+        <div class="label">Piutang Usaha Netto</div>
+        <div class="value" id="asKpiReceivable">-</div>
+        <div class="delta neutral" id="asKpiReceivablePct">-</div>
+        <div class="small">Komponen utama aset lancar</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <h3>Komposisi Aset</h3>
+        <div class="chart"><canvas id="asetStructChart"></canvas></div>
+      </div>
+      <div class="box">
+        <h3>Perbandingan Sumber Aset</h3>
+        <div class="chart"><canvas id="asetBarChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <h3>Total Aset per Unit</h3>
+        <div class="chart tall"><canvas id="unitAssetChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <h3>Aset Tetap Netto per Unit</h3>
+        <div class="chart tall"><canvas id="srcFixed"></canvas></div>
+      </div>
+      <div class="box">
+        <h3>Pekerjaan Dalam Pelaksanaan per Unit</h3>
+        <div class="chart tall"><canvas id="srcPdp"></canvas></div>
+      </div>
+      <div class="box">
+        <h3>Properti Investasi per Unit</h3>
+        <div class="chart tall"><canvas id="srcProp"></canvas></div>
+      </div>
+      <div class="box">
+        <h3>Aset Tidak Lancar Lain per Unit</h3>
+        <div class="chart tall"><canvas id="srcNca"></canvas></div>
+      </div>
+      <div class="box">
+        <h3>Aset Lancar per Unit</h3>
+        <div class="chart tall"><canvas id="srcCurrent"></canvas></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <h3>Piutang Usaha per Unit</h3>
+        <div class="chart tall"><canvas id="receivableUnitChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TAB 03 EKUITAS & LIABILITAS ========== -->
+<section id="el" class="panel">
+  <div class="section">
+    <h2 class="section-title"><span class="num">03</span>Ekuitas &amp; Liabilitas</h2>
+    <div class="rule"></div>
+    <div class="intro">Struktur sumber pendanaan dianalisis melalui Total Ekuitas, Akun Antar Satuan Administrasi, Liabilitas Jangka Panjang dan Liabilitas Jangka Pendek.</div>
+
+    <div class="filter-box">
+      <div class="filter-grid">
+        <div class="field"><label for="unitSelectEL">Pilih Unit</label><select class="unit-select" id="unitSelectEL"></select></div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card red">
+        <div class="label">Total Ekuitas</div>
+        <div class="value" id="elEquity">-</div>
+        <div class="delta neutral" id="elEquityPct">-</div>
+        <div class="small">Saldo laba / ekuitas</div>
+      </div>
+      <div class="card teal">
+        <div class="label">Antar Satuan Administrasi</div>
+        <div class="value" id="elInter">-</div>
+        <div class="delta neutral" id="elInterPct">-</div>
+        <div class="small">Akun antar satuan administrasi</div>
+      </div>
+      <div class="card gold">
+        <div class="label">Liabilitas Jangka Panjang</div>
+        <div class="value" id="elLong">-</div>
+        <div class="delta neutral" id="elLongPct">-</div>
+        <div class="small">Terutama pendapatan ditangguhkan</div>
+      </div>
+      <div class="card">
+        <div class="label">Liabilitas Jangka Pendek</div>
+        <div class="value" id="elShort">-</div>
+        <div class="delta neutral" id="elShortPct">-</div>
+        <div class="small">Utang &amp; kewajiban lancar</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box"><h3>Komposisi Ekuitas &amp; Liabilitas</h3><div class="chart"><canvas id="elStructureChart"></canvas></div></div>
+      <div class="box"><h3>Perbandingan Sumber Pendanaan</h3><div class="chart"><canvas id="elBarChart"></canvas></div></div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <h3>Total Ekuitas &amp; Liabilitas per Unit (Total Pasiva)</h3>
+        <div class="chart tall"><canvas id="pasivaUnitChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <h3>Ekuitas per Unit</h3>
+        <div class="chart tall"><canvas id="eqUnitChart"></canvas></div>
+      </div>
+      <div class="box">
+        <h3>Akun Antar Satuan Administrasi per Unit</h3>
+        <div class="chart tall"><canvas id="interUnitChart"></canvas></div>
+      </div>
+      <div class="box">
+        <h3>Liabilitas Jangka Panjang per Unit</h3>
+        <div class="chart tall"><canvas id="ljpUnitChart"></canvas></div>
+      </div>
+      <div class="box">
+        <h3>Liabilitas Jangka Pendek per Unit</h3>
+        <div class="chart tall"><canvas id="ljkUnitChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <h3>Rincian Liabilitas Jangka Panjang</h3>
+        <div class="chart"><canvas id="liabPanjangChart"></canvas></div>
+      </div>
+      <div class="box">
+        <h3>Rincian Liabilitas Jangka Pendek</h3>
+        <div class="chart tall"><canvas id="liabPendekChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TAB 04 ANALISIS & REKOMENDASI ========== -->
+<section id="analisis" class="panel">
+  <div class="section">
+    <h2 class="section-title"><span class="num">04</span>Analisis &amp; Rekomendasi</h2>
+    <div class="rule"></div>
+
+    <div class="callout blue"><b>Struktur aset didominasi Aset Tetap Netto.</b> Pada posisi GABUNGAN, Aset Tetap Netto Rp24,68 T atau 87,09% dari Total Aset Rp28,34 T.</div>
+    <div class="callout red"><b>Perhatian ekuitas defisit dan likuiditas jangka pendek.</b> Ekuitas defisit di UID (-Rp1,78 T), UP2D (-Rp182,50 M) dan UP3 Yogyakarta (-Rp135,92 M). Rasio lancar GABUNGAN 0,75x: Aset Lancar Rp2,87 T belum menutup Liabilitas Jangka Pendek Rp3,81 T.</div>
+
+    <h3 class="sub-title">Temuan Utama</h3>
+    <div class="insight-grid">
+      <div class="ins ok">
+        <div class="ins-title">Aset Tetap Netto Menjadi Komponen Dominan</div>
+        <div class="ins-text">Aset Tetap Netto Rp24,68 triliun atau <b>87,09%</b> dari Total Aset Rp28,34 triliun. Akumulasi penyusutan Rp2,37 triliun setara 8,74% dari nilai bruto, sehingga sebagian besar aset masih berada pada umur ekonomis yang relatif baru.</div>
+      </div>
+      <div class="ins warn">
+        <div class="ins-title">Struktur Pendanaan Bertumpu pada Akun Antar Satuan</div>
+        <div class="ins-text">Akun Antar Satuan Administrasi Rp14,76 triliun (<b>52,10%</b> dari total pasiva), Total Ekuitas Rp4,99 triliun (17,61%), Liabilitas Jangka Panjang Rp4,77 triliun (16,83%) dan Liabilitas Jangka Pendek Rp3,81 triliun (13,46%). Aset unit dibiayai terutama melalui rekening antar unit.</div>
+      </div>
+      <div class="ins warn">
+        <div class="ins-title">Piutang Usaha Komponen Utama Aset Lancar</div>
+        <div class="ins-text">Piutang Usaha Netto Rp2,66 triliun atau <b>92,95%</b> dari Aset Lancar Rp2,87 triliun. UID, UP2D dan UP3 Yogyakarta tidak mencatat piutang usaha. Porsi terbesar berada di UP3 SEMARANG (20,10% dari total piutang).</div>
+      </div>
+      <div class="ins danger">
+        <div class="ins-title">Kas dan Setara Kas Hampir Nihil</div>
+        <div class="ins-text">Kas dan Setara Kas hanya Rp2.175.000 (di bawah 0,01% dari Aset Lancar) dan seluruhnya tercatat di UID. Kewajiban jangka pendek Rp3,81 triliun tidak didukung kas, sehingga kemampuan membayar bergantung pada penerimaan piutang dan pemindahan dana antar unit.</div>
+      </div>
+      <div class="ins danger">
+        <div class="ins-title">Ekuitas Defisit di Tiga Satuan</div>
+        <div class="ins-text">UID (-Rp1,78 T), UP2D (-Rp182,50 M) dan UP3 Yogyakarta (-Rp135,92 M). Saldo antar satuan UID mencapai Rp2,68 triliun atau 221% dari total asetnya, dan UP2D Rp1,42 triliun atau 113%. Kedua satuan ini sangat bergantung pada pendanaan dari unit lain.</div>
+      </div>
+      <div class="ins warn">
+        <div class="ins-title">Uang Jaminan Langganan Mendominasi Liabilitas Jangka Pendek</div>
+        <div class="ins-text">Rp1,97 triliun atau <b>51,59%</b> dari Liabilitas Jangka Pendek Rp3,81 triliun. Konsentrasi terbesar di UP3 SEMARANG (Rp377,71 M, 19,19%) dan UP3 PEKALONGAN (Rp151,27 M). Nilai ini perlu dikelola karena terkait kewajiban kepada pelanggan.</div>
+      </div>
+      <div class="ins warn">
+        <div class="ins-title">Pendapatan Ditangguhkan Membebani Pasiva</div>
+        <div class="ins-text">Pendapatan ditangguhkan jangka panjang Rp4,71 triliun (98,72% dari liabilitas jangka panjang) ditambah Biaya Penyambungan jangka pendek Rp442,11 miliar, total sekitar Rp5,15 triliun atau 18,17% dari total pasiva. Pengakuannya akan memengaruhi pendapatan dan ekuitas di masa mendatang.</div>
+      </div>
+      <div class="ins danger">
+        <div class="ins-title">Rasio Lancar Rendah Tersebar Luas</div>
+        <div class="ins-text">8 dari 14 satuan yang memiliki aset (di luar UP3 Yogyakarta) berada di bawah 0,8x, termasuk UP3 PEKALONGAN (0,61x), UP3 CILACAP (0,63x) dan UP2D (0,59x). UID berada di 0,03x.</div>
+      </div>
+    </div>
+
+    <h3 class="sub-title">Rekomendasi</h3>
+    <div class="reco">
+      <div class="reco-card"><div class="k">Rekomendasi 1 · Rekonsiliasi Antar Satuan</div><p>Nilai GABUNGAN Akun Antar Satuan (Rp14,76 T) sama dengan jumlah langsung saldo seluruh satuan, sehingga pasangan saldo antar satuan belum tampak dieliminasi. Rekonsiliasi pasangan saldo per satuan dan pastikan eliminasi dilakukan sebelum menyajikan posisi gabungan.</p></div>
+      <div class="reco-card"><div class="k">Rekomendasi 2 · Penyehatan Ekuitas</div><p>Telaah penyebab defisit UID (Rp1,78 T) dan UP2D (Rp182,50 M), seperti akumulasi rugi, beban penyusutan atau penurunan nilai, lalu susun opsi penyehatan termasuk kemungkinan penambahan modal atau penataan ulang pembiayaan antar unit.</p></div>
+      <div class="reco-card"><div class="k">Rekomendasi 3 · Status UP3 Yogyakarta</div><p>UP3 Yogyakarta tidak mencatat aset, memiliki ekuitas negatif Rp135,92 M, akun antar satuan Rp133,52 M dan liabilitas jangka pendek Rp2,40 M. Tinjau status operasional dan kejelasan sumber dana untuk menutup ekuitas negatifnya.</p></div>
+      <div class="reco-card"><div class="k">Rekomendasi 4 · Likuiditas &amp; Kas</div><p>Kas hanya Rp2,2 juta sementara liabilitas jangka pendek Rp3,81 T. Susun proyeksi kas bulanan yang memetakan penerimaan piutang dan kewajiban jatuh tempo, serta tetapkan batas minimum rasio lancar per satuan, terutama untuk UID, UP2D, PEKALONGAN dan CILACAP.</p></div>
+      <div class="reco-card"><div class="k">Rekomendasi 5 · Penagihan Piutang</div><p>Prioritaskan penagihan Piutang Usaha Rp2,66 T (92,95% Aset Lancar). Fokus pada UP3 SEMARANG (Rp535,60 M), UP3 KUDUS (Rp346,31 M) dan UP3 SURAKARTA (Rp323,58 M), serta telaah umur piutang untuk mengidentifikasi piutang yang berisiko tidak tertagih.</p></div>
+      <div class="reco-card"><div class="k">Rekomendasi 6 · Kewajiban Non-Kas &amp; PDP</div><p>Tinjau mekanisme Uang Jaminan Langganan (Rp1,97 T) dan Pendapatan Ditangguhkan (Rp5,15 T), serta percepat penyelesaian PDP Rp647,40 M untuk dikapitalisasi ke aset tetap, terutama di UP3 SEMARANG (Rp149,76 M) dan UP3 KUDUS (Rp92,37 M).</p></div>
+    </div>
+
+    <div class="grid">
+      <div class="box"><h3>Unit dengan Aset Terbesar</h3><div id="insightTopAsset"></div></div>
+      <div class="box"><h3>Unit dengan Ekuitas Positif Terbesar</h3><div id="insightTopEquity"></div></div>
+    </div>
+
+    <div class="box">
+      <h3>Rasio Lancar per Unit</h3>
+      <div class="chart"><canvas id="rasioChart"></canvas></div>
+      <div class="small">Rasio Lancar = Aset Lancar ÷ Liabilitas Jangka Pendek. Diurutkan dari rasio terbesar ke terkecil. Merah = ekuitas defisit; kuning = rasio &lt; 0,8x; hijau = wajar. UP3 Yogyakarta tidak tampil karena total aset nol.</div>
+    </div>
+
+    <div class="box">
+      <h3>Rasio Kunci per Unit</h3>
+      <div class="small">Diurutkan dari Total Aset terbesar. Klik judul kolom untuk mengurutkan.</div>
+      <div class="table-wrap" style="margin-top:10px">
+        <table id="ratioTableEl">
+          <thead><tr><th>Unit</th><th>Total Aset</th><th>Aset Tetap/Total</th><th>Piutang/Aset Lancar</th><th>Ekuitas/Total Aset</th><th>Rasio Lancar</th><th>Status</th></tr></thead>
+          <tbody id="ratioTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout red"><b>Catatan Basis Data &amp; Konsolidasi:</b> Angka pada tab ini bersumber dari Excel Posisi Keuangan. Nilai Akun Antar Satuan pada GABUNGAN sama dengan jumlah langsung seluruh satuan dan belum dieliminasi, sehingga rasio yang memakai total pasiva gabungan perlu dibaca bersama catatan tersebut.</div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div>Sumber: Data Excel Posisi Keuangan Perbandingan Per Unit · UID Jawa Tengah</div>
+    <div>Dashboard Analisis · Strictly Private &amp; Confidential</div>
+  </div>
+</footer>
+
+<script>
+/* ==========================================================
+   DATA (sumber: Excel Posisi Keuangan, satuan Rp)
+========================================================== */
+const UNIT_ORDER=["GABUNGAN","UID","UP3 KUDUS","UP3 SURAKARTA","UP3 YOGYAKARTA","UP3 MAGELANG","UP3 PURWOKERTO","UP3 TEGAL","UP3 SEMARANG","UP3 SALATIGA","UP3 KLATEN","UP3 PEKALONGAN","UP3 CILACAP","UP3 DEMAK","UP3 SUKOHARJO","UP2D"];
+const UNITS=UNIT_ORDER.slice(1);
+
+const data={
+ "GABUNGAN":{asetTetap:24678457115792,asetBruto:27065219052635,akumPenyusutan:-2365041341557,rugiPenurunan:-21720595286,pdp:647396960940,properti:82191000000,asetTidakLancarLain:61155643036,asetLancar:2865982342507,kas:2175000,piutangUsaha:2663929706774,persediaan:193660827924,uangMukaPajak:713404249,piutangLainPendek:7498342883,biayaMukaPendek:177885677,totalAset:28335183062275,ekuitas:4988972501266,antarSatuan:14762792026750,liabPanjang:4768974047861,liabPendek:3814444486398},
+ "UID":{asetTetap:1158467605901,asetBruto:1210998238147,akumPenyusutan:-52530632246,rugiPenurunan:0,pdp:0,properti:1067000000,asetTidakLancarLain:46239057854,asetLancar:7609974641,kas:2175000,piutangUsaha:0,persediaan:0,uangMukaPajak:140838482,piutangLainPendek:7350802885,biayaMukaPendek:116158274,totalAset:1213383638396,ekuitas:-1784100032408,antarSatuan:2679024063401,liabPanjang:61930083030,liabPendek:256529524373},
+ "UP3 KUDUS":{asetTetap:2757365086335,asetBruto:3033634212532,akumPenyusutan:-273757039594,rugiPenurunan:-2512086603,pdp:92373058475,properti:17809000000,asetTidakLancarLain:1070022169,asetLancar:372137614115,kas:0,piutangUsaha:346309046432,persediaan:25809791933,uangMukaPajak:0,piutangLainPendek:18775750,biayaMukaPendek:0,totalAset:3240754781094,ekuitas:602072725344,antarSatuan:1636997511984,liabPanjang:563433279985,liabPendek:438251263781},
+ "UP3 SURAKARTA":{asetTetap:2484557772074,asetBruto:2698032812840,akumPenyusutan:-211856759885,rugiPenurunan:-1618280881,pdp:42692801726,properti:16124000000,asetTidakLancarLain:431886000,asetLancar:334895972167,kas:0,piutangUsaha:323583396653,persediaan:11304146014,uangMukaPajak:0,piutangLainPendek:8429500,biayaMukaPendek:0,totalAset:2878702431967,ekuitas:921892555628,antarSatuan:1104938336570,liabPanjang:491387016468,liabPendek:360484523301},
+ "UP3 YOGYAKARTA":{asetTetap:0,asetBruto:0,akumPenyusutan:0,rugiPenurunan:0,pdp:0,properti:0,asetTidakLancarLain:0,asetLancar:0,kas:0,piutangUsaha:0,persediaan:0,uangMukaPajak:0,piutangLainPendek:0,biayaMukaPendek:0,totalAset:0,ekuitas:-135917689047,antarSatuan:133520417786,liabPanjang:0,liabPendek:2397271261},
+ "UP3 MAGELANG":{asetTetap:1740076144696,asetBruto:1914993712831,akumPenyusutan:-173721651195,rugiPenurunan:-1195916940,pdp:32052084187,properti:17527000000,asetTidakLancarLain:1394028274,asetLancar:128912454181,kas:0,piutangUsaha:118079715729,persediaan:10771122406,uangMukaPajak:33540388,piutangLainPendek:28075658,biayaMukaPendek:0,totalAset:1919961711338,ekuitas:270654778888,antarSatuan:1183880986460,liabPanjang:288436575745,liabPendek:176989370245},
+ "UP3 PURWOKERTO":{asetTetap:2350809092140,asetBruto:2567618453355,akumPenyusutan:-215280938902,rugiPenurunan:-1528422313,pdp:9457238447,properti:13755000000,asetTidakLancarLain:837128450,asetLancar:169148517716,kas:0,piutangUsaha:146523688176,persediaan:22607209660,uangMukaPajak:0,piutangLainPendek:17619880,biayaMukaPendek:0,totalAset:2544006976753,ekuitas:437869491406,antarSatuan:1529315009786,liabPanjang:347078550046,liabPendek:229743925515},
+ "UP3 TEGAL":{asetTetap:2469802210355,asetBruto:2724265550454,akumPenyusutan:-252992218940,rugiPenurunan:-1471121159,pdp:84855574664,properti:1222000000,asetTidakLancarLain:849000178,asetLancar:253877415591,kas:0,piutangUsaha:237262825240,persediaan:16367628309,uangMukaPajak:236294288,piutangLainPendek:10667754,biayaMukaPendek:0,totalAset:2810606200788,ekuitas:447106909102,antarSatuan:1523406844361,liabPanjang:501510497697,liabPendek:338581949628},
+ "UP3 SEMARANG":{asetTetap:2880647869733,asetBruto:3163558538085,akumPenyusutan:-281376030438,rugiPenurunan:-1534637914,pdp:149764003778,properti:3602000000,asetTidakLancarLain:3496720102,asetLancar:567475858771,kas:0,piutangUsaha:535603382316,persediaan:31760318331,uangMukaPajak:98826250,piutangLainPendek:13331874,biayaMukaPendek:0,totalAset:3604986452384,ekuitas:1810651166355,antarSatuan:318113355990,liabPanjang:824077360493,liabPendek:652144569546},
+ "UP3 SALATIGA":{asetTetap:979149362661,asetBruto:1080623606022,akumPenyusutan:-100371566913,rugiPenurunan:-1102676448,pdp:21182398812,properti:0,asetTidakLancarLain:174636194,asetLancar:144829679749,kas:0,piutangUsaha:135192782453,persediaan:9636834296,uangMukaPajak:0,piutangLainPendek:63000,biayaMukaPendek:0,totalAset:1145336077416,ekuitas:386786950506,antarSatuan:396117887656,liabPanjang:200396244049,liabPendek:162034995205},
+ "UP3 KLATEN":{asetTetap:1193303312751,asetBruto:1320536478014,akumPenyusutan:-125769527416,rugiPenurunan:-1463637847,pdp:12313483179,properti:6080000000,asetTidakLancarLain:630543753,asetLancar:174938028415,kas:0,piutangUsaha:163598102272,persediaan:11333666977,uangMukaPajak:0,piutangLainPendek:6259166,biayaMukaPendek:0,totalAset:1387265368098,ekuitas:381615183569,antarSatuan:559269966055,liabPanjang:266405530741,liabPendek:179974687733},
+ "UP3 PEKALONGAN":{asetTetap:1423070701566,asetBruto:1559405981970,akumPenyusutan:-133053806210,rugiPenurunan:-3281474194,pdp:43482905628,properti:301000000,asetTidakLancarLain:519253968,asetLancar:194853542184,kas:0,piutangUsaha:177367617154,persediaan:17349160098,uangMukaPajak:126099932,piutangLainPendek:10665000,biayaMukaPendek:0,totalAset:1662227403346,ekuitas:702536083686,antarSatuan:292153549997,liabPanjang:349293862498,liabPendek:318243907165},
+ "UP3 CILACAP":{asetTetap:1812505433161,asetBruto:1995297684272,akumPenyusutan:-180708082636,rugiPenurunan:-2084168475,pdp:18189781896,properti:0,asetTidakLancarLain:0,asetLancar:157056097050,kas:0,piutangUsaha:148183439205,persediaan:8810436647,uangMukaPajak:62221198,piutangLainPendek:0,biayaMukaPendek:0,totalAset:1987751312107,ekuitas:381003752069,antarSatuan:1046329654151,liabPanjang:310807890523,liabPendek:249610015364},
+ "UP3 DEMAK":{asetTetap:1087863152724,asetBruto:1202840010826,akumPenyusutan:-113183811904,rugiPenurunan:-1793046198,pdp:27523358933,properti:158000000,asetTidakLancarLain:823898250,asetLancar:181274759086,kas:0,piutangUsaha:173626410423,persediaan:7616165223,uangMukaPajak:2492373,piutangLainPendek:17372000,biayaMukaPendek:12319067,totalAset:1297643168993,ekuitas:305621654064,antarSatuan:486762079248,liabPanjang:293573952014,liabPendek:211685483667},
+ "UP3 SUKOHARJO":{asetTetap:1149309206291,asetBruto:1270554590289,akumPenyusutan:-120506762994,rugiPenurunan:-738621004,pdp:62871043854,properti:4546000000,asetTidakLancarLain:363690000,asetLancar:168819981347,kas:0,piutangUsaha:158599300721,persediaan:10160230094,uangMukaPajak:4307196,piutangLainPendek:6735000,biayaMukaPendek:49408336,totalAset:1385909921492,ekuitas:443679759846,antarSatuan:451165034137,liabPanjang:270622528494,liabPendek:220442599015},
+ "UP2D":{asetTetap:1191530165404,asetBruto:1322859182998,akumPenyusutan:-129932512284,rugiPenurunan:-1396505310,pdp:50639227361,properti:0,asetTidakLancarLain:4325777844,asetLancar:10152447494,kas:0,piutangUsaha:0,persediaan:10134117936,uangMukaPajak:8784142,piutangLainPendek:9545416,biayaMukaPendek:0,totalAset:1256647618103,ekuitas:-182500787742,antarSatuan:1421797329168,liabPanjang:20676078,liabPendek:17330400599}
+};
+
+/* Liabilitas detail (urutan nilai mengikuti UNIT_ORDER) */
+const LIAB_PANJANG=[
+ {label:"Pendapatan Ditangguhkan",v:[4707731487150,708198397,563433279985,491387016468,0,288436575745,347078550046,501510497697,824077360493,200396244049,266405530741,349293862498,310807890523,293573952014,270622528494,0]},
+ {label:"Utang Sewa",v:[61242560711,61242560711,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+ {label:"Utang Lain-lain (Jk. Panjang)",v:[0,-20676078,0,0,0,0,0,0,0,0,0,0,0,0,0,20676078]}
+];
+const LIAB_PENDEK=[
+ {label:"Utang Usaha",v:[591122300117,59044022434,71070024311,37151066350,2395796261,26629528518,36699808204,54630374130,91018257905,18385494733,23057364115,52999677890,31032823905,26910927773,45420932650,14676200938]},
+ {label:"Pendapatan Ditangguhkan - Biaya Penyambungan (BP)",v:[442111352783,0,42379455442,39715086538,0,24281559249,24291925252,39101624375,79143521211,15990876885,20334744654,80988657568,36205970606,20935865460,18742065543,0]},
+ {label:"Utang Dana Pensiun",v:[780259600,-226990040,94436100,83081600,0,87774740,83763800,102676420,96740440,59515750,71198300,65686180,72281610,61218800,77669690,51206210]},
+ {label:"Utang Pajak",v:[45352819090,13186416053,2421763111,3152073257,0,2681843564,2214457581,2996932346,5426727882,1745683142,1885579059,1712948950,2111037070,1642933987,2164658037,2009765051]},
+ {label:"Utang Lain-Lain",v:[747007934381,164613112974,73272352630,64162520234,1475000,31209951945,45480223284,61128776415,98752631078,34613772493,28401198433,31209266124,45064883398,35611091860,32893450113,593228400]},
+ {label:"Biaya Yang Masih Harus Dibayar",v:[3415425844,3214079716,31419200,60617385,0,0,0,11737700,0,2082000,90477143,0,0,0,5012700,0]},
+ {label:"Uang Jaminan Langganan",v:[1967955511347,0,248981812987,216160077937,0,92098712229,120973747394,180609828242,377706691030,91237570202,106134126029,151267670453,135123018775,126523445787,121138810282,0]},
+ {label:"Utang Sewa",v:[16698883236,16698883236,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
+];
+const valOf=(arr,unit)=>arr[UNIT_ORDER.indexOf(unit)]||0;
+
+/* ==========================================================
+   FORMAT
+========================================================== */
+const $=id=>document.getElementById(id);
+let currentUnit="GABUNGAN";
+
+function rupiah(n){return new Intl.NumberFormat("id-ID",{maximumFractionDigits:0}).format(Math.round(n||0));}
+function fmt2(n){return n.toLocaleString("id-ID",{minimumFractionDigits:2,maximumFractionDigits:2});}
+function shortRp(n){
+  const abs=Math.abs(n||0), sign=n<0?"-":"";
+  if(abs>=1e12) return sign+"Rp "+fmt2(abs/1e12)+" T";
+  if(abs>=1e9)  return sign+"Rp "+fmt2(abs/1e9)+" M";
+  if(abs>=1e6)  return sign+"Rp "+fmt2(abs/1e6)+" Jt";
+  return sign+"Rp "+rupiah(abs);
+}
+function pct(n,t){ if(!t) return "0,00%"; return fmt2(n/t*100)+"%"; }
+function rasioLancar(d){ return d.liabPendek? d.asetLancar/d.liabPendek : 0; }
+function rasioTxt(x){ return fmt2(x)+"x"; }
+
+/* Persentase tiap nilai terhadap total dataset, ditampilkan di belakang nilai pada tooltip */
+function shareOf(ds,raw){
+  const t=ds.data.reduce((s,x)=>s+Math.abs(+x||0),0);
+  return t? " ("+fmt2(Math.abs(+raw||0)/t*100)+"%)" : "";
+}
+
+/* Label dipecah menjadi 2 baris (tidak miring) */
+function wrapLbl(s){
+  const w=String(s).split(" ");
+  if(w.length<2) return s;
+  const h=Math.ceil(w.length/2);
+  return [w.slice(0,h).join(" "), w.slice(h).join(" ")];
+}
+const xTicksFlat={font:{size:10},maxRotation:0,minRotation:0,autoSkip:false};
+
+/* ==========================================================
+   CHART HELPERS
+========================================================== */
+const C = {
+  pln:'#0B2E4F', pln2:'#12406B', gold:'#C9A227', blue:'#2877A8', teal:'#0E7C7B', teal2:'#159A98',
+  green:'#1E7A4C', greenL:'#159A98', red:'#B23A2E', purple:'#7656A6', grid:'#E7E9EC', text2:'#41526B',
+  navyD:'#081E36'
+};
+const BLACK='#141414';
+Chart.defaults.font.family = "Arial, Helvetica, sans-serif";
+Chart.defaults.color = C.text2;
+Chart.defaults.font.size = 11;
+
+/* Plugin: teks total di tengah donut yang bolong.
+   Ukuran judul dan nilai otomatis menyesuaikan agar memenuhi lebar lubang donut, dengan huruf tebal. */
+const centerPlugin={
+  id:'centerText',
+  afterDatasetsDraw(chart){
+    const o=chart.options.plugins.centerText; if(!o) return;
+    const arc=chart.getDatasetMeta(0).data[0]; if(!arc) return;
+    const ctx=chart.ctx;
+    const inner=arc.innerRadius||arc.outerRadius*0.62;
+    const maxW=inner*2*0.86;
+    const fill=(text,cap)=>{
+      ctx.font='700 100px Arial, Helvetica, sans-serif';
+      const w=ctx.measureText(text).width||1;
+      return Math.max(8,Math.min(cap,100*maxW/w));
+    };
+    ctx.save();
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    const vS=fill(o.value,44);
+    const tS=fill(o.title,16);
+    ctx.font=`700 ${tS}px Arial, Helvetica, sans-serif`;
+    ctx.fillStyle=C.text2;
+    ctx.fillText(o.title,arc.x,arc.y-vS*0.55);
+    ctx.font=`700 ${vS}px Arial, Helvetica, sans-serif`;
+    ctx.fillStyle=C.navyD;
+    ctx.fillText(o.value,arc.x,arc.y+tS*0.6);
+    ctx.restore();
+  }
+};
+Chart.register(centerPlugin);
+
+/* Plugin: sorot batang terpilih dengan pendar (glow) dan garis tipis */
+const glowPlugin={
+  id:"glowSel",
+  afterDatasetsDraw(chart,_args,opts){
+    const sel=opts&&opts.sel; if(!sel) return;
+    const idx=chart.data.labels.indexOf(sel); if(idx<0) return;
+    const el=chart.getDatasetMeta(0).data[idx]; if(!el) return;
+    const p=el.getProps(["x","y","base","height"],true);
+    const w=Math.abs(p.x-p.base); if(w<1) return;
+    const color=chart.data.datasets[0].borderColor[idx];
+    const x0=Math.min(p.x,p.base);
+    const ctx=chart.ctx;
+    ctx.save();
+    ctx.shadowColor=color; ctx.shadowBlur=14;
+    ctx.strokeStyle=color; ctx.lineWidth=1.2;
+    ctx.strokeRect(x0,p.y-p.height/2,w,p.height);
+    ctx.restore();
+  }
+};
+
+const charts={};
+const chartColors=[C.pln,C.gold,C.teal,C.red,'#6B7280',C.pln2,'#7A8B99','#9A7D18'];
+function killChart(id){ if(charts[id]) charts[id].destroy(); }
+
+function doughnut(id,labels,values,colors,center){
+  killChart(id);
+  charts[id]=new Chart($(id),{
+    type:"doughnut",
+    data:{labels,datasets:[{data:values,backgroundColor:colors||chartColors,borderColor:"#fff",borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:"62%",
+      plugins:{
+        legend:{position:"bottom",labels:{boxWidth:10,boxHeight:10,padding:12,font:{size:11}}},
+        tooltip:{callbacks:{label:c=>" "+c.label+": "+shortRp(c.raw)+shareOf(c.dataset,c.raw)}},
+        centerText:center||null
+      }}
+  });
+}
+
+function bar(id,labels,values,{horizontal=false,colors=null,fmt=shortRp,share=true}={}){
+  killChart(id);
+  charts[id]=new Chart($(id),{
+    type:"bar",
+    data:{
+      labels: horizontal ? labels : labels.map(wrapLbl),
+      datasets:[{label:"Nilai",data:values,backgroundColor:colors||C.teal,borderRadius:3,borderWidth:0,maxBarThickness:28}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,indexAxis:horizontal?"y":"x",
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:c=>" "+fmt(c.raw)+(share?shareOf(c.dataset,c.raw):"")}}
+      },
+      scales:{
+        x:{grid:{display:false},ticks:horizontal
+            ? {font:{size:10},callback:function(v){return fmt(v);}}
+            : {...xTicksFlat, callback:function(v){return this.getLabelForValue(v);}}},
+        y:{grid:{color:C.grid},ticks:{font:{size:10},callback:function(v){return horizontal?this.getLabelForValue(v):fmt(v);}}}
+      }}
+  });
+}
+
+/* Batang mendatar per unit: warna sesuai legend, unit terpilih disorot */
+function hbar(id,items,sel){
+  killChart(id);
+  const hi=items.map(x=>x.label===sel);
+  charts[id]=new Chart($(id),{
+    type:"bar",
+    data:{labels:items.map(x=>x.label),datasets:[{
+      label:"Nilai",
+      data:items.map(x=>x.value),
+      backgroundColor:items.map((x,i)=>hi[i]?x.color+"38":x.color),
+      borderColor:items.map(x=>x.color),
+      borderWidth:items.map((x,i)=>hi[i]?1:0),
+      borderRadius:3,maxBarThickness:24
+    }]},
+    options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:c=>" "+shortRp(c.raw)+shareOf(c.dataset,c.raw)}},
+        glowSel:{sel:sel||null}
+      },
+      scales:{
+        x:{grid:{color:C.grid},ticks:{font:{size:10},callback:v=>shortRp(v)}},
+        y:{grid:{display:false},ticks:{
+          font:c=>({size:11,weight:c.chart.data.labels[c.index]===sel?"bold":"normal"}),
+          color:c=>c.chart.data.labels[c.index]===sel?"#A87F12":C.text2}}
+      }
+    },
+    plugins:[glowPlugin]
+  });
+}
+
+function stack(id,segs){
+  const total=segs.reduce((s,x)=>s+Math.max(0,x.value),0);
+  $(id).innerHTML=
+    `<div class="stack">${segs.map(s=>`<div class="seg" title="${s.label}: ${shortRp(s.value)}" style="width:${total?Math.max(0,s.value)/total*100:0}%;background:${s.color}"></div>`).join("")}</div>`+
+    `<div class="legend">${segs.map(s=>`<span><i style="background:${s.color}"></i>${s.label} <b>${shortRp(Math.abs(s.value))}</b> <em>${pct(Math.max(0,s.value),total)}</em></span>`).join("")}</div>`;
+}
+
+/* ==========================================================
+   UNIT SELECTORS
+========================================================== */
+const SEL_IDS=["unitSelect","unitSelectAset","unitSelectEL"];
+SEL_IDS.forEach(id=>{
+  $(id).innerHTML=UNIT_ORDER.map(u=>`<option value="${u}">${u}</option>`).join("");
+  $(id).value=currentUnit;
+  $(id).addEventListener("change",function(){
+    currentUnit=this.value;
+    SEL_IDS.forEach(o=>{ $(o).value=currentUnit; });
+    updateDashboard();
+  });
+});
+
+/* ==========================================================
+   DYNAMIC UPDATE (per unit)
+========================================================== */
+const SN=n=>n.replace("UP3 ","");
+function setCard(valId,pctId,value,base){
+  $(valId).textContent=shortRp(value);
+  $(pctId).textContent=pct(value,base)+" Total Aset";
+}
+
+function updateDashboard(){
+  const u=currentUnit, d=data[u];
+  const liabTotal=d.liabPanjang+d.liabPendek;
+  /* Total passiva = ekuitas + liabilitas + akun antar satuan administrasi */
+  const passiva=d.ekuitas+d.liabPanjang+d.liabPendek+d.antarSatuan;
+  const SEL = u==="GABUNGAN" ? null : SN(u);
+
+  /* KPI overview */
+  $("kpiAssets").textContent=shortRp(d.totalAset);
+  $("kpiAssetsPct").textContent="100% Total Aset";
+  $("kpiUnit").textContent=u;
+  $("kpiEquity").textContent=shortRp(d.ekuitas);
+  $("kpiEquityPct").textContent=pct(d.ekuitas,d.totalAset)+" Total Aset";
+  $("kpiEquityPct").className="delta "+(d.ekuitas<0?"neg":"pos");
+  $("kpiLiab").textContent=shortRp(liabTotal);
+  $("kpiLiabPct").textContent=pct(liabTotal,d.totalAset)+" Total Aset";
+  $("kpiInter").textContent=shortRp(d.antarSatuan);
+  $("kpiInterPct").textContent=pct(d.antarSatuan,d.totalAset)+" Total Aset";
+
+  /* KPI aset */
+  setCard("asKpiFixed","asKpiFixedPct",d.asetTetap,d.totalAset);
+  setCard("asKpiPdp","asKpiPdpPct",d.pdp,d.totalAset);
+  setCard("asKpiCurrent","asKpiCurrentPct",d.asetLancar,d.totalAset);
+  setCard("asKpiReceivable","asKpiReceivablePct",d.piutangUsaha,d.totalAset);
+
+  /* Infografis stack */
+  const lainnya=d.totalAset-d.asetTetap-d.pdp-d.asetLancar;
+  stack("stackAktiva",[
+    {label:"Aset Tetap Netto",value:d.asetTetap,color:C.pln},
+    {label:"PDP",value:d.pdp,color:C.gold},
+    {label:"Aset Lancar",value:d.asetLancar,color:C.teal},
+    {label:"Lainnya",value:lainnya,color:"#B9C6D6"}
+  ]);
+  stack("stackPasiva",[
+    {label:d.ekuitas<0?"Ekuitas (defisit)":"Ekuitas",value:Math.abs(d.ekuitas),color:C.red},
+    {label:"Antar Satuan",value:d.antarSatuan,color:C.gold},
+    {label:"Liab. Jk. Panjang",value:d.liabPanjang,color:C.pln2},
+    {label:"Liab. Jk. Pendek",value:d.liabPendek,color:C.teal}
+  ]);
+
+  /* Ringkasan aset (aktiva) */
+  $("overviewTable").innerHTML=`
+    <tr class="total"><td>TOTAL ASET</td><td>${rupiah(d.totalAset)}</td><td>100%</td></tr>
+    <tr><td>Aset Tetap Netto</td><td>${rupiah(d.asetTetap)}</td><td>${pct(d.asetTetap,d.totalAset)}</td></tr>
+    <tr><td>Pekerjaan Dalam Pelaksanaan</td><td>${rupiah(d.pdp)}</td><td>${pct(d.pdp,d.totalAset)}</td></tr>
+    <tr><td>Aset Lancar</td><td>${rupiah(d.asetLancar)}</td><td>${pct(d.asetLancar,d.totalAset)}</td></tr>
+    <tr><td>Aset Tidak Lancar Lain</td><td>${rupiah(d.asetTidakLancarLain)}</td><td>${pct(d.asetTidakLancarLain,d.totalAset)}</td></tr>`;
+
+  /* Ringkasan pasiva (ekuitas & liabilitas) */
+  $("pasivaTable").innerHTML=`
+    <tr class="total"><td>TOTAL PASIVA</td><td>${rupiah(passiva)}</td><td>100%</td></tr>
+    <tr><td>Total Ekuitas</td><td>${rupiah(d.ekuitas)}</td><td>${pct(d.ekuitas,passiva)}</td></tr>
+    <tr><td>Akun Antar Satuan Administrasi</td><td>${rupiah(d.antarSatuan)}</td><td>${pct(d.antarSatuan,passiva)}</td></tr>
+    <tr><td>Liabilitas Jangka Panjang</td><td>${rupiah(d.liabPanjang)}</td><td>${pct(d.liabPanjang,passiva)}</td></tr>
+    <tr><td>Liabilitas Jangka Pendek</td><td>${rupiah(d.liabPendek)}</td><td>${pct(d.liabPendek,passiva)}</td></tr>`;
+
+  /* Overview doughnuts (dengan total di tengah) */
+  doughnut("overviewAssetChart",
+    ["Aset Tetap Netto","Pekerjaan Dalam Pelaksanaan","Aset Lancar","Lainnya"],
+    [Math.max(0,d.asetTetap),Math.max(0,d.pdp),Math.max(0,d.asetLancar),Math.max(0,lainnya)],
+    null,
+    {title:"Total Aset", value:shortRp(d.totalAset)});
+  const pasivaLabels=[d.ekuitas<0?"Ekuitas (Defisit)":"Ekuitas","Antar Satuan Administrasi","Liabilitas Jangka Panjang","Liabilitas Jangka Pendek"];
+  const pasivaVals=[Math.abs(d.ekuitas),d.antarSatuan,d.liabPanjang,d.liabPendek];
+  doughnut("overviewELChart",pasivaLabels,pasivaVals,null,
+    {title:"Total Ekuitas & Liabilitas", value:shortRp(passiva)});
+
+  /* Struktur aset: donut + batang (urut besar → kecil). Lainnya dihapus karena sudah termasuk Properti & ATLL */
+  const asetParts=[
+    {label:"Aset Tetap Netto",value:d.asetTetap,color:C.pln},
+    {label:"PDP",value:d.pdp,color:C.gold},
+    {label:"Properti Investasi",value:d.properti,color:C.blue},
+    {label:"Aset Tidak Lancar Lain",value:d.asetTidakLancarLain,color:C.purple},
+    {label:"Aset Lancar",value:d.asetLancar,color:C.teal}
+  ].filter(x=>x.value>0);
+  doughnut("asetStructChart",
+    asetParts.map(x=>x.label),
+    asetParts.map(x=>x.value),
+    asetParts.map(x=>x.color),
+    {title:"Total Aset", value:shortRp(d.totalAset)});
+  const asetSorted=[...asetParts].sort((a,b)=>b.value-a.value);
+  bar("asetBarChart",
+    asetSorted.map(x=>x.label),
+    asetSorted.map(x=>x.value),
+    {colors:asetSorted.map(x=>x.color),fmt:shortRp});
+
+  /* Ekuitas & liabilitas KPI (persentase terhadap total aset) */
+  $("elEquity").textContent=shortRp(d.ekuitas);
+  $("elEquityPct").textContent=pct(d.ekuitas,d.totalAset)+" Total Aset";
+  $("elInter").textContent=shortRp(d.antarSatuan);
+  $("elInterPct").textContent=pct(d.antarSatuan,d.totalAset)+" Total Aset";
+  $("elLong").textContent=shortRp(d.liabPanjang);
+  $("elLongPct").textContent=pct(d.liabPanjang,d.totalAset)+" Total Aset";
+  $("elShort").textContent=shortRp(d.liabPendek);
+  $("elShortPct").textContent=pct(d.liabPendek,d.totalAset)+" Total Aset";
+
+  doughnut("elStructureChart",pasivaLabels,pasivaVals,null,
+    {title:"Total Ekuitas & Liabilitas", value:shortRp(passiva)});
+
+  /* Perbandingan sumber pendanaan: urut besar → kecil dari kiri ke kanan */
+  const pasivaParts=[
+    {label:"Ekuitas",value:Math.abs(d.ekuitas),color:C.red},
+    {label:"Antar Satuan",value:d.antarSatuan,color:C.gold},
+    {label:"Liab. Jk. Panjang",value:d.liabPanjang,color:C.pln2},
+    {label:"Liab. Jk. Pendek",value:d.liabPendek,color:C.teal}
+  ].sort((a,b)=>b.value-a.value);
+  bar("elBarChart",pasivaParts.map(x=>x.label),pasivaParts.map(x=>x.value),{colors:pasivaParts.map(x=>x.color),fmt:shortRp});
+
+  /* ---------- Per-unit: tab Aset ---------- */
+  const rowsBy=(fn,color)=>UNITS.map(un=>({label:SN(un),value:fn(data[un]),color})).sort((a,b)=>b.value-a.value);
+  hbar("unitAssetChart", rowsBy(x=>x.totalAset,BLACK), SEL);
+  hbar("srcFixed",   rowsBy(x=>x.asetTetap,C.pln), SEL);
+  hbar("srcPdp",     rowsBy(x=>x.pdp,C.gold), SEL);
+  hbar("srcProp",    rowsBy(x=>x.properti,C.blue), SEL);
+  hbar("srcNca",     rowsBy(x=>x.asetTidakLancarLain,C.purple), SEL);
+  hbar("srcCurrent", rowsBy(x=>x.asetLancar,C.teal), SEL);
+  hbar("receivableUnitChart", rowsBy(x=>x.piutangUsaha,C.teal2), SEL);
+
+  /* ---------- Per-unit: tab Ekuitas & Liabilitas ---------- */
+  hbar("pasivaUnitChart", rowsBy(x=>x.ekuitas+x.antarSatuan+x.liabPanjang+x.liabPendek,BLACK), SEL);
+  hbar("eqUnitChart",     rowsBy(x=>x.ekuitas,C.red), SEL);
+  hbar("interUnitChart",  rowsBy(x=>x.antarSatuan,C.gold), SEL);
+  hbar("ljpUnitChart",    rowsBy(x=>x.liabPanjang,C.pln2), SEL);
+  hbar("ljkUnitChart",    rowsBy(x=>x.liabPendek,C.teal), SEL);
+
+  /* Rincian liabilitas: seluruh item, urut besar → kecil (per unit terpilih) */
+  const liabItems=list=>list
+    .map((it,i)=>({label:it.label.replace(" - Biaya Penyambungan (BP)"," (BP)"),value:valOf(it.v,currentUnit),color:chartColors[i%chartColors.length]}))
+    .sort((a,b)=>b.value-a.value);
+  hbar("liabPanjangChart", liabItems(LIAB_PANJANG), null);
+  hbar("liabPendekChart",  liabItems(LIAB_PENDEK), null);
+}
+
+/* ==========================================================
+   STATIC CHARTS & RANKINGS (tidak berubah per unit)
+========================================================== */
+function renderStatic(){
+  const label=n=>n.replace("UP3 ","");
+
+  /* Insight unit teratas */
+  const rankedAssets=UNITS.map(u=>({unit:u,value:data[u].totalAset})).filter(x=>x.value>0).sort((a,b)=>b.value-a.value);
+  const topA=rankedAssets[0];
+  const topE=UNITS.map(u=>({unit:u,value:data[u].ekuitas})).filter(x=>x.value>0).sort((a,b)=>b.value-a.value)[0];
+  $("insightTopAsset").innerHTML=`<div class="callout blue"><b>${topA.unit}</b> merupakan unit dengan Total Aset terbesar, yaitu <b>${shortRp(topA.value)}</b>.</div>`;
+  $("insightTopEquity").innerHTML=`<div class="callout teal"><b>${topE.unit}</b> memiliki Ekuitas positif terbesar, yaitu <b>${shortRp(topE.value)}</b>.</div>`;
+
+  /* Rasio table (urut Total Aset) */
+  const ratioUnits=UNITS.filter(u=>data[u].totalAset>0).sort((a,b)=>data[b].totalAset-data[a].totalAset);
+  $("ratioTable").innerHTML=ratioUnits.map(u=>{
+    const d=data[u], r=rasioLancar(d);
+    let badge;
+    if(d.ekuitas<0) badge=`<span class="badge red">EKUITAS DEFISIT</span>`;
+    else if(r<0.8)  badge=`<span class="badge gold">RASIO LANCAR &lt; 0,8x</span>`;
+    else            badge=`<span class="badge green">WAJAR</span>`;
+    return `<tr>
+      <td>${u}</td>
+      <td>${rupiah(d.totalAset)}</td>
+      <td>${pct(d.asetTetap,d.totalAset)}</td>
+      <td>${d.asetLancar?pct(d.piutangUsaha,d.asetLancar):"-"}</td>
+      <td>${pct(d.ekuitas,d.totalAset)}</td>
+      <td>${rasioTxt(r)}</td>
+      <td>${badge}</td>
+    </tr>`;
+  }).join("");
+
+  /* Rasio lancar chart: terbesar ke terkecil dari kiri (rasio, tanpa persentase) */
+  const rasioUnits=UNITS.filter(u=>data[u].totalAset>0).sort((a,b)=>rasioLancar(data[b])-rasioLancar(data[a]));
+  bar("rasioChart",rasioUnits.map(u=>label(u)),rasioUnits.map(u=>rasioLancar(data[u])),{
+    colors:rasioUnits.map(u=>{const d=data[u];return d.ekuitas<0?C.red:rasioLancar(d)<0.8?C.gold:C.teal;}),
+    fmt:x=>rasioTxt(x),
+    share:false
+  });
+}
+
+/* ==========================================================
+   SORTABLE TABLES (dengan tanda sort; baris total tetap di bawah)
+========================================================== */
+function makeTableSortable(table){
+  const headers = table.querySelectorAll('thead th');
+  headers.forEach((th,col)=>{
+    th.title = 'Klik untuk mengurutkan';
+    const ic = document.createElement('span');
+    ic.className = 'sort-ic';
+    ic.textContent = '↕';
+    th.appendChild(ic);
+    th.addEventListener('click',()=>{
+      const tbody = table.tBodies[0];
+      const all = Array.from(tbody.rows);
+      const totals = all.filter(r=>r.classList.contains('total'));
+      const rows = all.filter(r=>!r.classList.contains('total'));
+      const dir = th.dataset.sortDir==='asc' ? 'desc' : 'asc';
+      headers.forEach(h=>{
+        delete h.dataset.sortDir;
+        h.classList.remove('sort-asc','sort-desc');
+        const s = h.querySelector('.sort-ic'); if(s) s.textContent='↕';
+      });
+      th.dataset.sortDir = dir;
+      th.classList.add(dir==='asc'?'sort-asc':'sort-desc');
+      th.querySelector('.sort-ic').textContent = dir==='asc'?'↑':'↓';
+      const parse = row => {
+        const cell = row.cells[col]; if(!cell) return '';
+        const t = cell.textContent.trim();
+        const n = parseFloat(t.replace(/\./g,'').replace(/,/g,'.').replace(/%/g,'').replace(/[()]/g,'').replace(/x$/,''));
+        return Number.isNaN(n) ? t.toLowerCase() : n;
+      };
+      rows.sort((a,b)=>{
+        const av=parse(a), bv=parse(b);
+        if(typeof av==='number' && typeof bv==='number') return dir==='asc'?av-bv:bv-av;
+        return dir==='asc'?String(av).localeCompare(String(bv),'id'):String(bv).localeCompare(String(av),'id');
+      });
+      rows.forEach(r=>tbody.appendChild(r));
+      totals.forEach(r=>tbody.appendChild(r));
+    });
+  });
+}
+
+/* ==========================================================
+   TAB NAVIGATION
+========================================================== */
+function activateTab(name){
+  const btn = document.querySelector('.tab[data-tab="'+name+'"]');
+  const panel = document.getElementById(name);
+  if(!btn || !panel) return;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+  panel.classList.add('active');
+  setTimeout(()=>Object.values(charts).forEach(c=>c && c.resize()),100);
+}
+document.querySelectorAll('.tab').forEach(btn=>{
+  btn.addEventListener('click',()=>activateTab(btn.dataset.tab));
+});
+
+/* ==========================================================
+   INIT
+========================================================== */
+renderStatic();
+updateDashboard();
+makeTableSortable(document.getElementById('ratioTableEl'));
+document.querySelectorAll('.table-wrap > table').forEach(t=>{ if(t.id!=='ratioTableEl') makeTableSortable(t); });
+</script>
+</body>
+</html>
