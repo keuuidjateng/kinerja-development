@@ -261,7 +261,8 @@ table.unit-table td.rank{color:var(--navy);font-weight:700}
 
 <nav class="tabs">
   <div class="tabbar">
-    <button class="tab active" data-tab="rincian"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Rincian NAC</button>
+    <button class="tab active" data-tab="overview"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Overview</button>
+    <button class="tab" data-tab="rincian"><svg viewBox="0 0 24 24"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="13" y2="15"/></svg>Rincian NAC</button>
     <button class="tab" data-tab="kpi"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>KPI NAC</button>
     <button class="tab" data-tab="insight"><svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>Analisis &amp; Rekomendasi</button>
   </div>
@@ -269,12 +270,12 @@ table.unit-table td.rank{color:var(--navy);font-weight:700}
 
 <main class="wrap">
 
-  <!-- ===================== TAB 1: RINCIAN NAC ===================== -->
-  <div id="tab-rincian" class="panel active">
+  <!-- ===================== TAB 1: OVERVIEW ===================== -->
+  <div id="tab-overview" class="panel active">
 
     <section>
       <div class="section-head">
-        <h2 class="section-title"><span class="num"></span>Ringkasan Kinerja</h2>
+        <h2 class="section-title"><span class="num"></span>Ringkasan Eksekutif</h2>
         <div class="section-note">Posisi s.d. Oktober 2026 &middot; seluruh nominal dalam Rupiah</div>
         <div class="rule"></div>
       </div>
@@ -300,7 +301,7 @@ table.unit-table td.rank{color:var(--navy);font-weight:700}
         <div class="card teal">
           <div class="label">Realisasi thd Target s/d Okt</div>
           <div class="value">110,24%</div>
-          <div class="small">target Rp 248,59 M</div>
+          <div class="small">target maksimal Rp 248,59 M</div>
         </div>
         <div class="card gold">
           <div class="label">Kontributor Unit Terbesar</div>
@@ -347,6 +348,31 @@ table.unit-table td.rank{color:var(--navy);font-weight:700}
         </div>
       </div>
     </section>
+
+    <section>
+      <div class="two-col">
+        <div class="callout navy">
+          <div class="callout-label">Target Revisi Tahun 2026</div>
+          <div class="callout-value">Rp 292,39 M</div>
+          <div class="callout-text">
+            Target awal Rp378,11 Miliar telah direvisi. Realisasi s.d. Oktober mencapai
+            93,73% dari target revisi tahunan, dengan sisa Rp18,35 Miliar.
+          </div>
+        </div>
+        <div class="callout navy">
+          <div class="callout-label">Realisasi Tahun 2025</div>
+          <div class="callout-value">Rp 303,63 M</div>
+          <div class="callout-text">
+            Realisasi 2026 s.d. Oktober setara 90,26% dari realisasi 2025. Perbandingan langsung
+            perlu mempertimbangkan perbedaan periode pengamatan.
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== TAB 2: RINCIAN NAC ===================== -->
+  <div id="tab-rincian" class="panel">
 
     <section>
       <div class="section-head">
@@ -414,30 +440,9 @@ table.unit-table td.rank{color:var(--navy);font-weight:700}
       <div class="kat-summary" id="katSummaryB"></div>
       <div id="katItemsB"></div>
     </section>
-
-    <section>
-      <div class="two-col">
-        <div class="callout navy">
-          <div class="callout-label">Target Revisi Tahun 2026</div>
-          <div class="callout-value">Rp 292,39 M</div>
-          <div class="callout-text">
-            Target awal Rp378,11 Miliar telah direvisi. Realisasi s.d. Oktober mencapai
-            93,73% dari target revisi tahunan, dengan sisa Rp18,35 Miliar.
-          </div>
-        </div>
-        <div class="callout navy">
-          <div class="callout-label">Realisasi Tahun 2025</div>
-          <div class="callout-value">Rp 303,63 M</div>
-          <div class="callout-text">
-            Realisasi 2026 s.d. Oktober setara 90,26% dari realisasi 2025. Perbandingan langsung
-            perlu mempertimbangkan perbedaan periode pengamatan.
-          </div>
-        </div>
-      </div>
-    </section>
   </div>
 
-  <!-- ===================== TAB 2: KPI NAC ===================== -->
+  <!-- ===================== TAB 3: KPI NAC ===================== -->
   <div id="tab-kpi" class="panel">
 
     <section>
@@ -540,13 +545,13 @@ table.unit-table td.rank{color:var(--navy);font-weight:700}
     </section>
   </div>
 
-  <!-- ===================== TAB 3: ANALISIS & REKOMENDASI ===================== -->
+  <!-- ===================== TAB 4: ANALISIS & REKOMENDASI ===================== -->
   <div id="tab-insight" class="panel">
 
     <section>
       <div class="section-head">
         <h2 class="section-title"><span class="num"></span>Temuan Utama</h2>
-        <div class="section-note">Temuan dari tab Rincian NAC dan KPI NAC, diturunkan langsung dari data sumber</div>
+        <div class="section-note">Temuan dari tab Overview, Rincian NAC, dan KPI NAC, diturunkan langsung dari data sumber</div>
         <div class="rule"></div>
       </div>
       <div class="insight-grid">
@@ -706,12 +711,10 @@ table.unit-table td.rank{color:var(--navy);font-weight:700}
       dengan posisi realisasi s.d. Oktober 2026, target s.d. Oktober, dan revisi target 2026.
     </div>
     <div class="fnote">
-      <b>Catatan periode:</b> Judul kolom persentase pada sumber menyebut "thd Target s/d Sept 2026", namun
-      nilai persentase dihitung terhadap target s/d Oktober 2026. Dashboard ini memakai posisi Oktober secara konsisten.
+      <b>Catatan periode:</b> Nilai persentase dihitung terhadap target s/d Oktober 2026. Dashboard ini memakai posisi Oktober secara konsisten.
     </div>
     <div class="fnote">
-      <b>Catatan metodologi:</b> Pencapaian memakai realisasi &divide; target (sesuai kolom sumber). Untuk NAC
-      (polarisasi negatif), nilai &le; 90% berarti hijau, 90&ndash;100% kuning, dan &gt; 100% merah karena realisasi
+      <b>Catatan metodologi:</b> Untuk NAC (polarisasi negatif), nilai &lt; 95% berarti hijau, 95&ndash;100% kuning, dan &ge; 100% merah karena realisasi
       melebihi target. Target per jenis biaya tidak tersedia pada data sumber terbaru, sehingga analisis per item
       memakai realisasi dan perbandingan dengan realisasi 2025. Item tanpa realisasi dan tanpa data 2025 tidak ditampilkan.
     </div>
@@ -860,7 +863,7 @@ table.unit-table td.rank{color:var(--navy);font-weight:700}
     Chart.defaults.font.size = 11;
   }
 
-  /* ===================== RINCIAN: GAUGES ===================== */
+  /* ===================== OVERVIEW: GAUGES ===================== */
   function gauge(label, value, caption, tagCls, tagText, realText, targetText){
     var col = pctColNeg(value);
     var dash = Math.max(0, Math.min(100, value)).toFixed(1);
@@ -888,22 +891,23 @@ table.unit-table td.rank{color:var(--navy);font-weight:700}
     var pB   = ratio(CAT.B.real, CAT.B.tsept);
     gauge("TOTAL NAC", pTot,
       "realisasi s.d. Oktober terhadap target s.d. Oktober",
-      pTot > 100 ? "gap-risk" : "gap-even", pTot > 100 ? "Di atas target s/d Okt" : "Di bawah target s/d Okt",
+      pTot > 100 ? "gap-risk" : "gap-even", pTot > 100 ? "Di atas target maksimal s/d Okt" : "Di bawah target maksimal s/d Okt",
       fmtM(TOT.real), fmtM(TOT.tsept));
     gauge("KATEGORI A", pA,
       "realisasi Kategori A terhadap target s/d Oktober",
-      pA > 100 ? "gap-risk" : "gap-even", pA > 100 ? "Di atas target s/d Okt" : "Di bawah target s/d Okt",
+      pA > 100 ? "gap-risk" : "gap-even", pA > 100 ? "Di atas target maksimal s/d Okt" : "Di bawah target maksimal s/d Okt",
       fmtM(CAT.A.real), fmtM(CAT.A.tsept));
     gauge("KATEGORI B", pB,
       "realisasi Kategori B terhadap target s/d Oktober",
-      pB > 100 ? "gap-risk" : "gap-even", pB > 100 ? "Di atas target s/d Okt" : "Di bawah target s/d Okt",
+      pB > 100 ? "gap-risk" : "gap-even", pB > 100 ? "Di atas target maksimal s/d Okt" : "Di bawah target maksimal s/d Okt",
       fmtM(CAT.B.real), fmtM(CAT.B.tsept));
   }
 
-  /* ===================== RINCIAN: CHARTS ===================== */
+  /* ===================== OVERVIEW: CHARTS ===================== */
   var axisRp = function(v){ return n2(v / 1e9, 0) + ' M'; };
 
-  function initRincianCharts(){
+  function initOverview(){
+    renderGauges();
     if (!window.Chart) return;
 
     charts.donut = new Chart(document.getElementById('donutKategori').getContext('2d'), {
@@ -973,7 +977,11 @@ table.unit-table td.rank{color:var(--navy);font-weight:700}
         }
       }
     });
+  }
 
+  /* ===================== RINCIAN NAC: TOP JENIS BIAYA & TABEL ===================== */
+  function initRincianChart(){
+    if (!window.Chart) return;
     var topAll = ITEMS.A.concat(ITEMS.B)
       .filter(function(x){ return x.real > 0; })
       .sort(function(x, y){ return y.real - x.real; });
@@ -1017,7 +1025,6 @@ table.unit-table td.rank{color:var(--navy);font-weight:700}
     });
   }
 
-  /* ===================== RINCIAN: LISTS & TABLES ===================== */
   function renderTopList(){
     var all = ITEMS.A.concat(ITEMS.B)
       .filter(function(x){ return x.real > 0; })
@@ -1160,13 +1167,12 @@ table.unit-table td.rank{color:var(--navy);font-weight:700}
   }
 
   function initRincian(){
-    renderGauges();
+    initRincianChart();
     renderTopList();
     renderUnitTable();
     initSortable('unitTable');
     renderCat('A', 'katSummaryA', 'katItemsA');
     renderCat('B', 'katSummaryB', 'katItemsB');
-    initRincianCharts();
   }
 
   /* ===================== KPI TAB ===================== */
@@ -1340,10 +1346,11 @@ table.unit-table td.rank{color:var(--navy);font-weight:700}
   }
 
   /* ===================== TAB SWITCHING ===================== */
-  var TAB_KEY = 'nac.activeTab';
-  var VALID_TABS = ['rincian', 'kpi', 'insight'];
+  var TAB_KEY = 'nac.activeTab.v2';
+  var VALID_TABS = ['overview', 'rincian', 'kpi', 'insight'];
   var inited = {};
   var inits = {
+    overview: initOverview,
     rincian: initRincian,
     kpi: initKpi,
     insight: function(){}
@@ -1379,10 +1386,10 @@ table.unit-table td.rank{color:var(--navy);font-weight:700}
       if (nav) isReload = nav.type === 'reload';
       else if (performance.navigation) isReload = performance.navigation.type === 1;
     } catch(e) {}
-    if (!isReload) { activate('rincian'); return; }
+    if (!isReload) { activate('overview'); return; }
     var saved = null;
     try { saved = localStorage.getItem(TAB_KEY); } catch(e) {}
-    activate(VALID_TABS.indexOf(saved) >= 0 ? saved : 'rincian');
+    activate(VALID_TABS.indexOf(saved) >= 0 ? saved : 'overview');
   })();
 
 })();
